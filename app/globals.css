@@ -1,26 +1,50 @@
-@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at 20% 20%, #0a1f33, #030712 60%);
+  color: #e2f3ff;
+  scroll-behavior: smooth;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden; /* ป้องกัน horizontal overflow โดยไม่ตั้งใจ */
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+      circle at 10% 80%,
+      rgba(0, 255, 255, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(circle at 85% 20%, rgba(0, 150, 255, 0.08), transparent 50%);
+  z-index: -1;
+}
+
+/* Selection */
+::selection {
+  background: #00d4ff;
+  color: black;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00d4ff;
+  border-radius: 20px;
 }
