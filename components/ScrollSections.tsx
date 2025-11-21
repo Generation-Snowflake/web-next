@@ -19,7 +19,9 @@ export default function ScrollSections() {
         scrub: 1,
         snap: 1 / (sections.length - 1),
         end: () =>
-          "+=" + document.querySelector(".sections-wrapper")!.offsetHeight,
+          "+=" +
+          ((document.querySelector(".sections-wrapper") as HTMLElement | null)
+            ?.offsetHeight ?? 0),
       },
     });
   }, []);
