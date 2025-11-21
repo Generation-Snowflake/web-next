@@ -40,18 +40,21 @@ export default function Navbar() {
 
         {/* Links */}
         <div className="hidden md:flex items-center gap-8 text-softwhite/80">
-          <Link className="hover:text-ice transition" href="/services">
-            Services
+          <Link className="hover:text-ice transition" href="/">
+            Home
           </Link>
-          <Link className="hover:text-ice transition" href="/portfolio">
+          {/* <Link className="hover:text-ice transition" href="/services">
+            Services
+          </Link> */}
+          {/* <Link className="hover:text-ice transition" href="/portfolio">
             Portfolio
           </Link>
           <Link className="hover:text-ice transition" href="/workflow">
             Workflow
-          </Link>
-          <Link className="hover:text-ice transition" href="/about">
+          </Link> */}
+          {/* <Link className="hover:text-ice transition" href="/about">
             About
-          </Link>
+          </Link> */}
           <Link className="hover:text-ice transition" href="/contact">
             Contact
           </Link>
