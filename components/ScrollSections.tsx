@@ -10,7 +10,7 @@ export default function ScrollSections() {
   useEffect(() => {
     const sections = gsap.utils.toArray(".snap-section");
 
-    gsap.to(sections, {
+    const animation = gsap.to(sections, {
       yPercent: -100 * (sections.length - 1),
       ease: "none",
       scrollTrigger: {
@@ -20,10 +20,16 @@ export default function ScrollSections() {
         snap: 1 / (sections.length - 1),
         end: () =>
           "+=" +
-          ((document.querySelector(".sections-wrapper") as HTMLElement | null)
+          ((document.querySelector(".sections-wrapper") as HTMLElement)
             ?.offsetHeight ?? 0),
       },
     });
+
+    // ⚠️ IMPORTANT: kill ALL ScrollTriggers when unmounting
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+      animation.kill();
+    };
   }, []);
 
   return null;

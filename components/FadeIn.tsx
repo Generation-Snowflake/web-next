@@ -11,17 +11,18 @@ interface Props {
 
 export default function FadeIn({ children, delay = 0 }: Props) {
   const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.2 });
+  const { ref, inView } = useInView({ threshold: 0.2 });
 
   useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-    }
+    if (inView) controls.start("visible");
   }, [inView]);
 
   return (
     <motion.div
-      ref={ref}
+      ref={(el) => {
+        // ให้ inView ref attach กับ motion DOM โดยตรง
+        ref(el);
+      }}
       initial="hidden"
       animate={controls}
       variants={{
