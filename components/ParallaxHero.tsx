@@ -3,12 +3,11 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import WebGLBackground from "./WebGLBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ParallaxHero() {
-  const gridRef = useRef(null);
-  const dustRef = useRef(null);
   const logoRef = useRef(null);
   const textRef = useRef(null);
   const subTextRef = useRef(null);
@@ -23,27 +22,8 @@ export default function ParallaxHero() {
     // ------------------------------------------
     // PARALLAX ON SCROLL
     // ------------------------------------------
-    gsap.to(gridRef.current, {
-      y: -200,
-      scale: 1.15,
-      ease: "none",
-      scrollTrigger: {
-        trigger: gridRef.current,
-        start: "top top",
-        scrub: true,
-      },
-    });
+    // Background animations removed for WebGL replacement
 
-    gsap.to(dustRef.current, {
-      y: -350,
-      opacity: 0.35,
-      ease: "none",
-      scrollTrigger: {
-        trigger: dustRef.current,
-        start: "top top",
-        scrub: true,
-      },
-    });
 
     gsap.to(textRef.current, {
       y: -120,
@@ -104,24 +84,14 @@ export default function ParallaxHero() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* BACKGROUND GRID */}
-      <img
-        ref={gridRef}
-        src="/background.png"
-        className="absolute inset-0 w-full h-full object-cover opacity-20 z-0"
-      />
+      {/* WEBGL BACKGROUND */}
+      <WebGLBackground />
 
-      {/* DUST */}
-      <img
-        ref={dustRef}
-        src="/dust.png"
-        className="absolute inset-0 w-full h-full object-cover opacity-15 z-10"
-      />
 
       {/* TITLE */}
       <h1
         ref={textRef}
-        className="absolute text-5xl font-bold text-softwhite top-[28%] left-1/2 -translate-x-1/2 opacity-90 z-30 text-center"
+        className="absolute text-5xl md:text-7xl font-bold text-softwhite top-[28%] left-1/2 -translate-x-1/2 opacity-90 z-30 text-center w-full px-4"
       >
         GSF Robotics & AI
       </h1>
@@ -129,28 +99,32 @@ export default function ParallaxHero() {
       {/* SUBTEXT */}
       <p
         ref={subTextRef}
-        className="absolute text-lg text-gray-300 top-[34%] left-1/2 -translate-x-1/2 opacity-90 z-30 text-center"
+        className="absolute text-lg md:text-2xl text-gray-300 top-[38%] left-1/2 -translate-x-1/2 opacity-90 z-30 text-center w-full px-4 max-w-4xl"
       >
-        Building modern solutions in Robotics, AI, IoT & Software Engineering
+        รับทำหุ่นยนต์ พัฒนา AI ระบบ IoT และ Software House ครบวงจร
+        <br />
+        <span className="text-base md:text-lg text-gray-400 mt-2 block">
+          Building modern solutions in Robotics, AI, IoT & Software Engineering
+        </span>
       </p>
 
       {/* CTA BUTTONS */}
       <div
         ref={ctaRef}
-        className="absolute flex gap-4 top-[50%] left-1/2 -translate-x-1/2 opacity-90 z-30"
+        className="absolute flex gap-4 top-[55%] left-1/2 -translate-x-1/2 opacity-90 z-30"
       >
         <a
           href="#contact"
-          className="px-6 py-3 rounded-full bg-teal-600/80 text-white font-medium hover:bg-teal-500 transition backdrop-blur-md shadow-lg"
+          className="px-8 py-3 rounded-full bg-teal-600/80 text-white font-medium hover:bg-teal-500 transition backdrop-blur-md shadow-lg hover:scale-105 transform duration-200"
         >
-          Get a Quote
+          ขอใบเสนอราคา
         </a>
 
         <a
           href="#portfolio"
-          className="px-6 py-3 rounded-full border border-white/30 text-white font-medium hover:bg-white/10 transition backdrop-blur-md shadow-lg"
+          className="px-8 py-3 rounded-full border border-white/30 text-white font-medium hover:bg-white/10 transition backdrop-blur-md shadow-lg hover:scale-105 transform duration-200"
         >
-          View Portfolio
+          ดูผลงานของเรา
         </a>
       </div>
     </div>

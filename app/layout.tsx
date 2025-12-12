@@ -4,33 +4,44 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata = {
-  title: "GSF Robotics & AI | Modern Software House",
+  title: "GSF Robotics & AI | รับทำหุ่นยนต์ AI IoT และ Software House ครบวงจร",
   description:
-    "GSF is a modern software house specializing in Robotics, AI, IoT, Web Development, and Data Engineering. Built by the next generation of innovators.",
-  keywords: ["Robotics", "AI", "IoT", "Web Development", "Data Engineering", "Software House"],
+    "GSF Robotics & AI รับทำหุ่นยนต์ พัฒนา AI ระบบ IoT และ Web Application โดยทีมงานคนรุ่นใหม่ เชี่ยวชาญด้าน Automation และ Data Engineering",
+  keywords: [
+    "หุ่นยนต์",
+    "รับทำหุ่นยนต์",
+    "Robot",
+    "AI",
+    "IoT",
+    "Web Development",
+    "Data Engineering",
+    "Software House",
+    "Automation",
+    "ปัญญาประดิษฐ์",
+  ],
   authors: [{ name: "GSF Team" }],
   openGraph: {
-    title: "GSF Robotics & AI | Modern Software House",
+    title: "GSF Robotics & AI | รับทำหุ่นยนต์ AI IoT และ Software House",
     description:
-      "Modern Software House — Robotics, AI, IoT, Web, Data Engineering by Young Generation",
+      "บริการรับทำหุ่นยนต์ พัฒนา AI ระบบ IoT และ Web Application ครบวงจร โดยทีมวิศวกรคนรุ่นใหม่",
     url: "https://gsf-robotics.com",
     siteName: "GSF Robotics & AI",
     images: [
       {
-        url: "/og-image.png", // Ensure this image exists or is created
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "GSF Robotics & AI",
+        alt: "GSF Robotics & AI - รับทำหุ่นยนต์",
       },
     ],
-    locale: "en_US",
+    locale: "th_TH",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GSF Robotics & AI",
+    title: "GSF Robotics & AI | รับทำหุ่นยนต์ AI IoT",
     description:
-      "Modern Software House — Robotics, AI, IoT, Web, Data Engineering by Young Generation",
+      "บริการรับทำหุ่นยนต์ พัฒนา AI ระบบ IoT และ Web Application ครบวงจร",
     images: ["/og-image.png"],
   },
   icons: {
@@ -48,7 +59,33 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="th" className="scroll-smooth">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "GSF Robotics & AI",
+              url: "https://gsf-robotics.com",
+              logo: "https://gsf-robotics.com/logo.png",
+              description:
+                "GSF Robotics & AI รับทำหุ่นยนต์ พัฒนา AI ระบบ IoT และ Web Application",
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "customer service",
+                areaServed: "TH",
+                availableLanguage: ["Thai", "English"],
+              },
+              sameAs: [
+                "https://www.facebook.com/gsfrobotics",
+                // Add other social links here if available
+              ],
+            }),
+          }}
+        />
+      </head>
       <body className="relative bg-darkbg text-softwhite font-sans antialiased overflow-x-hidden selection:bg-ice selection:text-darkbg">
         <SmoothScroll />
 
