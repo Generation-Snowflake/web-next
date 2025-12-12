@@ -2,28 +2,56 @@ import "./globals.css";
 import SmoothScroll from "@/app/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Preloader from "@/components/Preloader";
 
 export const metadata = {
-  title: "GSF Robotics & AI | รับทำหุ่นยนต์ AI IoT และ Software House ครบวงจร",
+  title: {
+    default: "GSF Robotics & AI | Robotics, AI, IoT & Full-Stack Software House",
+    template: "%s | GSF Robotics & AI",
+  },
   description:
-    "GSF Robotics & AI รับทำหุ่นยนต์ พัฒนา AI ระบบ IoT และ Web Application โดยทีมงานคนรุ่นใหม่ เชี่ยวชาญด้าน Automation และ Data Engineering",
+    "GSF Robotics & AI provides expert services in Robotics, AI, IoT, and Web Application development by a team of specialized engineers. Find the best automation solutions for your business.",
   keywords: [
-    "หุ่นยนต์",
-    "รับทำหุ่นยนต์",
-    "Robot",
-    "AI",
-    "IoT",
-    "Web Development",
-    "Data Engineering",
-    "Software House",
+    "Robotics",
+    "Robot Maker",
     "Automation",
-    "ปัญญาประดิษฐ์",
+    "AI",
+    "Machine Learning",
+    "IoT",
+    "Internet of Things",
+    "Web Development",
+    "Software House",
+    "Data Engineering",
+    "System Integrator",
+    "ROS2",
+    "Computer Vision",
   ],
   authors: [{ name: "GSF Team" }],
+  creator: "GSF Robotics & AI",
+  publisher: "GSF Robotics & AI",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: "https://gsf-robotics.com",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
-    title: "GSF Robotics & AI | รับทำหุ่นยนต์ AI IoT และ Software House",
+    title: "GSF Robotics & AI | Robotics, AI, IoT & Software House",
     description:
-      "บริการรับทำหุ่นยนต์ พัฒนา AI ระบบ IoT และ Web Application ครบวงจร โดยทีมวิศวกรคนรุ่นใหม่",
+      "Full-service Robotics, AI, IoT, and Web Application development by a team of innovative engineers. Driving business with modern technology.",
     url: "https://gsf-robotics.com",
     siteName: "GSF Robotics & AI",
     images: [
@@ -31,17 +59,17 @@ export const metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "GSF Robotics & AI - รับทำหุ่นยนต์",
+        alt: "GSF Robotics & AI - Leading Automation Solutions",
       },
     ],
-    locale: "th_TH",
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GSF Robotics & AI | รับทำหุ่นยนต์ AI IoT",
+    title: "GSF Robotics & AI | Robotics, AI, IoT Development",
     description:
-      "บริการรับทำหุ่นยนต์ พัฒนา AI ระบบ IoT และ Web Application ครบวงจร",
+      "Full-service Robotics, AI, IoT, and Web Application development by a team of innovative engineers.",
     images: ["/og-image.png"],
   },
   icons: {
@@ -59,7 +87,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="th" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth">
       <head>
         <script
           type="application/ld+json"
@@ -71,12 +99,12 @@ export default function RootLayout({
               url: "https://gsf-robotics.com",
               logo: "https://gsf-robotics.com/logo.png",
               description:
-                "GSF Robotics & AI รับทำหุ่นยนต์ พัฒนา AI ระบบ IoT และ Web Application",
+                "GSF Robotics & AI provides expert services in Robotics, AI, IoT, and Web Application development.",
               contactPoint: {
                 "@type": "ContactPoint",
                 contactType: "customer service",
-                areaServed: "TH",
-                availableLanguage: ["Thai", "English"],
+                areaServed: "Global",
+                availableLanguage: ["English", "Thai"],
               },
               sameAs: [
                 "https://www.facebook.com/gsfrobotics",
@@ -87,6 +115,7 @@ export default function RootLayout({
         />
       </head>
       <body className="relative bg-darkbg text-softwhite font-sans antialiased overflow-x-hidden selection:bg-ice selection:text-darkbg">
+        <Preloader />
         <SmoothScroll />
 
         <Navbar />

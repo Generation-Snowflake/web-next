@@ -20,8 +20,7 @@ export default function ScrollSections() {
         snap: 1 / (sections.length - 1),
         end: () =>
           "+=" +
-          ((document.querySelector(".sections-wrapper") as HTMLElement)
-            ?.offsetHeight ?? 0),
+          window.innerHeight * (sections.length - 1),
       },
     });
 

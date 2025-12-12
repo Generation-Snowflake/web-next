@@ -37,8 +37,9 @@ export default function Navbar() {
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold font-display tracking-tighter">
-          GSF<span className="text-ice">.</span>
+        <Link href="/" className="flex items-center gap-2">
+           <img src="/logo-tech.png" alt="GSF Logo" className="w-10 h-10 object-contain" />
+          <span className="text-2xl font-bold font-display tracking-tighter">GSF<span className="text-ice">.</span></span>
         </Link>
 
         {/* Desktop Menu */}

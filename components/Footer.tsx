@@ -8,7 +8,7 @@ export default function Footer() {
         {/* Logo + Text */}
         <div className="flex items-center gap-4">
           <Image
-            src="/logo.png"
+            src="/logo-tech.png"
             alt="GSF Robotics & AI"
             width={48}
             height={48}
