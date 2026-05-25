@@ -8,9 +8,24 @@ import MagneticText from "./MagneticText";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const capabilities = [
+  {
+    label: "AI + CV Systems",
+    detail: "Models, detection pipelines, and production interfaces for visual intelligence.",
+  },
+  {
+    label: "Robotics + IoT",
+    detail: "Connected machines, sensors, control layers, and monitoring dashboards.",
+  },
+  {
+    label: "Web + Mobile Platforms",
+    detail: "Operational software that makes advanced systems usable by real teams.",
+  },
+];
+
 export default function VisionSection() {
-  const containerRef = useRef(null);
-  const textRef = useRef(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -18,12 +33,12 @@ export default function VisionSection() {
         textRef.current,
         {
           opacity: 0,
-          y: 100,
+          y: 80,
         },
         {
           opacity: 1,
           y: 0,
-          duration: 1.5,
+          duration: 1.2,
           ease: "power3.out",
           scrollTrigger: {
             trigger: containerRef.current,
@@ -41,52 +56,46 @@ export default function VisionSection() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full min-h-[80vh] flex items-center justify-center py-24 px-6 overflow-hidden"
+      className="relative flex min-h-[80vh] w-full items-center justify-center overflow-hidden px-6 py-20"
     >
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-teal-900/20 rounded-full blur-3xl -z-10 opacity-50 pointer-events-none" />
-      
-      {/* PARTICLE NETWORK */}
+      <div className="absolute left-1/2 top-1/2 -z-10 h-[760px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal-900/20 opacity-50 blur-3xl" />
       <ParticleNetwork />
 
-      <div className="max-w-5xl mx-auto text-center z-10">
-        <div ref={textRef} className="space-y-8">
-          <h2 className="text-4xl md:text-7xl font-bold tracking-tight leading-tight">
-             <MagneticText 
-              text="Engineering the Future"
-              className="bg-clip-text text-transparent bg-gradient-to-r from-softwhite via-ice to-teal-400 justify-center"
-            />
-            <br />
-            <span className="text-gray-500 text-3xl md:text-5xl font-medium mt-4 block">
-              with Intelligence & Precision.
-            </span>
-          </h2>
+      <div className="z-10 mx-auto max-w-6xl">
+        <div ref={textRef} className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+          <div>
+            <h2 className="text-4xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl">
+              <MagneticText
+                text="From model to machine,"
+                className="bg-gradient-to-r from-softwhite via-ice to-teal-400 bg-clip-text text-transparent"
+              />
+              <span className="mt-3 block text-3xl font-medium text-gray-500 md:text-5xl">
+                from sensor to platform.
+              </span>
+            </h2>
+          </div>
 
-          <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            At GSF Robotics & AI, we don't just write code; we build
-            ecosystems. From autonomous robotics to scalable IoT networks and
-            intelligent AI models, we deliver end-to-end solutions that drive
-            innovation.
-          </p>
+          <div className="space-y-8">
+            <p className="text-lg leading-8 text-gray-300 md:text-xl">
+              GSF connects AI models, robotics control, IoT data, cloud
+              infrastructure, and product interfaces into complete systems that
+              can be tested, shipped, and operated.
+            </p>
 
-          <div className="pt-12 grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-white/10 mt-12">
-            <div>
-              <h3 className="text-2xl font-bold text-white mb-2">50+</h3>
-              <p className="text-gray-500 text-sm uppercase tracking-wider">
-                Projects Delivered
-              </p>
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-white mb-2">99%</h3>
-              <p className="text-gray-500 text-sm uppercase tracking-wider">
-                Client Satisfaction
-              </p>
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-white mb-2">24/7</h3>
-              <p className="text-gray-500 text-sm uppercase tracking-wider">
-                Support & Monitoring
-              </p>
+            <div className="grid gap-4">
+              {capabilities.map((capability) => (
+                <div
+                  key={capability.label}
+                  className="group border-l border-ice/30 bg-white/[0.03] px-5 py-4 transition duration-300 hover:border-ice hover:bg-white/[0.06]"
+                >
+                  <h3 className="text-sm font-semibold uppercase tracking-[0.24em] text-ice">
+                    {capability.label}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-gray-400 group-hover:text-gray-300">
+                    {capability.detail}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

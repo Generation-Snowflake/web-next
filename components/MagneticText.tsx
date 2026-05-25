@@ -30,6 +30,7 @@ export default function MagneticText({
 function MagneticChar({ children }: { children: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(1);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const { clientX, clientY } = e;
@@ -48,13 +49,17 @@ function MagneticChar({ children }: { children: string }) {
         x: distanceX * strength * 0.5,
         y: distanceY * strength * 0.5,
       });
+      // Fade out as cursor gets closer, but not completely (min 0.3)
+      setOpacity(1 - strength * 0.7);
     } else {
       setPosition({ x: 0, y: 0 });
+      setOpacity(1);
     }
   };
 
   const handleMouseLeave = () => {
     setPosition({ x: 0, y: 0 });
+    setOpacity(1);
   };
 
   return (
@@ -62,9 +67,9 @@ function MagneticChar({ children }: { children: string }) {
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      animate={{ x: position.x, y: position.y }}
+      animate={{ x: position.x, y: position.y, opacity: opacity }}
       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
-      className="inline-block cursor-default lg:hover:text-teal-400 transition-colors duration-200"
+      className="inline-block cursor-default transition-colors duration-200"
     >
       {children}
     </motion.span>

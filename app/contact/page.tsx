@@ -37,12 +37,12 @@ export default function ContactPage() {
 
           {/* Email */}
           <h3 className="text-2xl font-semibold text-ice mb-4">Email</h3>
-          <p className="text-softwhite/80 mb-6">admin@gsf-company.com</p>
+          <p className="text-softwhite/80 mb-6">contact@gsf-company.com</p>
 
           {/* Button */}
           <div className="mt-10 text-center">
             <Link
-              href="mailto:admin@gsf-company.com"
+              href="mailto:contact@gsf-company.com"
               className="px-10 py-4 bg-ice text-black font-semibold rounded-xl hover:opacity-80 transition shadow-glow"
             >
               Send Email
@@ -62,7 +62,7 @@ export default function ContactPage() {
           </p>
 
           <Link
-            href="mailto:admin@gsf-company.com"
+            href="mailto:contact@gsf-company.com"
             className="px-8 py-3 bg-ice text-black font-semibold rounded-xl hover:opacity-80 transition shadow-glow"
           >
             Contact Now

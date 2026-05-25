@@ -14,85 +14,96 @@ import {
 
 const services = [
   {
-    title: "Robotics Development",
-    icon: <Cpu size={32} />,
-    desc: "Custom robotic solutions with ROS2, SLAM, and autonomous navigation for industrial and commercial use.",
-  },
-  {
     title: "AI & Machine Learning",
-    icon: <Brain size={32} />,
-    desc: "State-of-the-art models for predictive analytics, NLP, and intelligent decision-making systems.",
+    icon: Brain,
+    desc: "Model strategy, intelligent automation, prediction systems, and applied AI features built for product environments.",
   },
   {
     title: "Computer Vision",
-    icon: <ScanEye size={32} />,
-    desc: "Object detection, face recognition, and quality inspection using advanced deep learning (YOLO/PyTorch).",
+    icon: ScanEye,
+    desc: "Detection, recognition, inspection, and edge-ready visual intelligence using modern deep learning pipelines.",
+  },
+  {
+    title: "Robotics & Automation",
+    icon: Cpu,
+    desc: "Robot control layers, autonomy concepts, operator interfaces, and automation software for physical systems.",
   },
   {
     title: "IoT Systems",
-    icon: <Wifi size={32} />,
-    desc: "End-to-end IoT solutions from firmware (ESP32/STM32) to cloud dashboards and real-time monitoring.",
+    icon: Wifi,
+    desc: "Device connectivity, telemetry, sensor data flows, and real-time monitoring for connected operations.",
   },
   {
     title: "Web Platforms",
-    icon: <Globe size={32} />,
-    desc: "High-performance web applications using Next.js, React, and modern scalable architectures.",
+    icon: Globe,
+    desc: "High-performance web applications, dashboards, admin tools, and customer-facing platforms.",
   },
   {
-    title: "Mobile Apps",
-    icon: <Smartphone size={32} />,
-    desc: "Cross-platform mobile experiences with Flutter or native iOS/Android development.",
+    title: "Mobile Applications",
+    icon: Smartphone,
+    desc: "Cross-platform mobile experiences for field teams, operators, customers, and connected devices.",
   },
   {
-    title: "Backend & API",
-    icon: <Server size={32} />,
-    desc: "Robust microservices and RESTful/GraphQL APIs built with NestJS, Go, or Python.",
+    title: "Backend & Cloud",
+    icon: Server,
+    desc: "APIs, system architecture, cloud services, integrations, and deployment foundations that scale.",
   },
   {
     title: "Data Engineering",
-    icon: <Database size={32} />,
-    desc: "Data pipelines, warehousing, and visualization to turn raw data into actionable insights.",
+    icon: Database,
+    desc: "Pipelines, storage, analytics, and operational data layers that turn system events into decisions.",
   },
 ];
 
 export default function ServicesSection() {
   return (
-    <section className="py-24 px-6 max-w-7xl mx-auto">
+    <section className="mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 py-20">
       <FadeIn>
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-            Our Services
-          </h2>
-          <p className="text-gray-400 text-lg md:text-xl">
-            End-to-End Technology Solutions
+        <div className="mb-12 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-ice/70">
+              Deep tech capabilities
+            </p>
+            <h2 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-white md:text-6xl">
+              Engineering systems where software meets machines.
+            </h2>
+          </div>
+          <p className="max-w-md text-sm leading-7 text-gray-400 md:text-base">
+            From AI models and robot behavior to cloud platforms and mobile
+            control surfaces, every layer is designed to work together.
           </p>
         </div>
       </FadeIn>
 
       <FadeIn>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, i) => (
-            <div
-              key={i}
-              className="group relative p-8 rounded-2xl bg-white/5 border border-white/10 overflow-hidden hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-teal-900/20"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              <div className="relative z-10">
-                <div className="w-12 h-12 mb-6 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-400 group-hover:text-white group-hover:bg-teal-500 transition-colors duration-300">
-                  {service.icon}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {services.map((service) => {
+            const Icon = service.icon;
+
+            return (
+              <div
+                key={service.title}
+                className="group relative min-h-[230px] overflow-hidden rounded-xl border border-white/10 bg-white/[0.035] p-6 transition duration-300 hover:-translate-y-1 hover:border-ice/60 hover:bg-white/[0.07] hover:shadow-[0_18px_70px_rgba(0,212,255,0.12)]"
+              >
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ice/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full border border-ice/10 transition duration-300 group-hover:scale-125 group-hover:border-ice/30" />
+
+                <div className="relative z-10">
+                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg border border-ice/20 bg-ice/10 text-ice transition duration-300 group-hover:bg-ice group-hover:text-darkbg">
+                    <Icon size={25} strokeWidth={1.8} />
+                  </div>
+
+                  <h3 className="text-lg font-semibold text-white">
+                    {service.title}
+                  </h3>
+
+                  <p className="mt-3 text-sm leading-6 text-gray-400 transition-colors group-hover:text-gray-300">
+                    {service.desc}
+                  </p>
                 </div>
-                
-                <h3 className="text-xl font-bold text-white mb-2">
-                  {service.title}
-                </h3>
-                
-                <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors">
-                  {service.desc}
-                </p>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </FadeIn>
     </section>

@@ -15,7 +15,7 @@ export default function FadeIn({ children, delay = 0 }: Props) {
 
   useEffect(() => {
     if (inView) controls.start("visible");
-  }, [inView]);
+  }, [inView, controls]);
 
   return (
     <motion.div

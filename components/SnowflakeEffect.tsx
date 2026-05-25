@@ -2,70 +2,90 @@
 
 import { useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useTexture, Instances, Instance } from "@react-three/drei";
+import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
+type SnowflakeSeed = {
+  position: [number, number, number];
+  speed: number;
+  rotationSpeed: number;
+  scale: number;
+  rotation: [number, number, number];
+};
+
+function seededValue(seed: number) {
+  const value = Math.sin(seed * 999) * 10000;
+  return value - Math.floor(value);
+}
+
+function createSnowflakeSeed(index: number): SnowflakeSeed {
+  const x = (seededValue(index + 1) - 0.5) * 15;
+  const y = seededValue(index + 2) * 10 + 5;
+  const z = (seededValue(index + 3) - 0.5) * 10;
+  const speed = seededValue(index + 4) * 0.02 + 0.01;
+  const rotationSpeed = (seededValue(index + 5) - 0.5) * 0.02;
+  const scale = seededValue(index + 6) * 0.15 + 0.05;
+  const rotation: [number, number, number] = [0, 0, seededValue(index + 7) * Math.PI];
+
+  return { position: [x, y, z], speed, rotationSpeed, scale, rotation };
+}
+
 function Snowflakes({ count = 50 }) {
-  const texture = useTexture("/logo-tech.png");
-  // We don't actually need viewport from useTexture, but we need the texture itself.
-  // Let's load texture properly within the component usage or passing it down.
-  // Simplification: We'll use a plain mesh for each snowflakemapped with the texture.
+  const seeds = useMemo(
+    () => Array.from({ length: count }, (_, index) => createSnowflakeSeed(index)),
+    [count]
+  );
+
   return (
     <group>
-       {Array.from({ length: count }).map((_, i) => (
-        <SnowflakeItem key={i} />
+      {seeds.map((seed, index) => (
+        <SnowflakeItem key={index} seed={seed} index={index} />
       ))}
     </group>
   );
 }
 
-function SnowflakeItem() {
-   const texture = useTexture("/logo-tech.png");
-   const ref = useRef<THREE.Mesh>(null);
-   
-   const [position, speed, rotationSpeed, scale] = useMemo(() => {
-     const x = (Math.random() - 0.5) * 15;
-     const y = Math.random() * 10 + 5;
-     const z = (Math.random() - 0.5) * 10;
-     const speed = Math.random() * 0.02 + 0.01;
-     const rotationSpeed = (Math.random() - 0.5) * 0.02;
-     const scale = Math.random() * 0.15 + 0.05; // Smaller size
-     return [[x, y, z], speed, rotationSpeed, scale];
-   }, []);
+function SnowflakeItem({ seed, index }: { seed: SnowflakeSeed; index: number }) {
+  const texture = useTexture("/logo-tech.png");
+  const ref = useRef<THREE.Mesh>(null);
 
-   useFrame(() => {
-     if (ref.current) {
-       ref.current.position.y -= speed;
-       ref.current.rotation.z += rotationSpeed;
-       
-       // Reset if below view
-       if (ref.current.position.y < -6) {
-         ref.current.position.y = 8;
-         ref.current.position.x = (Math.random() - 0.5) * 15;
-       }
-     }
-   });
+  useFrame(() => {
+    if (ref.current) {
+      ref.current.position.y -= seed.speed;
+      ref.current.rotation.z += seed.rotationSpeed;
 
-   return (
-     <mesh ref={ref} position={position as any} scale={[scale, scale, 1]} rotation={[0,0, Math.random() * Math.PI]}>
-       <planeGeometry args={[1, 1]} />
-       <meshStandardMaterial 
-        map={texture} 
-        transparent 
-        alphaTest={0.1} // Fix transparency edges
+      if (ref.current.position.y < -6) {
+        ref.current.position.y = 8;
+        ref.current.position.x = (seededValue(index + 20) - 0.5) * 15;
+      }
+    }
+  });
+
+  return (
+    <mesh
+      ref={ref}
+      position={seed.position}
+      scale={[seed.scale, seed.scale, 1]}
+      rotation={seed.rotation}
+    >
+      <planeGeometry args={[1, 1]} />
+      <meshStandardMaterial
+        map={texture}
+        transparent
+        alphaTest={0.1}
         depthWrite={false}
-        opacity={0.9} 
+        opacity={0.9}
         emissive="#00ffff"
         emissiveIntensity={0.8}
         toneMapped={false}
-       />
-     </mesh>
-   );
+      />
+    </mesh>
+  );
 }
 
 export default function SnowflakeEffect() {
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none z-20">
+    <div className="pointer-events-none absolute inset-0 z-20 h-full w-full">
       <Canvas camera={{ position: [0, 0, 5] }} gl={{ alpha: true }}>
         <ambientLight intensity={1} />
         <Snowflakes count={30} />

@@ -4,131 +4,75 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import WebGLBackground from "./WebGLBackground";
-// import SnowflakeEffect from "./SnowflakeEffect";
+import DeepTechCore from "./DeepTechCore";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ParallaxHero() {
-  const logoRef = useRef(null);
-  const textRef = useRef(null);
-  const subTextRef = useRef(null);
-  const ctaRef = useRef(null);
-
-  // floating animation refs
-  const floatingTargets = [textRef, subTextRef, ctaRef];
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        contentRef.current,
+        { opacity: 0, y: 36 },
+        { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+      );
+
+      gsap.to(contentRef.current, {
+        y: -42,
+        ease: "none",
+        scrollTrigger: {
+          trigger: contentRef.current,
+          start: "top 70%",
+          scrub: true,
+        },
+      });
+    });
+
     ScrollTrigger.refresh();
 
-    // ------------------------------------------
-    // PARALLAX ON SCROLL
-    // ------------------------------------------
-    // Background animations removed for WebGL replacement
-
-
-    gsap.to(textRef.current, {
-      y: -120,
-      opacity: 1,
-      ease: "none",
-      scrollTrigger: {
-        trigger: textRef.current,
-        start: "top 95%",
-        scrub: true,
-      },
-    });
-
-    gsap.to([subTextRef.current, ctaRef.current], {
-      y: -80,
-      opacity: 1,
-      ease: "none",
-      scrollTrigger: {
-        trigger: textRef.current,
-        start: "top 80%",
-        scrub: true,
-      },
-    });
-
-    // ------------------------------------------
-    // FLOATING ANIMATION (loop)
-    // ------------------------------------------
-    floatingTargets.forEach((ref, i) => {
-      gsap.to(ref.current, {
-        y: "+=10",
-        duration: 1 + i,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-    });
-
-    // ------------------------------------------
-    // MOUSE PARALLAX
-    // ------------------------------------------
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20; // tilt left/right
-      const y = (e.clientY / window.innerHeight - 0.5) * 20; // tilt up/down
-
-      gsap.to([textRef.current, subTextRef.current, ctaRef.current], {
-        x: x,
-        y: y,
-        duration: 0.6,
-        ease: "sine.out",
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center text-center">
-      {/* WEBGL BACKGROUND */}
+    <div className="relative h-screen w-full overflow-hidden">
       <WebGLBackground />
-      {/* <SnowflakeEffect /> */}
+      <DeepTechCore />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_45%,rgba(0,212,255,0.22),transparent_31%),linear-gradient(90deg,rgba(5,10,20,0.98)_0%,rgba(5,10,20,0.78)_42%,rgba(5,10,20,0.22)_72%,rgba(5,10,20,0.82)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-darkbg to-transparent" />
+      <div className="absolute right-[8vw] top-28 hidden h-[58vh] w-px bg-gradient-to-b from-transparent via-ice/35 to-transparent lg:block" />
+      <div className="absolute right-[5vw] top-[22vh] hidden h-32 w-32 rounded-full border border-ice/15 lg:block" />
 
-      {/* CONTENT CONTAINER - Using Flexbox for proper vertical stacking */}
-      <div className="relative z-30 flex flex-col items-center gap-8 max-w-5xl px-4 mt-[-5vh]">
-        {/* TITLE */}
-        <h1
-          ref={textRef}
-          className="text-5xl md:text-7xl font-bold text-softwhite opacity-90 leading-tight"
-        >
-           GSF Robotics & AI
-        </h1>
+      <div className="relative z-20 mx-auto flex h-full w-full max-w-7xl items-center px-6 pt-20">
+        <div ref={contentRef} className="max-w-3xl text-left">
+          <p className="mb-5 text-sm font-semibold uppercase tracking-[0.32em] text-ice/80">
+            GSF Robotics & AI
+          </p>
+          <h1 className="text-4xl font-bold leading-[0.96] tracking-tight text-softwhite md:text-6xl lg:text-7xl">
+            Deep tech systems for AI, robotics, IoT, and intelligent software.
+          </h1>
+          <p className="mt-7 max-w-2xl text-base leading-8 text-gray-300 md:text-xl">
+            We build production-ready systems across computer vision,
+            autonomous robotics, connected devices, web platforms, and mobile
+            applications.
+          </p>
 
-        {/* SUBTEXT */}
-        <p
-          ref={subTextRef}
-          className="text-lg md:text-2xl text-gray-300 opacity-90 max-w-4xl"
-        >
-          End-to-end Robotics, AI, IoT, and Software Development Solutions
-          <br />
-          <span className="text-base md:text-lg text-gray-400 mt-2 block">
-            Building modern solutions in Robotics, AI, IoT & Software Engineering
-          </span>
-        </p>
+          <div className="mt-9 flex flex-col gap-4 sm:flex-row">
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center rounded-full bg-ice px-7 py-3 text-sm font-semibold text-darkbg shadow-glow transition duration-300 hover:-translate-y-0.5 hover:bg-ice-light"
+            >
+              Discuss a Project
+            </a>
 
-        {/* CTA BUTTONS */}
-        <div
-          ref={ctaRef}
-          className="flex gap-4 opacity-90 pt-4"
-        >
-          <a
-            href="#contact"
-            className="px-8 py-3 rounded-full bg-teal-600/80 text-white font-medium hover:bg-teal-500 transition backdrop-blur-md shadow-lg hover:scale-105 transform duration-200"
-          >
-            Get a Quote
-          </a>
-
-          <a
-            href="#portfolio"
-            className="px-8 py-3 rounded-full border border-white/30 text-white font-medium hover:bg-white/10 transition backdrop-blur-md shadow-lg hover:scale-105 transform duration-200"
-          >
-            View Our Work
-          </a>
+            <a
+              href="#portfolio"
+              className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-7 py-3 text-sm font-semibold text-white backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:border-ice hover:bg-white/10"
+            >
+              Explore Work
+            </a>
+          </div>
         </div>
       </div>
     </div>

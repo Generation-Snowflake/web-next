@@ -6,14 +6,18 @@ import { useRef, useMemo } from "react";
 import * as THREE from "three";
 import * as random from "maath/random/dist/maath-random.esm";
 
-function ParticleField(props: any) {
+type ParticleFieldProps = {
+  radius?: number;
+};
+
+function ParticleField({ radius = 1.5 }: ParticleFieldProps) {
   const ref = useRef<THREE.Points>(null);
   const sphere = useMemo(
-    () => random.inSphere(new Float32Array(5001), { radius: 1.5 }),
-    []
+    () => random.inSphere(new Float32Array(5001), { radius }),
+    [radius]
   );
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.x -= delta / 10;
       ref.current.rotation.y -= delta / 15;
@@ -22,18 +26,12 @@ function ParticleField(props: any) {
 
   return (
     <group rotation={[0, 0, Math.PI / 4]}>
-      <Points
-        ref={ref}
-        positions={sphere}
-        stride={3}
-        frustumCulled={false}
-        {...props}
-      >
+      <Points ref={ref} positions={sphere} stride={3} frustumCulled={false}>
         <PointMaterial
           transparent
-          color="#2dd4bf" // Teal-400
+          color="#2dd4bf"
           size={0.003}
-          sizeAttenuation={true}
+          sizeAttenuation
           depthWrite={false}
         />
       </Points>
@@ -43,7 +41,7 @@ function ParticleField(props: any) {
 
 export default function ParticleNetwork() {
   return (
-    <div className="absolute inset-0 w-full h-full -z-10 bg-darkbg/50">
+    <div className="absolute inset-0 -z-10 h-full w-full bg-darkbg/50">
       <Canvas camera={{ position: [0, 0, 1] }}>
         <ParticleField />
       </Canvas>

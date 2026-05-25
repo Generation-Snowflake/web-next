@@ -7,13 +7,11 @@ export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading time (could be replaced by real asset loading)
     const timer = setTimeout(() => {
       setIsLoading(false);
       document.body.style.overflow = "auto";
-    }, 2500);
+    }, 2200);
 
-    // Lock scroll on mount
     document.body.style.overflow = "hidden";
 
     return () => {
@@ -30,38 +28,55 @@ export default function Preloader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, y: -50 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[9999] bg-[#0A0F1F] flex flex-col items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-[#050A14]"
         >
-          {/* Logo Animation */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,212,255,0.16),transparent_34%),linear-gradient(120deg,rgba(0,212,255,0.06),transparent_42%,rgba(45,212,191,0.08))]" />
+
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
+            initial={{ scale: 0.82, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "backOut" }}
-            className="relative"
+            transition={{ duration: 0.75, ease: "backOut" }}
+            className="relative flex h-36 w-36 items-center justify-center md:h-48 md:w-48"
+            aria-label="Initializing GSF system"
           >
-            <div className="absolute inset-0 bg-teal-500/20 blur-3xl rounded-full animate-pulse" />
-            <img
-              src="/logo-tech.png"
-              alt="Loading"
-              className="w-32 h-32 md:w-48 md:h-48 object-contain relative z-10"
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 rounded-full border border-transparent border-t-ice border-r-ice/30 shadow-[0_0_48px_rgba(0,212,255,0.28)]"
             />
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{ duration: 3.4, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-5 rounded-full border border-transparent border-b-teal-300 border-l-teal-300/30"
+            />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-10 rounded-full border border-dashed border-ice/30"
+            />
+            <motion.div
+              animate={{ scale: [0.9, 1.12, 0.9], opacity: [0.72, 1, 0.72] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+              className="h-8 w-8 rounded-full bg-ice shadow-[0_0_36px_rgba(0,212,255,0.82)]"
+            />
+            <div className="absolute h-px w-56 bg-gradient-to-r from-transparent via-ice/45 to-transparent" />
+            <div className="absolute h-56 w-px bg-gradient-to-b from-transparent via-teal-300/35 to-transparent" />
           </motion.div>
 
-          {/* Loading Text */}
-          <div className="mt-8 flex flex-col items-center gap-2">
+          <div className="relative mt-8 flex flex-col items-center gap-3">
             <motion.div
               initial={{ width: 0 }}
-              animate={{ width: 200 }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-              className="h-1 bg-gradient-to-r from-teal-800 via-teal-400 to-teal-800 rounded-full"
+              animate={{ width: 220 }}
+              transition={{ duration: 1.8, ease: "easeInOut" }}
+              className="h-px rounded-full bg-gradient-to-r from-transparent via-ice to-transparent"
             />
             <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="text-teal-400/60 text-xs uppercase tracking-[0.2em] font-mono"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35 }}
+              className="font-mono text-xs uppercase tracking-[0.28em] text-teal-300/70"
             >
-              Initializing System...
+              Initializing System
             </motion.p>
           </div>
         </motion.div>
