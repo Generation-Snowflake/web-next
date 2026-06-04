@@ -1,7 +1,5 @@
 import "./globals.css";
-import SmoothScroll from "@/app/SmoothScroll";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Chrome from "@/app/Chrome";
 import Preloader from "@/components/Preloader";
 
 export const metadata = {
@@ -116,13 +114,8 @@ export default function RootLayout({
       </head>
       <body className="relative bg-darkbg text-softwhite font-sans antialiased overflow-x-hidden selection:bg-ice selection:text-darkbg">
         <Preloader />
-        <SmoothScroll />
 
-        <Navbar />
-
-        <main className="relative z-10">{children}</main>
-
-        <Footer />
+        <Chrome>{children}</Chrome>
       </body>
     </html>
   );
