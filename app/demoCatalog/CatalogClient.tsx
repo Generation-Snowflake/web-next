@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
@@ -322,7 +323,9 @@ function Presentation({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, list.length]);
 
-  return (
+  // Portal to <body> so the overlay escapes <main>'s z-10 stacking context and
+  // sits above the fixed navbar (z-50).
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -407,6 +410,7 @@ function Presentation({
           ))}
         </div>
       )}
-    </motion.div>
+    </motion.div>,
+    document.body,
   );
 }

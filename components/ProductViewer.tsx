@@ -5,7 +5,6 @@ import { Canvas } from "@react-three/fiber";
 import {
   OrbitControls,
   Stage,
-  Environment,
   useGLTF,
   useAnimations,
   Html,
@@ -140,17 +139,21 @@ export default function ProductViewer({ modelUrl }: { modelUrl: string }) {
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}
       >
         <color attach="background" args={["#0a0f1f"]} />
-        <ambientLight intensity={0.4} />
+        {/* Self-contained lighting — no remote HDR fetch, so the viewer keeps
+            working for offline / on-site customer demos. */}
+        <ambientLight intensity={0.6} />
+        <hemisphereLight args={["#bfe9ff", "#0a0f1f", 0.8]} />
         <directionalLight
           position={[5, 8, 5]}
-          intensity={1.2}
+          intensity={1.4}
           castShadow
           shadow-mapSize={[2048, 2048]}
         />
+        <directionalLight position={[-6, 4, -4]} intensity={0.5} color="#6AEFFF" />
         <Suspense fallback={<Loader />}>
           <Stage
-            intensity={0.5}
-            environment="city"
+            intensity={0.4}
+            environment={null}
             adjustCamera={false}
             shadows={{ type: "contact", opacity: 0.4, blur: 2.5 }}
           >
@@ -162,7 +165,6 @@ export default function ProductViewer({ modelUrl }: { modelUrl: string }) {
               onClips={handleClips}
             />
           </Stage>
-          <Environment preset="city" />
         </Suspense>
 
         {grid && (
