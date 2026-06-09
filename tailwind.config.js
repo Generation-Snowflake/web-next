@@ -16,6 +16,15 @@ module.exports = {
         softwhite: "#F4F9FF",
         glass: "rgba(255, 255, 255, 0.05)",
         "glass-border": "rgba(255, 255, 255, 0.1)",
+        // Flender-inspired industrial palette for the standalone /demoCatalog.
+        catalog: {
+          ink: "#0B1A24", // dark slate — hero / header / footer
+          teal: "#00A0AB", // petrol/teal brand accent
+          "teal-dark": "#017E88",
+          mist: "#EEF2F4", // light page background
+          line: "#DCE3E7", // hairline borders on light surfaces
+          slate: "#5C6E78", // muted body text on light
+        },
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],

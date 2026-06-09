@@ -3,9 +3,11 @@
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Preloader from "@/components/Preloader";
 
-// Routes that render full-bleed without the site Navbar/Footer.
-const BARE_ROUTES = ["/demo3d"];
+// Routes that render full-bleed as their own standalone experience, without the
+// main-site Navbar/Footer (and without the GSF intro Preloader).
+const BARE_ROUTES = ["/demo3d", "/demoCatalog"];
 
 export default function Chrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -19,6 +21,7 @@ export default function Chrome({ children }: { children: React.ReactNode }) {
 
   return (
     <>
+      <Preloader />
       <Navbar />
       <main className="relative z-10">{children}</main>
       <Footer />
