@@ -16,6 +16,10 @@ module.exports = {
         softwhite: "#F4F9FF",
         glass: "rgba(255, 255, 255, 0.05)",
         "glass-border": "rgba(255, 255, 255, 0.1)",
+        // Validation / error signal: a warm rose, deliberately off the cyan ramp
+        // so an error never reads as "another accent".
+        danger: "#FF8E8E",
+        "danger-text": "#FFB3B3",
         // Flender-inspired industrial palette for the standalone /demoCatalog.
         catalog: {
           ink: "#0B1A24", // dark slate — hero / header / footer
@@ -27,8 +31,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        display: ["Outfit", "sans-serif"], // Added for headings
+        sans: ["var(--font-inter)", "Inter", "sans-serif"],
+        display: ["var(--font-outfit)", "Outfit", "sans-serif"], // brand mark / headings
       },
       boxShadow: {
         glow: "0 0 30px rgba(0, 212, 255, 0.4)",
