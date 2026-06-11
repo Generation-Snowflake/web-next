@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import FadeIn from "./FadeIn";
 
 const projects = [
@@ -74,6 +76,21 @@ export default function PortfolioPreview() {
               </div>
             </article>
           ))}
+        </div>
+      </FadeIn>
+
+      <FadeIn>
+        <div className="mt-10">
+          <Link
+            href="/portfolio"
+            className="group inline-flex items-center gap-2 text-sm font-semibold text-ice transition-colors hover:text-ice-light focus-visible:underline focus-visible:outline-none"
+          >
+            View all work
+            <ArrowRight
+              size={16}
+              className="transition-transform duration-300 group-hover:translate-x-1"
+            />
+          </Link>
         </div>
       </FadeIn>
     </section>

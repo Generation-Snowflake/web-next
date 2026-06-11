@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import ParticleNetwork from "./ParticleNetwork";
-import MagneticText from "./MagneticText";
+import { prefersReducedMotion } from "./usePrefersReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,6 +28,12 @@ export default function VisionSection() {
   const textRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
+    // Reduced motion: skip the scroll-triggered reveal, show the final state.
+    if (prefersReducedMotion()) {
+      gsap.set(textRef.current, { opacity: 1, y: 0 });
+      return;
+    }
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         textRef.current,
@@ -64,12 +70,9 @@ export default function VisionSection() {
       <div className="z-10 mx-auto max-w-6xl">
         <div ref={textRef} className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <h2 className="text-4xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl">
-              <MagneticText
-                text="From model to machine,"
-                className="bg-gradient-to-r from-softwhite via-ice to-teal-400 bg-clip-text text-transparent"
-              />
-              <span className="mt-3 block text-3xl font-medium text-gray-500 md:text-5xl">
+            <h2 className="text-balance text-4xl font-bold leading-[1.05] tracking-tight text-softwhite md:text-6xl lg:text-7xl">
+              From model to machine,
+              <span className="mt-3 block text-3xl font-medium text-gray-400 md:text-5xl">
                 from sensor to platform.
               </span>
             </h2>
@@ -86,7 +89,7 @@ export default function VisionSection() {
               {capabilities.map((capability) => (
                 <div
                   key={capability.label}
-                  className="group border-l border-ice/30 bg-white/[0.03] px-5 py-4 transition duration-300 hover:border-ice hover:bg-white/[0.06]"
+                  className="group rounded-lg border border-white/10 bg-white/[0.03] px-5 py-4 transition duration-300 hover:border-ice/50 hover:bg-white/[0.06]"
                 >
                   <h3 className="text-sm font-semibold uppercase tracking-[0.24em] text-ice">
                     {capability.label}

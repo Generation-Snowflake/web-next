@@ -17,7 +17,7 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-semibold">GSF Robotics & AI</h3>
             <p className="text-softwhite/60 text-sm">
-              Building future technology with young minds.
+              We build AI, robotics, and IoT systems that run in production.
             </p>
           </div>
         </div>
@@ -25,21 +25,21 @@ export default function Footer() {
         {/* Links */}
         <div className="grid grid-cols-2 gap-6 text-softwhite/70">
           <div className="flex flex-col gap-2">
-            <Link href="/services" className="hover:text-ice transition">
+            <Link href="/services" className="transition hover:text-ice focus-visible:text-ice focus-visible:outline-none">
               Services
             </Link>
-            <Link href="/portfolio" className="hover:text-ice transition">
+            <Link href="/portfolio" className="transition hover:text-ice focus-visible:text-ice focus-visible:outline-none">
               Portfolio
             </Link>
-            <Link href="/workflow" className="hover:text-ice transition">
+            <Link href="/workflow" className="transition hover:text-ice focus-visible:text-ice focus-visible:outline-none">
               Workflow
             </Link>
           </div>
           <div className="flex flex-col gap-2">
-            <Link href="/about" className="hover:text-ice transition">
+            <Link href="/about" className="transition hover:text-ice focus-visible:text-ice focus-visible:outline-none">
               About
             </Link>
-            <Link href="/contact" className="hover:text-ice transition">
+            <Link href="/contact" className="transition hover:text-ice focus-visible:text-ice focus-visible:outline-none">
               Contact
             </Link>
           </div>
