@@ -112,8 +112,10 @@ function RobotHumanoid({ target }: { target: TargetKey }) {
     const time = state.clock.elapsedTime;
     const pointerX = pointer.current.x;
     const pointerY = pointer.current.y;
-    const desiredYaw = targetAngles[target] + pointerX * 0.28;
-    const desiredPitch = pointerY * 0.16;
+    const desiredYaw = targetAngles[target] + pointerX * 0.42;
+    // Negative so the head pitches UP toward the cursor (rotation.x > 0 tilts
+    // the face down when the head faces the camera).
+    const desiredPitch = -pointerY * 0.42;
 
     if (robotRef.current) {
       robotRef.current.rotation.y = THREE.MathUtils.lerp(
@@ -135,13 +137,13 @@ function RobotHumanoid({ target }: { target: TargetKey }) {
     if (headRef.current) {
       headRef.current.rotation.y = THREE.MathUtils.lerp(
         headRef.current.rotation.y,
-        pointerX * 0.32,
-        0.08
+        pointerX * 0.65,
+        0.11
       );
       headRef.current.rotation.x = THREE.MathUtils.lerp(
         headRef.current.rotation.x,
         desiredPitch,
-        0.08
+        0.11
       );
     }
 
