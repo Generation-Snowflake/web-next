@@ -1,5 +1,22 @@
 import "./globals.css";
+import { Inter, Outfit } from "next/font/google";
 import Chrome from "@/app/Chrome";
+
+// Self-hosted via next/font: no render-blocking external @import, offline-safe,
+// font-display: swap. --font-inter (body/display) and --font-outfit (brand mark).
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-outfit",
+  display: "swap",
+});
 
 export const metadata = {
   title: {
@@ -74,8 +91,12 @@ export const metadata = {
     shortcut: "/logo.png",
     apple: "/logo.png",
   },
-  viewport: "width=device-width, initial-scale=1",
-  themeColor: "#0A0F1F",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#050A14",
 };
 
 export default function RootLayout({
@@ -84,7 +105,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <head>
         <script
           type="application/ld+json"

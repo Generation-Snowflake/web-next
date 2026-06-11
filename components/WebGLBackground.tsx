@@ -4,6 +4,8 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { MeshDistortMaterial, Float, Environment } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
+import WebGLScene from "./WebGLScene";
+import { useInView } from "./useInView";
 
 function DistortedSphere() {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -38,22 +40,34 @@ function DistortedSphere() {
 }
 
 export default function WebGLBackground() {
+  const [ref, inView] = useInView<HTMLDivElement>();
+
   return (
-    <div className="absolute inset-0 w-full h-full -z-10">
-      <Canvas
-        camera={{ position: [0, 0, 5], fov: 75 }}
-        gl={{ alpha: true, antialias: true }}
-        dpr={[1, 2]} // Optimize for high DPI screens
+    <div ref={ref} className="absolute inset-0 w-full h-full -z-10">
+      <WebGLScene
+        fallback={
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(0,212,255,0.12),transparent_60%)]"
+          />
+        }
       >
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <pointLight position={[-10, -10, -5]} intensity={1} color="#00ffcc" />
-        
-        <DistortedSphere />
-        
-        {/* Environment for better reflections */}
-        <Environment preset="city" />
-      </Canvas>
+        <Canvas
+          frameloop={inView ? "always" : "never"}
+          camera={{ position: [0, 0, 5], fov: 75 }}
+          gl={{ alpha: true, antialias: true }}
+          dpr={[1, 2]} // Optimize for high DPI screens
+        >
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[10, 10, 5]} intensity={1} />
+          <pointLight position={[-10, -10, -5]} intensity={1} color="#00ffcc" />
+
+          <DistortedSphere />
+
+          {/* Environment for better reflections */}
+          <Environment preset="city" />
+        </Canvas>
+      </WebGLScene>
     </div>
   );
 }

@@ -5,6 +5,8 @@ import { Points, PointMaterial } from "@react-three/drei";
 import { useRef, useMemo } from "react";
 import * as THREE from "three";
 import * as random from "maath/random/dist/maath-random.esm";
+import WebGLScene from "./WebGLScene";
+import { useInView } from "./useInView";
 
 type ParticleFieldProps = {
   radius?: number;
@@ -40,11 +42,22 @@ function ParticleField({ radius = 1.5 }: ParticleFieldProps) {
 }
 
 export default function ParticleNetwork() {
+  const [ref, inView] = useInView<HTMLDivElement>();
+
   return (
-    <div className="absolute inset-0 -z-10 h-full w-full bg-darkbg/50">
-      <Canvas camera={{ position: [0, 0, 1] }}>
-        <ParticleField />
-      </Canvas>
+    <div ref={ref} className="absolute inset-0 -z-10 h-full w-full bg-darkbg/50">
+      <WebGLScene
+        fallback={
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(45,212,191,0.10),transparent_55%)]"
+          />
+        }
+      >
+        <Canvas frameloop={inView ? "always" : "never"} camera={{ position: [0, 0, 1] }}>
+          <ParticleField />
+        </Canvas>
+      </WebGLScene>
     </div>
   );
 }

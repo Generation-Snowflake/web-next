@@ -4,6 +4,8 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Line, Points, PointMaterial } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+import WebGLScene from "./WebGLScene";
+import { useInView } from "./useInView";
 
 type TargetKey = "home" | "about" | "services" | "portfolio" | "contact";
 
@@ -271,20 +273,42 @@ function RobotHumanoid({ target }: { target: TargetKey }) {
 
 export default function DeepTechCore() {
   const target = useNavigationTarget();
+  const [ref, inView] = useInView<HTMLDivElement>();
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-10 opacity-70 sm:opacity-85 lg:opacity-100">
-      <Canvas
-        camera={{ position: [0, 0, 5.8], fov: 42 }}
-        dpr={[1, 1.7]}
-        gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+    <div
+      ref={ref}
+      className="pointer-events-none absolute inset-0 z-10 opacity-70 sm:opacity-85 lg:opacity-100"
+    >
+      <WebGLScene
+        fallback={
+          <div
+            aria-hidden
+            className="absolute inset-0 flex items-center justify-center"
+          >
+            <div className="relative h-[42vh] max-h-[420px] w-[42vh] max-w-[420px]">
+              <div className="absolute inset-0 rounded-full border border-ice/15" />
+              <div className="absolute inset-[14%] rounded-full border border-ice/20" />
+              <div className="absolute inset-[34%] rounded-full border border-ice/25" />
+              <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(0,212,255,0.18),transparent_62%)]" />
+              <div className="absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ice shadow-glow" />
+            </div>
+          </div>
+        }
       >
-        <ambientLight intensity={0.68} />
-        <directionalLight position={[2.8, 4, 4]} intensity={1.4} color="#ffffff" />
-        <pointLight position={[3, 2.2, 4]} intensity={2.2} color="#6aefff" />
-        <pointLight position={[-4, -2, 3]} intensity={0.9} color="#2dd4bf" />
-        <RobotHumanoid target={target} />
-      </Canvas>
+        <Canvas
+          frameloop={inView ? "always" : "never"}
+          camera={{ position: [0, 0, 5.8], fov: 42 }}
+          dpr={[1, 1.7]}
+          gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+        >
+          <ambientLight intensity={0.68} />
+          <directionalLight position={[2.8, 4, 4]} intensity={1.4} color="#ffffff" />
+          <pointLight position={[3, 2.2, 4]} intensity={2.2} color="#6aefff" />
+          <pointLight position={[-4, -2, 3]} intensity={0.9} color="#2dd4bf" />
+          <RobotHumanoid target={target} />
+        </Canvas>
+      </WebGLScene>
     </div>
   );
 }

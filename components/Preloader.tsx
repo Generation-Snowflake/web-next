@@ -2,21 +2,33 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { prefersReducedMotion } from "./usePrefersReducedMotion";
 
 export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // Short, escapable intro. Reduced motion gets the shortest path; everyone
+    // can dismiss on first interaction instead of waiting out a fixed timer.
+    const duration = prefersReducedMotion() ? 400 : 900;
+
+    const dismiss = () => {
       setIsLoading(false);
-      document.body.style.overflow = "auto";
-    }, 2200);
+      document.body.style.overflow = ""; // restore the class-based overflow-x guard
+    };
+
+    const timer = setTimeout(dismiss, duration);
+
+    const opts = { passive: true, once: true } as const;
+    const events = ["scroll", "wheel", "pointerdown", "keydown", "touchstart"];
+    events.forEach((e) => window.addEventListener(e, dismiss, opts));
 
     document.body.style.overflow = "hidden";
 
     return () => {
       clearTimeout(timer);
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
+      events.forEach((e) => window.removeEventListener(e, dismiss));
     };
   }, []);
 
@@ -37,7 +49,8 @@ export default function Preloader() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.75, ease: "backOut" }}
             className="relative flex h-36 w-36 items-center justify-center md:h-48 md:w-48"
-            aria-label="Initializing GSF system"
+            role="status"
+            aria-label="Loading GSF Robotics & AI"
           >
             <motion.div
               animate={{ rotate: 360 }}
@@ -76,7 +89,7 @@ export default function Preloader() {
               transition={{ delay: 0.35 }}
               className="font-mono text-xs uppercase tracking-[0.28em] text-teal-300/70"
             >
-              Initializing System
+              Bringing the core online
             </motion.p>
           </div>
         </motion.div>
