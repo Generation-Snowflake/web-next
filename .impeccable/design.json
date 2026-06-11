@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-09T00:00:00.000Z",
+  "title": "Design System: GSF Robotics & AI",
+  "extensions": {
+    "colorMeta": {
+      "reactor-cyan": { "role": "primary", "displayName": "Reactor Cyan", "canonical": "#00D4FF", "tonalRamp": ["#021A20", "#03323D", "#04525F", "#0088A3", "#00B6D9", "#00D4FF", "#6AEFFF", "#B5F7FF"] },
+      "forge-black": { "role": "neutral", "displayName": "Forge Black", "canonical": "#050A14", "tonalRamp": ["#030712", "#050A14", "#0A1525", "#0F2138", "#16314F", "#1F4368", "#2E5C8A", "#4A7DB0"] },
+      "signal-white": { "role": "neutral", "displayName": "Signal White", "canonical": "#F4F9FF", "tonalRamp": ["#0F1A24", "#1F3140", "#37505F", "#5C6E78", "#9CA3AF", "#D1D5DB", "#E2F3FF", "#F4F9FF"] },
+      "catalog-teal": { "role": "tertiary", "displayName": "Catalog Teal", "canonical": "#00A0AB", "tonalRamp": ["#021E20", "#04393C", "#066066", "#017E88", "#00A0AB", "#27BEC8", "#6FD7DE", "#B6EEF1"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero h1 and section h2 headings. Inter 700/800, tight leading, negative tracking." },
+      "title": { "displayName": "Title", "purpose": "Card and sub-section headings in Signal White." },
+      "body": { "displayName": "Body", "purpose": "Paragraph copy in Body Text gray; measure held to 65-75ch." },
+      "label": { "displayName": "Label", "purpose": "Section kicker/eyebrow: uppercase, tracked, cyan at ~70-80%. One deliberate brand device." },
+      "brand-mark": { "displayName": "Brand Mark", "purpose": "The 'GSF.' logotype only. Outfit, the single reserved use of a second family." }
+    },
+    "shadows": [
+      { "name": "glow", "value": "0 0 30px rgba(0, 212, 255, 0.4)", "purpose": "Resting halo on the primary CTA; the cyan heat trace marking the live action." },
+      { "name": "glow-sm", "value": "0 0 15px rgba(0, 212, 255, 0.3)", "purpose": "Smaller accented elements and active chips." },
+      { "name": "card-lift", "value": "0 18px 70px rgba(0, 212, 255, 0.12)", "purpose": "Appears only on card hover, paired with translateY(-4px). Depth as a response to interaction." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "300ms ease", "purpose": "Default state transition for buttons, cards, nav (color, border, transform)." },
+      { "name": "hover-lift", "value": "translateY(-2px to -4px)", "purpose": "Buttons rise -0.5 to -1; cards rise -1 on hover." },
+      { "name": "smooth-scroll", "value": "Lenis @studio-freight/lenis", "purpose": "Page-level smooth scrolling; must respect prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The live action. Solid cyan pill with a resting glow halo, brightens and rises on hover.",
+      "html": "<button class=\"ds-btn-primary\">Start the conversation</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; background: #00D4FF; color: #050A14; font-family: Inter, sans-serif; font-weight: 600; font-size: 0.875rem; padding: 12px 28px; border: none; border-radius: 9999px; box-shadow: 0 0 30px rgba(0,212,255,0.4); cursor: pointer; transition: background 0.3s ease, transform 0.3s ease; } .ds-btn-primary:hover { background: #6AEFFF; transform: translateY(-2px); } .ds-btn-primary:focus-visible { outline: 2px solid #6AEFFF; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary hero action. Low-opacity glass pill with a hairline border that ignites cyan on hover.",
+      "html": "<button class=\"ds-btn-ghost\">See the work</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); color: #F4F9FF; font-family: Inter, sans-serif; font-weight: 600; font-size: 0.875rem; padding: 12px 28px; border: 1px solid rgba(255,255,255,0.25); border-radius: 9999px; backdrop-filter: blur(12px); cursor: pointer; transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease; } .ds-btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: #00D4FF; transform: translateY(-2px); } .ds-btn-ghost:focus-visible { outline: 2px solid #00D4FF; outline-offset: 3px; }"
+    },
+    {
+      "name": "Nav CTA",
+      "kind": "nav",
+      "refersTo": "nav-cta",
+      "description": "Compact nav call-to-action: cyan-tinted glass pill that inverts to a solid cyan fill on hover.",
+      "html": "<a class=\"ds-nav-cta\" href=\"#contact\">Get started</a>",
+      "css": ".ds-nav-cta { display: inline-flex; align-items: center; background: rgba(0,212,255,0.1); color: #00D4FF; font-family: Inter, sans-serif; font-weight: 500; font-size: 0.875rem; padding: 8px 20px; border: 1px solid rgba(0,212,255,0.2); border-radius: 9999px; text-decoration: none; transition: background 0.3s ease, color 0.3s ease; } .ds-nav-cta:hover { background: #00D4FF; color: #050A14; } .ds-nav-cta:focus-visible { outline: 2px solid #00D4FF; outline-offset: 3px; }"
+    },
+    {
+      "name": "Capability Card",
+      "kind": "card",
+      "refersTo": "card-surface",
+      "description": "Service/capability tile. Flat glass surface at rest; on hover it rises, the border ignites cyan, and a top-edge heat line plus the card-lift glow fade in.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-icon\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\"></rect><path d=\"M9 9h6v6H9z\"></path><path d=\"M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2\"></path></svg></div><h3 class=\"ds-card-title\">Robotics & Automation</h3><p class=\"ds-card-body\">Robot control layers, autonomy, operator interfaces, and automation software for physical systems.</p></article>",
+      "css": ".ds-card { position: relative; overflow: hidden; min-height: 230px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; } .ds-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,0.6); background: rgba(255,255,255,0.07); box-shadow: 0 18px 70px rgba(0,212,255,0.12); } .ds-card::before { content: ''; position: absolute; inset-inline: 0; top: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(0,212,255,0.5), transparent); opacity: 0; transition: opacity 0.3s ease; } .ds-card:hover::before { opacity: 1; } .ds-card-icon { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; margin-bottom: 24px; color: #00D4FF; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2); border-radius: 8px; transition: background 0.3s ease, color 0.3s ease; } .ds-card:hover .ds-card-icon { background: #00D4FF; color: #050A14; } .ds-card-title { font-family: Inter, sans-serif; font-weight: 600; font-size: 1.125rem; color: #F4F9FF; margin: 0; } .ds-card-body { font-family: Inter, sans-serif; font-size: 0.875rem; line-height: 1.6; color: #9CA3AF; margin-top: 12px; }"
+    },
+    {
+      "name": "Section Kicker",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "The signature eyebrow: a single deliberate brand device, uppercase, widely tracked, cyan at reduced opacity.",
+      "html": "<p class=\"ds-kicker\">Deep tech capabilities</p>",
+      "css": ".ds-kicker { font-family: Inter, sans-serif; font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.3em; color: rgba(0,212,255,0.75); margin: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Cold Forge",
+    "overview": "Precision machining seen under cold light. The surface is a near-black steel blue; through it runs a single electric cyan, the energy signature of a working machine and a heat trace at the cutting edge. Nothing is decorative for its own sake: glow means something is live, an edge lights because it is active. The system reads as engineered first and styled second, the impression GSF Robotics needs to leave on industrial buyers and investors alike. Density is deliberate but never busy; cyan is rationed so its appearance always carries information, and the motion stack exists to demonstrate capability, not to fill silence.",
+    "keyCharacteristics": [
+      "Near-black steel-blue field (#050A14) with one rationed electric-cyan signal (#00D4FF).",
+      "Glass surfaces at very low opacity; depth comes from tone and glow, not heavy shadow.",
+      "Glow is functional: it marks live, active, or hovered state, never ambient decoration.",
+      "Engineered motion: parallax, particles, and 3D viewers that show capability, each with a reduced-motion fallback.",
+      "Cyan rarity: the accent appears on a small fraction of any screen, so it always reads as signal."
+    ],
+    "rules": [
+      { "name": "The Rationed Signal Rule", "body": "Reactor Cyan is signal, not paint. It appears on at most ~10% of any screen, only where it carries meaning (CTA, active/hover state, live readout, brand mark). If cyan is being used to add color or make it pop, remove it.", "section": "colors" },
+      { "name": "The Two-Worlds Rule", "body": "The dark Forge palette and the light Catalog palette never mix on the same surface. The catalog is a sealed sub-brand scoped to /demoCatalog.", "section": "colors" },
+      { "name": "The One-Family Rule", "body": "Inter does all the work; Outfit is only ever the 'GSF.' mark. No third family. Hierarchy comes from weight (400 to 600 to 700/800) and scale.", "section": "typography" },
+      { "name": "The Load-What-You-Set Rule", "body": "Outfit must actually be loaded (next/font or @import) wherever font-display is used; today only Inter is imported, so font-display silently falls back to system sans.", "section": "typography" },
+      { "name": "The Glow-Is-State Rule", "body": "Glow is never decoration. It marks the primary action, an active control, or a hovered surface. A card at rest casts nothing; it earns its lift by being touched.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do ration Reactor Cyan to ~10% of any screen, used only where it carries meaning.",
+      "Do keep readable text at Body Text (#D1D5DB) or lighter and verify >=4.5:1 against Forge Black; use Reactor Cyan Deep (#0088A3), not bright cyan, for cyan-colored text.",
+      "Do treat glow as a state signal: resting flat, lighting up on hover/active/focus.",
+      "Do give every animated surface (particles, parallax, scroll sequences, the 3D viewer) a prefers-reduced-motion fallback.",
+      "Do add visible cyan focus rings and full keyboard operability to every interactive element, including the model viewer and the mobile menu.",
+      "Do let real artifacts (3D models, portfolio pieces) be the proof of capability.",
+      "Do keep the light Catalog palette sealed inside /demoCatalog."
+    ],
+    "donts": [
+      "Don't build a generic SaaS template: no cream backgrounds, no identical feature-card grids, no big-number hero-metric block, no tracked-uppercase eyebrow over every section.",
+      "Don't drift toward cheap or toy robotics: nothing cartoonish, playful, or consumer-gadget.",
+      "Don't use corporate stock-photo imagery (handshakes, generic factory floors).",
+      "Don't over-animate into clutter: every effect must reinforce capability or guide attention, or it gets cut.",
+      "Don't let glow become ambient decoration or spread cyan across large fills.",
+      "Don't introduce a third font family, and don't reference font-display (Outfit) without actually loading it.",
+      "Don't use border-left/border-right colored stripes, gradient-filled text, or decorative glassmorphism beyond the established low-opacity surface system."
+    ]
+  }
+}
