@@ -3,7 +3,7 @@ import ViewerClient from "./ViewerClient";
 export const metadata = {
   title: "Power Plant — Interactive 3D Sim",
   description:
-    "สำรวจโรงไฟฟ้าแบบ 3 มิติเต็มจอ — คลิกจุดสำคัญเพื่อซูมเข้าไปดูแต่ละส่วนพร้อมรายละเอียด",
+    "Explore the power plant in full-screen 3D — click hotspots to zoom into each section and see the details.",
 };
 
 export default function PowerPlantPage() {

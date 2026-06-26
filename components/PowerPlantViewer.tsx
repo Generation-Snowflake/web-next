@@ -50,46 +50,46 @@ type Hotspot = {
 const HOTSPOTS: Hotspot[] = [
   {
     id: "reactor",
-    name: "อาคารเตาปฏิกรณ์",
-    tag: "Reactor Building",
+    name: "Reactor Building",
+    tag: "01 · Core",
     description:
-      "หัวใจของโรงไฟฟ้า — เตาปฏิกรณ์ผลิตความร้อนเพื่อต้มน้ำเป็นไอน้ำแรงดันสูง ระบบหล่อเย็นและโครงสร้างกักเก็บความปลอดภัยถูกออกแบบให้ทนต่อแรงดันและรังสี",
+      "The heart of the plant — the reactor generates heat to boil water into high-pressure steam. Its cooling loops and containment structure are engineered to withstand extreme pressure and radiation.",
     position: [0, 0.4, 0],
     camera: [0.85, 0.75, 0.85],
   },
   {
     id: "cooling",
-    name: "หอหล่อเย็น",
-    tag: "Cooling Tower",
+    name: "Cooling Tower",
+    tag: "02 · Heat Rejection",
     description:
-      "ระบายความร้อนทิ้งออกจากวงจรไอน้ำ น้ำอุ่นจะถูกพ่นกระจายให้สัมผัสอากาศ ความร้อนระเหยออกไปก่อนน้ำหมุนเวียนกลับเข้าสู่ระบบควบแน่นอีกครั้ง",
+      "Rejects waste heat from the steam cycle. Warm water is sprayed and exposed to rising air; heat evaporates away before the cooled water cycles back into the condenser.",
     position: [-3.6, 0.4, -3.4],
     camera: [-4.25, 1.0, -4.05],
   },
   {
     id: "turbine",
-    name: "ห้องกังหันไอน้ำ",
-    tag: "Turbine Hall",
+    name: "Turbine Hall",
+    tag: "03 · Power Generation",
     description:
-      "ไอน้ำแรงดันสูงขับกังหันให้หมุนเพลาที่ต่อกับเครื่องกำเนิดไฟฟ้า เปลี่ยนพลังงานกลเป็นพลังงานไฟฟ้า ถือเป็นจุดที่เกิดการผลิตไฟฟ้าจริง",
+      "High-pressure steam spins the turbines, turning a shaft coupled to the generator and converting mechanical energy into electricity. This is where power is actually produced.",
     position: [3.4, 0.4, 1.6],
     camera: [4.15, 0.95, 2.3],
   },
   {
     id: "control",
-    name: "ห้องควบคุมกลาง",
-    tag: "Control Room",
+    name: "Control Room",
+    tag: "04 · Operations",
     description:
-      "ศูนย์บัญชาการที่เฝ้าระวังและสั่งการทุกระบบแบบเรียลไทม์ — แรงดัน อุณหภูมิ การไหล และระบบความปลอดภัย ผ่านแผงควบคุมและระบบ SCADA",
+      "The command center that monitors and directs every system in real time — pressure, temperature, flow and safety interlocks — through the control desks and SCADA.",
     position: [-2.6, 0.4, 3.2],
     camera: [-3.25, 0.95, 3.85],
   },
   {
     id: "switchyard",
-    name: "ลานไกไฟฟ้า",
-    tag: "Switchyard",
+    name: "Switchyard",
+    tag: "05 · Grid",
     description:
-      "ยกระดับแรงดันไฟฟ้าด้วยหม้อแปลงก่อนส่งเข้าสายส่งแรงสูง กระจายไฟฟ้าออกสู่โครงข่ายและผู้ใช้ พร้อมระบบตัดตอนเพื่อป้องกันความเสียหาย",
+      "Step-up transformers raise the voltage before feeding the high-tension lines, distributing power to the grid with breakers that isolate faults and protect the plant.",
     position: [3.6, 0.4, -2.6],
     camera: [4.25, 1.0, -3.2],
   },
@@ -245,7 +245,7 @@ function InfoCard({
       <div className="pointer-events-auto w-44 -translate-y-1/2 rounded-lg border border-ice/30 bg-darkbg/90 p-3 shadow-glow backdrop-blur-xl">
         <button
           onClick={onClose}
-          aria-label="ปิด"
+          aria-label="Close"
           className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full border border-ice/20 text-[10px] text-softwhite/60 transition hover:border-ice hover:text-ice"
         >
           ✕
@@ -315,7 +315,7 @@ function Loader() {
     <Html center>
       <div className="flex flex-col items-center gap-3 text-softwhite/70">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-ice/30 border-t-ice" />
-        <span className="text-sm tracking-wide">กำลังโหลดโมเดล…</span>
+        <span className="text-sm tracking-wide">Loading model…</span>
       </div>
     </Html>
   );
@@ -420,13 +420,13 @@ export default function PowerPlantViewer() {
 
       {/* Hint */}
       <div className="pointer-events-none absolute left-4 top-4 rounded-lg border border-ice/10 bg-darkbg/50 px-3 py-2 text-xs text-softwhite/60 backdrop-blur-md">
-        ลากเพื่อหมุน · สครอลล์เพื่อซูม · คลิกจุดหรือเลือกจากเมนู
+        Drag to rotate · Scroll to zoom · Click a marker or pick from the menu
       </div>
 
       {/* Location menu */}
       <div className="pointer-events-auto absolute right-4 top-4 flex w-[210px] flex-col gap-1 rounded-xl border border-ice/15 bg-darkbg/70 p-2 backdrop-blur-md">
         <span className="px-2 py-1 text-xs uppercase tracking-wider text-softwhite/50">
-          จุดสำคัญ · {HOTSPOTS.length}
+          Key Locations · {HOTSPOTS.length}
         </span>
         <button
           onClick={() => setActiveId(null)}
@@ -436,7 +436,7 @@ export default function PowerPlantViewer() {
               : "text-softwhite/70 hover:bg-white/5 hover:text-ice"
           }`}
         >
-          ↺ มุมมองรวม
+          ↺ Overview
         </button>
         <div className="my-1 h-px bg-ice/10" />
         {HOTSPOTS.map((h) => (
