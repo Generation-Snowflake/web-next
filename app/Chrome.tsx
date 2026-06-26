@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 // Routes that render full-bleed without the site Navbar/Footer.
-const BARE_ROUTES = ["/demo3d"];
+const BARE_ROUTES = ["/demo3d", "/power-plant"];
 
 export default function Chrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
