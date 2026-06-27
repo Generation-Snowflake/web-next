@@ -45,17 +45,34 @@ type Hotspot = {
   position: [number, number, number];
   // Where the camera flies to when this hotspot is selected.
   camera: [number, number, number];
+  // Optional equipment-standards card (used for the reactor building).
+  standards?: string[];
+  products?: string[];
+  image?: string;
 };
 
 const HOTSPOTS: Hotspot[] = [
   {
     id: "reactor",
     name: "Reactor Building",
-    tag: "01 · Core",
+    tag: "Equipment Standards",
     description:
-      "The heart of the plant — the reactor generates heat to boil water into high-pressure steam. Its cooling loops and containment structure are engineered to withstand extreme pressure and radiation.",
+      "Hazardous-area lighting certified for the reactor building envelope.",
+    standards: [
+      "Ex d (Flameproof)",
+      "Ex e (Increased Safety)",
+      "ATEX | IEC | Ex",
+    ],
+    products: [
+      "High Bay LED",
+      "Flood Light",
+      "Emergency Light",
+      "Exit Sign",
+      "Portable Inspection Light",
+    ],
+    image: "/power-plant/reactor-products.png",
     position: [0, 0.4, 0],
-    camera: [0.85, 0.75, 0.85],
+    camera: [2.4, 1.8, 2.4],
   },
   {
     id: "cooling",
@@ -235,6 +252,9 @@ function InfoCard({
   onClose: () => void;
 }) {
   const [x, y, z] = position;
+  // The reactor's equipment-standards card is rendered as a centered
+  // screen-space overlay in PowerPlantViewer, not in 3D space.
+  if (hotspot.standards || hotspot.products) return null;
   return (
     <Html
       position={[x, y + 0.22, z]}
@@ -371,7 +391,17 @@ function Scene({
 export default function PowerPlantViewer() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [points, setPoints] = useState<Points>(DEFAULT_POINTS);
+  const [lightbox, setLightbox] = useState<string | null>(null);
   const controls = useRef<React.ComponentRef<typeof OrbitControls>>(null);
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightbox]);
 
   return (
     <div className="relative h-[100dvh] w-full overflow-hidden bg-darkbg">
@@ -456,6 +486,98 @@ export default function PowerPlantViewer() {
           </button>
         ))}
       </div>
+
+      {(() => {
+        const active = HOTSPOTS.find((h) => h.id === activeId);
+        if (!active || !(active.standards || active.products)) return null;
+        return (
+          <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center p-6">
+            <div className="pointer-events-auto relative w-[320px] max-w-[88vw] rounded-xl border border-ice/30 bg-darkbg/85 p-4 shadow-glow backdrop-blur-xl">
+              <button
+                onClick={() => setActiveId(null)}
+                aria-label="Close"
+                className="absolute right-2.5 top-2.5 flex h-6 w-6 items-center justify-center rounded-full border border-ice/20 text-[11px] text-softwhite/70 transition hover:border-ice hover:text-ice"
+              >
+                ✕
+              </button>
+              <p className="mb-0.5 pr-6 text-[10px] uppercase tracking-[0.2em] text-ice/70">
+                {active.tag}
+              </p>
+              <h3 className="mb-2.5 pr-6 text-base font-bold leading-tight text-softwhite">
+                {active.name} Equipment Standards
+              </h3>
+              {active.standards && (
+                <div className="mb-3 flex flex-wrap gap-1.5">
+                  {active.standards.map((s) => (
+                    <span
+                      key={s}
+                      className="rounded-md border border-ice/25 bg-ice/5 px-2 py-0.5 text-[11px] text-ice/90"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {active.products && (
+                <>
+                  <p className="mb-1 text-[10px] uppercase tracking-wider text-softwhite/50">
+                    Products
+                  </p>
+                  <ul className="mb-3 grid grid-cols-2 gap-x-3 gap-y-1 text-[12px] leading-snug text-softwhite/85">
+                    {active.products.map((p) => (
+                      <li key={p} className="flex gap-1.5">
+                        <span className="text-ice/60">•</span>
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              {active.image && (
+                <button
+                  onClick={() => setLightbox(active.image!)}
+                  className="group relative block w-full overflow-hidden rounded-md border border-ice/20 transition hover:border-ice/70"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={active.image}
+                    alt={`${active.name} products`}
+                    className="block h-auto max-h-36 w-full object-cover transition group-hover:scale-[1.02]"
+                  />
+                  <span className="pointer-events-none absolute inset-0 flex items-end justify-end bg-gradient-to-t from-darkbg/70 via-transparent to-transparent p-1.5 text-[10px] uppercase tracking-wider text-ice/90 opacity-0 transition group-hover:opacity-100">
+                    Click to zoom ⤢
+                  </span>
+                </button>
+              )}
+            </div>
+          </div>
+        );
+      })()}
+
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-darkbg/90 p-6 backdrop-blur-md"
+          onClick={() => setLightbox(null)}
+        >
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightbox(null);
+            }}
+            aria-label="Close image"
+            className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full border border-ice/30 bg-darkbg/60 text-softwhite/80 transition hover:border-ice hover:text-ice"
+          >
+            ✕
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={lightbox}
+            alt="Product detail"
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-full max-w-full rounded-lg border border-ice/20 shadow-glow"
+          />
+        </div>
+      )}
     </div>
   );
 }
