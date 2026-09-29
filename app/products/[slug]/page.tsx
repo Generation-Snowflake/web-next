@@ -64,10 +64,6 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
   const name = shortName(product.name);
   const dev = product.status === "in-development";
   const hardware = product.group !== "software" && product.slug !== "robopark";
-  let fig = 1;
-  const nextFig = () => fig++;
-  const galleryFig = nextFig();
-  const viewerFig = product.model3d ? nextFig() : 0;
 
   return (
     <>
@@ -78,16 +74,16 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
         title={product.name}
         description={product.tagline}
       >
-        <p className="font-mono text-[15px]">
+        <p className="text-[15px]">
           {dev ? (
-            <span className="text-graphite">In development · testing with early users</span>
+            <span className="chip">In development · testing with early users</span>
           ) : from !== undefined ? (
             <>
               <span className="text-graphite">{multi ? "From " : ""}</span>
-              <span className="text-[1.25rem] text-signal">{formatTHB(from)}</span>
+              <span className="font-mono text-[1.375rem] font-medium tabular-nums text-signal">{formatTHB(from)}</span>
             </>
           ) : (
-            <span className="text-graphite">Price on request</span>
+            <span className="font-medium text-graphite">Price on request</span>
           )}
         </p>
         <ButtonLink href={quoteHref(quoteId)} size="lg" arrow>
@@ -102,37 +98,37 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
 
       {/* Photos + overview */}
       <section>
-        <Container className="grid gap-10 py-12 md:grid-cols-12 md:py-16">
+        <Container className="grid gap-10 py-14 md:grid-cols-12 md:py-20">
           {photos.length > 0 && (
             <div className="md:col-span-7">
-              <ProductGallery photos={photos} figure={galleryFig} priority />
+              <ProductGallery photos={photos} priority />
               {product.credits && <p className="caption mt-4">{product.credits}</p>}
             </div>
           )}
           <div className={photos.length > 0 ? "md:col-span-5" : "md:col-span-7"}>
-            <div className="space-y-4 text-[17px] leading-relaxed">
+            <div className="space-y-4 text-lg leading-relaxed text-graphite">
               {product.overview.map((p) => (
                 <p key={p}>{p}</p>
               ))}
             </div>
-            <dl className="mt-8 border-t border-ink text-[15px]">
+            <dl className="card mt-8 divide-y divide-hairline px-5 text-[15px]">
               {[
                 { label: "Made by", value: product.maker },
                 { label: "Category", value: product.category },
                 { label: "For", value: product.audience.join(", ") },
               ].map((r) => (
-                <div key={r.label} className="grid grid-cols-[7rem_1fr] gap-4 border-b border-hairline py-2.5">
+                <div key={r.label} className="grid grid-cols-[7rem_1fr] gap-4 py-3">
                   <dt className="text-graphite">{r.label}</dt>
                   <dd>{r.value}</dd>
                 </div>
               ))}
-              <div className="grid grid-cols-[7rem_1fr] gap-4 border-b border-hairline py-2.5">
+              <div className="grid grid-cols-[7rem_1fr] gap-4 py-3">
                 <dt className="text-graphite">{dev ? "Status" : "Price"}</dt>
                 <dd>
                   {dev ? (
                     "In development, testing with early users"
                   ) : from !== undefined ? (
-                    <span className="font-mono text-signal">
+                    <span className="font-mono font-medium tabular-nums text-signal">
                       {multi ? `${formatTHB(from)} to ${formatTHB(Math.max(...product.models.map((m) => m.priceTHB ?? 0)))}` : formatTHB(from)}
                     </span>
                   ) : (
@@ -153,10 +149,10 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
       {/* What it does */}
       {product.features.length > 0 && (
         <Band label="Features" title={`What ${name} does`}>
-          <dl className="border-t border-ink">
+          <dl className="card divide-y divide-hairline">
             {product.features.map((f) => (
-              <div key={f.title} className="grid gap-1 border-b border-hairline py-4 sm:grid-cols-[14rem_1fr] sm:gap-6">
-                <dt className="font-medium">{f.title}</dt>
+              <div key={f.title} className="grid gap-1 px-5 py-4 sm:grid-cols-[14rem_1fr] sm:gap-6 sm:px-6">
+                <dt className="font-semibold">{f.title}</dt>
                 <dd className="leading-relaxed text-graphite">{f.description}</dd>
               </div>
             ))}
@@ -177,7 +173,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
               : "Built from the project's simulation model. The motion is a slow demo within the joint limits, not recorded robot data."
           }
         >
-          <Product3DViewer model={product.model3d} figure={viewerFig} />
+          <Product3DViewer model={product.model3d} />
         </Band>
       )}
 
@@ -192,7 +188,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
           <SpecTable specs={[...product.specs, ...(single?.specs ?? [])]} />
           {product.inTheBox.length > 0 && (
             <div className="mt-12">
-              <h3 className="mb-3 text-[1.25rem] font-medium tracking-[-0.01em]">In the box</h3>
+              <h3 className="mb-3 text-[1.25rem] font-semibold tracking-tightish">In the box</h3>
               <InTheBox items={product.inTheBox} />
             </div>
           )}
@@ -211,7 +207,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
           <KitComparisonTable product={product} caption={`${product.name} kits compared`} />
           <div className="mt-14">
             {product.models.map((m) => (
-              <KitBlock key={m.id} product={product} model={m} figure={nextFig()} />
+              <KitBlock key={m.id} product={product} model={m} />
             ))}
           </div>
         </Band>
@@ -223,10 +219,10 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
         <div className="grid gap-10 sm:grid-cols-2">
           {product.useCases.length > 0 && (
             <div>
-              <h3 className="mb-3 text-[15px] font-medium">Use cases</h3>
-              <ul className="border-t border-ink">
+              <h3 className="mb-3 text-[15px] font-semibold">Use cases</h3>
+              <ul className="card divide-y divide-hairline px-5">
                 {product.useCases.map((u) => (
-                  <li key={u} className="border-b border-hairline py-2.5">
+                  <li key={u} className="py-3">
                     {u}
                   </li>
                 ))}
@@ -235,14 +231,14 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
           )}
           {product.links.length > 0 && (
             <div>
-              <h3 className="mb-3 text-[15px] font-medium">{hardware ? "Upstream docs and source" : "Website"}</h3>
-              <ul className="border-t border-ink">
+              <h3 className="mb-3 text-[15px] font-semibold">{hardware ? "Upstream docs and source" : "Website"}</h3>
+              <ul className="card divide-y divide-hairline px-5">
                 {product.links.map((l) => (
-                  <li key={l.href} className="border-b border-hairline py-2.5">
+                  <li key={l.href} className="py-3">
                     <a href={l.href} target="_blank" rel="noopener noreferrer" className="link">
                       {l.label}
                     </a>
-                    <span className="caption ml-2">{new URL(l.href).hostname.replace(/^www\./, "")}</span>
+                    <span className="caption ml-2 font-normal">{new URL(l.href).hostname.replace(/^www\./, "")}</span>
                   </li>
                 ))}
               </ul>
@@ -254,10 +250,10 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
 
       {hardware && (
       <Band label="From us" title="What we add to the hardware">
-        <dl className="border-t border-ink">
+        <dl className="card divide-y divide-hairline">
           {productSupport.map((s) => (
-            <div key={s.title} className="grid gap-1 border-b border-hairline py-4 sm:grid-cols-[14rem_1fr] sm:gap-6">
-              <dt className="font-medium">{s.title}</dt>
+            <div key={s.title} className="grid gap-1 px-5 py-4 sm:grid-cols-[14rem_1fr] sm:gap-6 sm:px-6">
+              <dt className="font-semibold">{s.title}</dt>
               <dd className="leading-relaxed text-graphite">{s.description}</dd>
             </div>
           ))}
@@ -267,24 +263,27 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
 
       {/* Related */}
       <Band wide label="Also from GSF" title="Other products">
-        <ul className="grid gap-8 sm:grid-cols-2">
+        <ul className="grid gap-4 sm:grid-cols-2">
           {related.map((p) => {
             const start = startingPrice(p);
             return (
               <li key={p.slug}>
-                <Link href={`/products/${p.slug}`} className="group grid grid-cols-[8rem_1fr] gap-5 sm:grid-cols-[11rem_1fr]">
-                  <span className="relative block aspect-square bg-paper-3">
+                <Link
+                  href={`/products/${p.slug}`}
+                  className="card card-hover group grid h-full grid-cols-[6.5rem_1fr] gap-4 p-3 sm:grid-cols-[9rem_1fr] sm:gap-5"
+                >
+                  <span className="relative block aspect-square overflow-hidden rounded-lg bg-paper-3">
                     {p.image && (
-                      <Image src={p.image} alt="" fill sizes="11rem" className="object-cover mix-blend-multiply" />
+                      <Image src={p.image} alt="" fill sizes="9rem" className="object-cover mix-blend-multiply" />
                     )}
                   </span>
-                  <span className="border-t border-ink pt-3">
+                  <span className="py-1 pr-2">
                     <span className="caption block">{p.category}</span>
-                    <span className="mt-1 block text-[1.25rem] font-medium tracking-[-0.01em] group-hover:text-teal-ink">
+                    <span className="mt-0.5 block text-[1.2rem] font-semibold tracking-tightish transition-colors duration-200 group-hover:text-teal-ink">
                       {p.name}
                     </span>
-                    <span className="mt-1 block text-[15px] leading-relaxed text-graphite">{p.tagline}</span>
-                    <span className="mt-2 block font-mono text-[14px]">
+                    <span className="mt-1 block text-[14px] leading-relaxed text-graphite">{p.tagline}</span>
+                    <span className="mt-2 block font-mono text-[14px] tabular-nums">
                       {p.status === "in-development" ? (
                         <span className="text-graphite">In development</span>
                       ) : start !== undefined ? (

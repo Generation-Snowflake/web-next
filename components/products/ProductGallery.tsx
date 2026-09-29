@@ -5,16 +5,16 @@ import Image from "next/image";
 import type { Photo } from "@/lib/products";
 
 /**
- * Main photo + a row of thumbnails. Photos sit on the paper-3 backdrop with
- * object-contain so white studio shots and portrait photos both fit.
+ * Main photo + a row of thumbnails. Photos sit on the paper-3 backdrop in a
+ * rounded frame, object-contain so white studio shots and portraits both fit.
  */
 export default function ProductGallery({
   photos,
-  figure = 1,
   priority = false,
   aspect = "aspect-[4/3]",
 }: {
   photos: Photo[];
+  /** @deprecated figure numbers are no longer shown. */
   figure?: number;
   priority?: boolean;
   aspect?: string;
@@ -25,7 +25,7 @@ export default function ProductGallery({
 
   return (
     <figure>
-      <div className={`relative overflow-hidden bg-paper-3 ${aspect}`}>
+      <div className={`relative overflow-hidden rounded-xl border border-hairline bg-paper ${aspect}`}>
         <Image
           key={current.src}
           src={current.src}
@@ -36,10 +36,7 @@ export default function ProductGallery({
           className="object-contain mix-blend-multiply"
         />
       </div>
-      <figcaption className="caption mt-2">
-        FIG. {figure}
-        {photos.length > 1 ? `.${index + 1}` : ""} — {current.alt}
-      </figcaption>
+      <figcaption className="caption mt-3 font-normal">{current.alt}</figcaption>
       {photos.length > 1 && (
         <ul className="mt-3 grid grid-cols-5 gap-2 sm:grid-cols-6" aria-label="More photos">
           {photos.map((p, i) => (
@@ -49,8 +46,8 @@ export default function ProductGallery({
                 onClick={() => setIndex(i)}
                 aria-label={`Show photo ${i + 1}: ${p.alt}`}
                 aria-current={i === index ? "true" : undefined}
-                className={`relative block aspect-square w-full overflow-hidden bg-paper-3 outline-offset-2 transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-ink ${
-                  i === index ? "ring-1 ring-ink" : "opacity-80 hover:opacity-100"
+                className={`relative block aspect-square w-full overflow-hidden rounded-lg border bg-paper outline-offset-2 transition-[opacity,border-color] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-ink ${
+                  i === index ? "border-teal ring-1 ring-teal" : "border-hairline opacity-75 hover:opacity-100"
                 }`}
               >
                 <Image src={p.src} alt="" fill sizes="96px" className="object-cover mix-blend-multiply" />

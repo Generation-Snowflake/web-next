@@ -2,7 +2,7 @@ import Link from "next/link";
 import Container from "./Container";
 import SectionHeading from "./SectionHeading";
 
-/** Top of every sub page: breadcrumb, H1, optional Thai line, ink rule below. */
+/** Top of every sub page: breadcrumb, big H1, lead paragraph, actions. */
 export default function PageHeader({
   eyebrow,
   label,
@@ -25,20 +25,20 @@ export default function PageHeader({
 }) {
   const trail = crumbs ?? (label ?? eyebrow ? [{ label: (label ?? eyebrow) as string }] : []);
   return (
-    <header className="border-b border-ink pb-12 pt-28 md:pb-16 md:pt-36">
+    <header className="border-b border-hairline pb-14 pt-28 md:pb-20 md:pt-36">
       <Container>
         {trail.length > 0 && (
-          <nav aria-label="Breadcrumb" className="mb-6 font-mono text-[13px] text-graphite">
-            <Link href="/" className="hover:text-ink">
+          <nav aria-label="Breadcrumb" className="mb-6 text-[14px] font-medium text-graphite">
+            <Link href="/" className="transition-colors duration-200 hover:text-ink">
               GSF
             </Link>
             {trail.map((c) => (
               <span key={c.label}>
-                <span aria-hidden className="px-2">
+                <span aria-hidden className="px-2 text-hairline-strong">
                   /
                 </span>
                 {c.href ? (
-                  <Link href={c.href} className="hover:text-ink">
+                  <Link href={c.href} className="transition-colors duration-200 hover:text-ink">
                     {c.label}
                   </Link>
                 ) : (
@@ -51,7 +51,7 @@ export default function PageHeader({
           </nav>
         )}
         <SectionHeading as="h1" title={title} titleTh={titleTh} description={description}>
-          {children && <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">{children}</div>}
+          {children && <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">{children}</div>}
         </SectionHeading>
       </Container>
     </header>

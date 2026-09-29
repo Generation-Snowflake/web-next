@@ -52,9 +52,9 @@ export default function Navbar() {
 
   const close = useCallback(() => setOpenOn(null), []);
 
-  // Over the dark home hero the bar is transparent and uses the night
-  // palette; everywhere else (and once scrolled) it is paper with an ink rule.
-  const night = pathname === "/" && !scrolled && !open;
+  // Transparent at the top of the page; once scrolled (or with the menu
+  // open) it turns translucent white with a blur and a hairline rule.
+  const solid = scrolled || open;
 
   // While the mobile menu is open: lock page scroll, move focus into the
   // panel, close on Escape and keep Tab inside the navbar + panel.
@@ -107,16 +107,18 @@ export default function Navbar() {
   const ctaActive = isActive(pathname, primaryCta.href);
 
   return (
-    <div ref={rootRef} className={night ? "night" : undefined}>
+    <div ref={rootRef}>
       <header
-        className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-150 ${
-          night ? "border-transparent bg-transparent" : "border-ink bg-paper"
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-300 ease-out ${
+          solid
+            ? "border-hairline bg-paper/80 shadow-nav backdrop-blur-md backdrop-saturate-150 supports-[not(backdrop-filter:blur(0))]:bg-paper"
+            : "border-transparent bg-paper/0"
         }`}
       >
         <div className="mx-auto flex h-16 w-full max-w-page items-center justify-between gap-6 px-5 sm:px-8">
-          <Link href="/" onClick={close} className="flex shrink-0 items-center gap-2.5 rounded-sm">
+          <Link href="/" onClick={close} className="flex shrink-0 items-center gap-2.5 rounded-md">
             <Image
-              src={night ? "/logo-night.png" : "/logo-ink.png"}
+              src="/logo-ink.png"
               alt=""
               width={32}
               height={32}
@@ -124,14 +126,14 @@ export default function Navbar() {
               className="h-8 w-8 object-contain"
             />
             <span
-              className={`text-[17px] font-medium tracking-[-0.015em] ${night ? "text-night-text" : "text-ink"}`}
+              className="text-[17px] font-semibold tracking-tightish text-ink"
             >
-              GSF <span className={night ? "text-night-muted" : "text-graphite"}>Robotics &amp; AI</span>
+              GSF <span className="font-medium text-graphite">Robotics &amp; AI</span>
             </span>
           </Link>
 
           <nav aria-label="Main" className="ml-auto hidden lg:block">
-            <ul className="flex items-center gap-7">
+            <ul className="flex items-center gap-1">
               {mainNav.map((item) => {
                 const active = isActive(pathname, item.href);
                 return (
@@ -139,14 +141,8 @@ export default function Navbar() {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`rounded-sm py-1 text-[15px] transition-colors duration-150 ${
-                        active
-                          ? `underline decoration-2 underline-offset-[7px] ${
-                              night ? "text-night-text decoration-teal" : "text-ink decoration-teal-ink"
-                            }`
-                          : night
-                            ? "text-night-muted hover:text-night-text"
-                            : "text-graphite hover:text-ink"
+                      className={`rounded-md px-3 py-1.5 text-[15px] font-medium transition-colors duration-200 ${
+                        active ? "bg-paper-2 text-ink" : "text-graphite hover:bg-paper-2 hover:text-ink"
                       }`}
                     >
                       {item.label}
@@ -161,9 +157,7 @@ export default function Navbar() {
             <Link
               href={primaryCta.href}
               aria-current={ctaActive ? "page" : undefined}
-              className={`hidden rounded-sm px-3.5 py-2 text-[14px] font-medium transition-colors duration-150 sm:inline-flex ${
-                night ? "bg-night-text text-night hover:bg-white" : "bg-ink text-paper hover:bg-black"
-              }`}
+              className="hidden h-9 items-center rounded-lg bg-ink px-4 text-[14px] font-medium text-white shadow-xs transition-colors duration-200 hover:bg-[#26282C] sm:inline-flex"
             >
               {primaryCta.label}
             </Link>
@@ -174,11 +168,7 @@ export default function Navbar() {
               onClick={() => setOpenOn(open ? null : pathname)}
               aria-expanded={open}
               aria-controls={MENU_ID}
-              className={`inline-flex h-10 items-center gap-2 rounded-sm border px-3 text-[14px] transition-colors duration-150 lg:hidden ${
-                night
-                  ? "border-night-muted text-night-text hover:border-night-text"
-                  : "border-ink text-ink hover:bg-ink hover:text-paper"
-              }`}
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-hairline-strong bg-paper px-3 text-[14px] font-medium text-ink shadow-xs transition-colors duration-200 hover:bg-paper-2 lg:hidden"
             >
               {open ? <X aria-hidden className="h-4 w-4" /> : <Menu aria-hidden className="h-4 w-4" />}
               {open ? "Close" : "Menu"}
@@ -187,7 +177,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile panel: paper, a ruled list of pages, then the ways to reach us. */}
+      {/* Mobile panel: white, a list of pages, then the ways to reach us. */}
       <div
         id={MENU_ID}
         ref={panelRef}
@@ -198,7 +188,7 @@ export default function Navbar() {
       >
         <div className="mx-auto flex min-h-full w-full max-w-page flex-col px-5 pb-10 pt-6 sm:px-8">
           <nav aria-label="Main">
-            <ul className="divide-y divide-hairline border-y border-ink">
+            <ul className="divide-y divide-hairline">
               {mainNav.map((item) => {
                 const active = isActive(pathname, item.href);
                 return (
@@ -210,9 +200,7 @@ export default function Navbar() {
                       className="flex items-baseline justify-between gap-4 py-4"
                     >
                       <span
-                        className={`text-2xl font-medium tracking-[-0.015em] ${
-                          active ? "text-ink underline decoration-teal-ink decoration-2 underline-offset-[6px]" : "text-ink"
-                        }`}
+                        className={`text-2xl font-semibold tracking-heading ${active ? "text-teal-ink" : "text-ink"}`}
                       >
                         {item.label}
                       </span>
@@ -232,24 +220,24 @@ export default function Navbar() {
             href={primaryCta.href}
             onClick={close}
             aria-current={ctaActive ? "page" : undefined}
-            className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-sm bg-ink px-5 py-3 text-base font-medium text-paper hover:bg-black"
+            className="mt-8 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-ink px-5 text-base font-medium text-white hover:bg-[#26282C]"
           >
             {primaryCta.label}
             <span aria-hidden>→</span>
           </Link>
 
-          <dl className="mt-10 grid gap-y-4 text-[15px]">
-            <div className="border-t border-hairline pt-3">
+          <dl className="mt-8 grid gap-3 text-[15px]">
+            <div className="rounded-lg border border-hairline p-4">
               <dt className="caption">Phone</dt>
               <dd className="mt-1 space-y-1">
                 {site.phones.map((p) => (
-                  <a key={p.href} href={p.href} className="block font-mono text-ink hover:text-teal-ink">
+                  <a key={p.href} href={p.href} className="block font-medium text-ink hover:text-teal-ink">
                     {p.display}
                   </a>
                 ))}
               </dd>
             </div>
-            <div className="border-t border-hairline pt-3">
+            <div className="rounded-lg border border-hairline p-4">
               <dt className="caption">Email</dt>
               <dd className="mt-1">
                 <a href={`mailto:${site.email}`} className="break-all text-ink hover:text-teal-ink">
@@ -257,7 +245,7 @@ export default function Navbar() {
                 </a>
               </dd>
             </div>
-            <div className="border-t border-hairline pt-3">
+            <div className="rounded-lg border border-hairline p-4">
               <dt className="caption">Hours</dt>
               <dd className="mt-1 text-graphite">{site.hours}</dd>
             </div>

@@ -32,28 +32,28 @@ const linkColumns: { title: string; span: string; links: FooterLink[] }[] = [
   { title: "Company", span: "lg:col-span-3", links: companyLinks },
 ];
 
-const linkCls = "text-night-text transition-colors duration-150 hover:text-teal";
+const linkCls = "text-graphite transition-colors duration-200 hover:text-ink";
 
 function ColumnTitle({ children }: { children: React.ReactNode }) {
-  return <h2 className="font-mono text-[13px] text-night-muted">{children}</h2>;
+  return <h2 className="text-[14px] font-semibold text-ink">{children}</h2>;
 }
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="night relative z-10 bg-night text-night-text">
-      <Container className="pb-10 pt-14 md:pt-16">
-        <Link href="/" className="inline-flex items-center gap-3 rounded-sm">
-          <Image src="/logo-night.png" alt="" width={40} height={40} className="h-10 w-10 object-contain" />
-          <span className="text-xl font-medium tracking-[-0.015em]">{site.name}</span>
+    <footer className="relative z-10 border-t border-hairline bg-paper-2 text-ink">
+      <Container className="pb-10 pt-14 md:pt-20">
+        <Link href="/" className="inline-flex items-center gap-3 rounded-md">
+          <Image src="/logo-ink.png" alt="" width={40} height={40} className="h-10 w-10 object-contain" />
+          <span className="text-xl font-semibold tracking-tightish">{site.name}</span>
         </Link>
-        <p className="mt-3 max-w-prose text-[15px] text-night-muted">{site.tagline}</p>
+        <p className="mt-3 max-w-prose text-[15px] text-graphite">{site.tagline}</p>
 
-        <div className="mt-10 grid gap-x-8 gap-y-10 border-t border-night-line pt-8 text-[15px] sm:grid-cols-2 lg:grid-cols-12">
+        <div className="mt-12 grid gap-x-8 gap-y-10 text-[15px] sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <ColumnTitle>Office</ColumnTitle>
-            <address className="mt-3 not-italic leading-relaxed">
+            <address className="mt-4 not-italic leading-relaxed text-graphite">
               {site.address.lines.map((line) => (
                 <span key={line} className="block">
                   {line}
@@ -69,37 +69,37 @@ export default function Footer() {
               Open in Google Maps<span className="sr-only"> (opens in a new tab)</span>
             </a>
 
-            <dl className="mt-6 divide-y divide-night-line border-y border-night-line">
+            <dl className="mt-6 divide-y divide-hairline border-y border-hairline">
               <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 py-2.5">
-                <dt className="text-night-muted">Phone</dt>
-                <dd className="flex gap-3 font-mono text-[14px]">
+                <dt className="text-graphite">Phone</dt>
+                <dd className="flex flex-wrap gap-x-3">
                   {site.phones.map((p) => (
-                    <a key={p.href} href={p.href} className={linkCls}>
+                    <a key={p.href} href={p.href} className="text-ink transition-colors duration-200 hover:text-teal-ink">
                       {p.display}
                     </a>
                   ))}
                 </dd>
               </div>
               <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 py-2.5">
-                <dt className="text-night-muted">Email</dt>
+                <dt className="text-graphite">Email</dt>
                 <dd>
-                  <a href={`mailto:${site.email}`} className={`break-all ${linkCls}`}>
+                  <a href={`mailto:${site.email}`} className="break-all text-ink transition-colors duration-200 hover:text-teal-ink">
                     {site.email}
                   </a>
                 </dd>
               </div>
               <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 py-2.5">
-                <dt className="text-night-muted">Hours</dt>
-                <dd>{site.hours}</dd>
+                <dt className="text-graphite">Hours</dt>
+                <dd className="text-ink">{site.hours}</dd>
               </div>
             </dl>
           </div>
 
           <nav aria-label="Footer" className="contents">
             {linkColumns.map((col) => (
-              <div key={col.title} className={`border-night-line lg:border-l lg:pl-6 ${col.span}`}>
+              <div key={col.title} className={col.span}>
                 <ColumnTitle>{col.title}</ColumnTitle>
-                <ul className="mt-3 space-y-2">
+                <ul className="mt-4 space-y-2.5">
                   {col.links.map((l) => (
                     <li key={l.href}>
                       <Link href={l.href} className={linkCls}>
@@ -113,10 +113,10 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-night-line pt-6 text-[13px] text-night-muted md:flex-row md:justify-between md:gap-8">
+        <div className="mt-14 flex flex-col gap-2 border-t border-hairline pt-6 text-[13px] text-graphite md:flex-row md:justify-between md:gap-8">
           <p>{site.legalName}</p>
           <p>Open-source robot designs (SO-101, XLeRobot) are Apache-2.0 by their authors.</p>
-          <p className="font-mono">© {year}</p>
+          <p>© {year}</p>
         </div>
       </Container>
     </footer>

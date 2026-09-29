@@ -1,14 +1,15 @@
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ButtonLink from "@/components/ui/Button";
+import Reveal from "@/components/ui/Reveal";
 import { classFormats, mazeCourse } from "@/lib/training";
 
 /** Short home-page pointer to the robotics classes page. */
 export default function Classes() {
   return (
-    <section aria-labelledby="classes-title" className="border-t border-ink bg-paper">
-      <Container className="grid gap-10 py-16 md:py-24 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-4">
+    <section aria-labelledby="classes-title" className="border-t border-hairline bg-paper-2">
+      <Container className="grid gap-10 py-20 md:py-28 lg:grid-cols-12 lg:gap-12">
+        <Reveal className="lg:col-span-4">
           <SectionHeading
             label="Classes"
             title={<span id="classes-title">We teach robotics too</span>}
@@ -17,22 +18,22 @@ export default function Classes() {
           <ButtonLink href="/training" variant="link" className="mt-6">
             Robotics classes
           </ButtonLink>
-        </div>
-        <div className="lg:col-span-8">
-          <div className="border-t border-ink py-5">
-            <p className="caption">{mazeCourse.format}</p>
-            <h3 className="mt-1 text-xl font-medium tracking-[-0.015em]">{mazeCourse.name}</h3>
+        </Reveal>
+        <Reveal className="lg:col-span-8" delay={80}>
+          <div className="card p-6 sm:p-8">
+            <span className="chip border-teal/30 bg-teal-wash text-teal-ink">{mazeCourse.format}</span>
+            <h3 className="mt-3 text-2xl font-semibold tracking-heading">{mazeCourse.name}</h3>
             <p className="mt-2 max-w-prose text-[17px] leading-relaxed text-graphite">{mazeCourse.summary}</p>
           </div>
-          <ul className="grid border-t border-hairline sm:grid-cols-2">
-            {classFormats.map((f, i) => (
-              <li key={f.title} className={`border-b border-hairline py-4 ${i % 2 === 0 ? "sm:pr-6" : "sm:pl-6"}`}>
-                <h4 className="font-medium">{f.title}</h4>
-                <p className="mt-1 text-[15px] leading-relaxed text-graphite">{f.description}</p>
+          <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+            {classFormats.map((f) => (
+              <li key={f.title} className="card p-5 sm:p-6">
+                <h4 className="font-semibold tracking-tightish">{f.title}</h4>
+                <p className="mt-1.5 text-[15px] leading-relaxed text-graphite">{f.description}</p>
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

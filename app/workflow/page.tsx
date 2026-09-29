@@ -32,22 +32,26 @@ export default function WorkflowPage() {
       </PageHeader>
 
       <section aria-labelledby="steps-title">
-        <Container className="py-14 md:py-20">
+        <Container className="py-20 md:py-28">
           <h2 id="steps-title" className="sr-only">
             Steps
           </h2>
-          <ol className="border-t border-ink">
+          <ol className="relative space-y-4">
             {processSteps.map((p, i) => (
-              <li key={p.title} className="grid gap-2 border-b border-hairline py-6 md:grid-cols-12 md:gap-8">
-                <h3 className="text-xl font-medium tracking-[-0.015em] md:col-span-3">
-                  <span className="mr-3 font-mono text-[13px] font-normal text-graphite">Step {i + 1}</span>
-                  <br className="hidden md:block" />
-                  {p.title}
+              <li key={p.title} className="card grid gap-3 p-6 sm:p-7 md:grid-cols-12 md:gap-8">
+                <h3 className="flex items-start gap-4 text-xl font-semibold tracking-heading md:col-span-4">
+                  <span aria-hidden className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal-wash text-[14px] font-semibold text-teal-ink">
+                    {i + 1}
+                  </span>
+                  <span className="pt-0.5">
+                    <span className="sr-only">Step {i + 1}: </span>
+                    {p.title}
+                  </span>
                 </h3>
-                <p className="max-w-prose text-[16px] leading-relaxed md:col-span-6">{p.description}</p>
+                <p className="max-w-prose text-[16px] leading-relaxed text-graphite md:col-span-5">{p.description}</p>
                 <p className="text-[14px] md:col-span-3">
-                  <span className="block text-graphite">You get</span>
-                  <span className="font-mono text-[13px]">{p.output}</span>
+                  <span className="caption block">You get</span>
+                  <span className="mt-0.5 block font-medium">{p.output}</span>
                 </p>
               </li>
             ))}
@@ -55,10 +59,10 @@ export default function WorkflowPage() {
         </Container>
       </section>
 
-      <section aria-labelledby="comms-title" className="border-t border-ink bg-paper-2">
-        <Container className="grid gap-8 py-14 md:grid-cols-12 md:py-20">
+      <section aria-labelledby="comms-title" className="border-t border-hairline bg-paper-2">
+        <Container className="grid gap-8 py-20 md:grid-cols-12 md:py-28">
           <div className="md:col-span-4">
-            <h2 id="comms-title" className="text-[1.75rem] font-medium leading-tight tracking-[-0.015em] sm:text-4xl">
+            <h2 id="comms-title" className="text-balance text-[2rem] font-semibold leading-[1.1] tracking-heading sm:text-[2.5rem]">
               Staying in touch
             </h2>
           </div>

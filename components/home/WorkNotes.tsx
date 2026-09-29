@@ -1,40 +1,41 @@
 import Container from "@/components/ui/Container";
 import ButtonLink from "@/components/ui/Button";
+import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { caseStudies } from "@/lib/work";
 
 export default function WorkNotes() {
   return (
-    <section aria-labelledby="work-title" className="border-t border-ink bg-paper">
-      <Container className="grid gap-10 py-16 md:py-24 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-4">
-          <SectionHeading
-            label="Work"
-            title={<span id="work-title">What we work on</span>}
-            description="Web and mobile apps, AI, IoT and robot software. Ask us on a call about similar projects."
-          />
-          <ButtonLink href="/portfolio" variant="link" className="mt-6">
-            All work
-          </ButtonLink>
-        </div>
+    <section aria-labelledby="work-title" className="bg-paper">
+      <Container className="grid gap-10 py-20 md:py-28 lg:grid-cols-12 lg:gap-12">
+        <Reveal className="lg:col-span-4">
+          <div className="lg:sticky lg:top-28">
+            <SectionHeading
+              label="Work"
+              title={<span id="work-title">What we work on</span>}
+              description="Web and mobile apps, AI, IoT and robot software. Ask us on a call about similar projects."
+            />
+            <ButtonLink href="/portfolio" variant="link" className="mt-6">
+              All work
+            </ButtonLink>
+          </div>
+        </Reveal>
 
-        <div className="lg:col-span-8">
-          <ul className="border-t border-ink">
-            {caseStudies.map((c) => (
-              <li
-                key={c.slug}
-                className="grid gap-1 border-b border-hairline py-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-6"
-              >
-                <p className="caption pt-0.5">{c.area}</p>
-                <div>
-                  <h3 className="font-medium">{c.title}</h3>
-                  <p className="mt-1 text-[15px] leading-relaxed text-graphite">{c.summary}</p>
-                  <p className="mt-2 font-mono text-[12px] text-graphite">{c.tags.join(" · ")}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-8">
+          {caseStudies.map((c, i) => (
+            <Reveal
+              as="li"
+              key={c.slug}
+              delay={(i % 2) * 80}
+              className={`card flex flex-col p-6 ${i === caseStudies.length - 1 && caseStudies.length % 2 === 1 ? "sm:col-span-2" : ""}`}
+            >
+              <span className="chip self-start">{c.area}</span>
+              <h3 className="mt-4 text-lg font-semibold leading-snug tracking-tightish">{c.title}</h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-graphite">{c.summary}</p>
+              <p className="mt-auto pt-4 text-[13px] text-graphite">{c.tags.join(" · ")}</p>
+            </Reveal>
+          ))}
+        </ul>
       </Container>
     </section>
   );

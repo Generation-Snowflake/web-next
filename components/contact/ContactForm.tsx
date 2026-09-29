@@ -210,9 +210,9 @@ async function copyText(text: string) {
 /* ------------------------------------------------------------------ */
 
 const control =
-  "block w-full rounded-sm border bg-paper px-3.5 py-2.5 text-base text-ink placeholder:text-graphite/70 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-teal-ink/30";
+  "block w-full rounded-lg border bg-paper px-3.5 py-2.5 text-base text-ink shadow-xs placeholder:text-graphite/70 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:ring-4 focus:ring-teal/15";
 const controlState = (invalid: boolean) =>
-  invalid ? "border-signal focus:border-signal" : "border-ink/70 hover:border-ink focus:border-teal-ink";
+  invalid ? "border-signal focus:border-signal" : "border-hairline-strong hover:border-graphite/40 focus:border-teal-ink";
 
 function Label({ htmlFor, children, required, optional }: { htmlFor: string; children: React.ReactNode; required?: boolean; optional?: boolean }) {
   return (
@@ -243,7 +243,7 @@ function SelectShell({ children }: { children: React.ReactNode }) {
 }
 
 const smallBtn =
-  "inline-flex items-center justify-center rounded-sm px-4 py-2.5 text-[15px] font-medium transition-colors duration-150";
+  "inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-[15px] font-medium transition-colors duration-200";
 
 /* ------------------------------------------------------------------ */
 /* Form                                                                */
@@ -329,11 +329,11 @@ export default function ContactForm({ initial }: { initial?: Partial<Values> }) 
   if (sent) {
     const href = mailto(sent.subject, sent.lines.join("\r\n"));
     return (
-      <div className="border-t border-ink pt-6">
+      <div className="card p-5 sm:p-8">
         <h2
           ref={successRef}
           tabIndex={-1}
-          className="text-2xl font-medium tracking-[-0.015em] focus:outline-none sm:text-3xl"
+          className="text-2xl font-semibold tracking-heading focus:outline-none sm:text-3xl"
         >
           Now press Send in your email app
         </h2>
@@ -343,27 +343,27 @@ export default function ContactForm({ initial }: { initial?: Partial<Values> }) 
         </p>
         <p className="mt-3 max-w-prose text-[15px] leading-relaxed text-graphite">
           Nothing opened? Copy the message below and send it from any email account, or call us on{" "}
-          <a href={site.phones[0].href} className="link font-mono">
+          <a href={site.phones[0].href} className="link">
             {site.phones[0].display}
           </a>
           .
         </p>
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <a href={href} className={`${smallBtn} bg-ink text-paper hover:bg-black`}>
+          <a href={href} className={`${smallBtn} bg-ink text-white shadow-xs hover:bg-[#26282C]`}>
             Open email app again
           </a>
           <button
             type="button"
             onClick={() => onCopy("message")}
-            className={`${smallBtn} border border-ink text-ink hover:bg-ink hover:text-paper`}
+            className={`${smallBtn} border border-hairline-strong bg-paper text-ink shadow-xs hover:bg-paper-2`}
           >
             {copied === "message" ? "Message copied" : "Copy message"}
           </button>
           <button
             type="button"
             onClick={() => onCopy("address")}
-            className={`${smallBtn} border border-ink text-ink hover:bg-ink hover:text-paper`}
+            className={`${smallBtn} border border-hairline-strong bg-paper text-ink shadow-xs hover:bg-paper-2`}
           >
             {copied === "address" ? "Address copied" : "Copy email address"}
           </button>
@@ -374,7 +374,7 @@ export default function ContactForm({ initial }: { initial?: Partial<Values> }) 
 
         <figure className="mt-8">
           <figcaption className="caption mb-2">Your message</figcaption>
-          <div className="max-h-72 overflow-auto border border-hairline bg-paper-2 p-4 text-[14px] leading-6">
+          <div className="max-h-72 overflow-auto rounded-lg border border-hairline bg-paper-2 p-4 text-[14px] leading-6">
             <p className="text-graphite">
               To: <span className="text-ink">{site.email}</span>
             </p>
@@ -396,9 +396,9 @@ export default function ContactForm({ initial }: { initial?: Partial<Values> }) 
   const interestErr = show("interest");
 
   return (
-    <form ref={formRef} noValidate onSubmit={onSubmit} aria-labelledby={id("title")} className="border-t border-ink pt-6">
+    <form ref={formRef} noValidate onSubmit={onSubmit} aria-labelledby={id("title")} className="card p-5 sm:p-8">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 id={id("title")} className="text-2xl font-medium tracking-[-0.015em]">
+        <h2 id={id("title")} className="text-2xl font-semibold tracking-heading sm:text-[1.75rem]">
           Send us a message
         </h2>
         <p className="text-[13px] text-graphite">* required</p>
@@ -430,18 +430,18 @@ export default function ContactForm({ initial }: { initial?: Partial<Values> }) 
         <legend className="mb-2 flex items-baseline gap-1 text-[15px] font-medium">
           What is it about? <span aria-hidden className="text-graphite">*</span>
         </legend>
-        <div
-          className={`divide-y rounded-sm border ${
-            interestErr ? "divide-hairline border-signal" : "divide-hairline border-ink/70"
-          }`}
-        >
+        <div className="grid gap-2">
           {INTERESTS.map(({ value, label, hint }) => {
             const checked = values.interest === value;
             return (
               <label
                 key={value}
-                className={`flex cursor-pointer items-start gap-3 px-4 py-3 transition-colors duration-150 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-teal-ink ${
-                  checked ? "bg-paper-2" : "hover:bg-paper-2/60"
+                className={`flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 transition-[background-color,border-color] duration-200 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-teal-ink ${
+                  checked
+                    ? "border-teal bg-teal-wash/60 ring-1 ring-teal"
+                    : interestErr
+                      ? "border-signal hover:bg-paper-2"
+                      : "border-hairline-strong hover:bg-paper-2"
                 }`}
               >
                 <input
@@ -468,7 +468,7 @@ export default function ContactForm({ initial }: { initial?: Partial<Values> }) 
       </fieldset>
 
       {values.interest === "product" && (
-        <div className="mt-6 grid gap-5 border-l-2 border-ink pl-4 sm:grid-cols-6 sm:pl-5">
+        <div className="mt-6 grid gap-5 rounded-xl border border-hairline bg-paper-2 p-4 sm:grid-cols-6 sm:p-5">
           <div className="sm:col-span-6">
             <Label htmlFor={id("product")}>Which product?</Label>
             <SelectShell>
@@ -513,7 +513,7 @@ export default function ContactForm({ initial }: { initial?: Partial<Values> }) 
       )}
 
       {values.interest === "project" && (
-        <div className="mt-6 grid gap-5 border-l-2 border-ink pl-4 sm:grid-cols-2 sm:pl-5">
+        <div className="mt-6 grid gap-5 rounded-xl border border-hairline bg-paper-2 p-4 sm:grid-cols-2 sm:p-5">
           <div className="sm:col-span-2">
             <Label htmlFor={id("service")}>Which service fits best?</Label>
             <SelectShell>
@@ -582,7 +582,7 @@ export default function ContactForm({ initial }: { initial?: Partial<Values> }) 
         <p className="max-w-sm text-[14px] leading-relaxed text-graphite">
           Sending opens your own email app with this message ready to go. Nothing is stored on this website.
         </p>
-        <button type="submit" className={`${smallBtn} group shrink-0 gap-2 bg-ink px-5 py-3 text-base text-paper hover:bg-black`}>
+        <button type="submit" className={`${smallBtn} group h-12 shrink-0 gap-2 bg-ink px-5 text-base text-white shadow-xs hover:bg-[#26282C]`}>
           Send via email
           <span aria-hidden className="transition-transform duration-150 group-hover:translate-x-0.5">
             →

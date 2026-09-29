@@ -10,59 +10,59 @@ import { quoteHref } from "./productUi";
 export default function KitBlock({
   product,
   model,
-  figure,
 }: {
   product: Product;
   model: ProductModel;
-  figure: number;
 }) {
   const photos = model.gallery ?? (model.image ? [{ src: model.image, alt: model.name }] : []);
   const price = formatTHB(model.priceTHB);
   return (
-    <article id={model.id} className="scroll-mt-24 border-t border-ink py-12 md:py-14">
+    <article id={model.id} className="scroll-mt-24 border-t border-hairline py-14 md:py-20">
       <div className="grid gap-8 md:grid-cols-12 md:gap-10">
         <div className="md:col-span-5">
-          <ProductGallery photos={photos} figure={figure} />
+          <ProductGallery photos={photos} />
         </div>
         <div className="md:col-span-7">
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-            <h3 className="text-[1.5rem] font-medium leading-tight tracking-[-0.015em] sm:text-[1.75rem]">
+            <h3 className="text-[1.625rem] font-semibold leading-tight tracking-heading sm:text-[2rem]">
               {product.name} {model.name}
             </h3>
-            <p className="font-mono text-[1.25rem] text-signal">{price ?? "Price on request"}</p>
+            <p className="font-mono text-[1.375rem] font-medium tabular-nums text-signal">{price ?? "Price on request"}</p>
           </div>
           <p className="caption mt-1">
-            {model.sku && <>SKU {model.sku} · </>}
+            {model.sku && <><span className="font-mono font-normal">SKU {model.sku}</span> · </>}
             {model.audience}
           </p>
-          <p className="mt-4 max-w-prose text-[17px] leading-relaxed text-graphite">{model.tagline}</p>
+          <p className="mt-4 max-w-prose text-lg leading-relaxed text-graphite">{model.tagline}</p>
 
           <SpecTable specs={model.specs} className="mt-8" />
 
           <div className="mt-8 grid gap-8 sm:grid-cols-2">
             {model.inTheBox && model.inTheBox.length > 0 && (
               <div>
-                <h4 className="mb-2 text-[15px] font-medium">In the box</h4>
+                <h4 className="mb-3 text-[15px] font-semibold">In the box</h4>
                 <InTheBox items={model.inTheBox} />
               </div>
             )}
             {model.extras && model.extras.length > 0 && (
               <div>
-                <h4 className="mb-2 text-[15px] font-medium">Also included</h4>
-                <table className="w-full border-t border-ink text-left text-[15px]">
+                <h4 className="mb-3 text-[15px] font-semibold">Also included</h4>
+                <div className="card overflow-hidden">
+                <table className="w-full text-left text-[15px]">
                   <tbody>
                     {model.extras.map((e) => (
-                      <tr key={e.label} className="border-b border-hairline">
-                        <th scope="row" className="py-2 pr-4 font-normal">
+                      <tr key={e.label} className="border-b border-hairline last:border-b-0">
+                        <th scope="row" className="px-4 py-2.5 font-normal">
                           {e.label}
                         </th>
-                        <td className={`py-2 text-right font-mono text-[14px] ${e.included ? "text-ink" : "text-graphite"}`}>
+                        <td className={`px-4 py-2.5 text-right text-[14px] font-medium ${e.included ? "text-teal-ink" : "text-graphite"}`}>
                           {e.included ? "Yes" : "No"}
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+                </div>
               </div>
             )}
           </div>

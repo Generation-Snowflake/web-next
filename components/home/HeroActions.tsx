@@ -21,7 +21,7 @@ function robotCue(action: RobotAction) {
 export default function HeroActions() {
   return (
     <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
-      <ButtonLink href="/contact" size="lg" tone="night" arrow {...robotCue("wave")}>
+      <ButtonLink href="/contact" size="lg" arrow {...robotCue("wave")}>
         Describe your project
       </ButtonLink>
       <ButtonLink href="/products" variant="link" className="text-[16px]" {...robotCue("excited")}>

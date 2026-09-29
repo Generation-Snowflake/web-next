@@ -1,15 +1,16 @@
+import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import ButtonLink from "@/components/ui/Button";
-import ImageFrame from "@/components/ui/ImageFrame";
+import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { formatTHB, products, startingPrice } from "@/lib/products";
 
 export default function RobotsWeSell() {
   return (
-    <section aria-labelledby="robots-title" className="border-t border-ink bg-paper-2">
-      <Container className="py-16 md:py-24">
-        <div className="flex flex-wrap items-end justify-between gap-6">
+    <section aria-labelledby="robots-title" className="bg-paper">
+      <Container className="py-20 md:py-28">
+        <Reveal className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
             label="Products"
             title={<span id="robots-title">What we sell</span>}
@@ -18,59 +19,57 @@ export default function RobotsWeSell() {
           <ButtonLink href="/products" variant="link">
             All products
           </ButtonLink>
-        </div>
+        </Reveal>
 
-        <ul className="mt-12 border-t border-ink">
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
           {products.map((p, i) => {
             const image = p.image ?? p.models.find((m) => m.image)?.image;
             const from = formatTHB(startingPrice(p));
             return (
-              <li key={p.slug} className="grid gap-6 border-b border-hairline py-8 last:border-b-0 md:grid-cols-12 md:gap-8">
-                {image && (
-                  <div className="md:col-span-4">
-                    <ImageFrame
-                      src={image}
-                      alt={`${p.name}, ${p.category.toLowerCase()}`}
-                      caption={`FIG. ${i + 2} — ${p.name}`}
-                      sizes="(min-width: 768px) 30vw, 100vw"
-                      fit="contain"
-                    />
-                  </div>
-                )}
-                <div className={image ? "md:col-span-5" : "md:col-span-8"}>
-                  <p className="caption">{p.category}</p>
-                  <h3 className="mt-1 text-2xl font-medium tracking-[-0.015em]">
-                    <Link href={`/products/${p.slug}`} className="transition-colors duration-150 hover:text-teal-ink">
+              <Reveal as="li" key={p.slug} delay={(i % 3) * 80} className={i < 2 ? "lg:col-span-3" : "lg:col-span-2"}>
+                <Link href={`/products/${p.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
+                  <span className={`relative block overflow-hidden border-b border-hairline bg-paper-3 ${i < 2 ? "aspect-[4/3] lg:aspect-[16/9]" : "aspect-[4/3]"}`}>
+                    {image ? (
+                      <Image
+                        src={image}
+                        alt={`${p.name}, ${p.category.toLowerCase()}`}
+                        fill
+                        sizes="(min-width: 1024px) 40rem, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover object-[center_30%] transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                      />
+                    ) : (
+                      <span className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-2xl font-semibold tracking-heading text-graphite/70">{p.name}</span>
+                      </span>
+                    )}
+                  </span>
+                  <span className="flex flex-1 flex-col p-6">
+                    <span className="caption">{p.category}</span>
+                    <span className="mt-1 text-xl font-semibold tracking-heading transition-colors duration-200 group-hover:text-teal-ink">
                       {p.name}
-                    </Link>
-                  </h3>
-                  <p className="mt-3 max-w-prose leading-relaxed text-graphite">{p.summary}</p>
-                  <dl className="mt-5 border-t border-hairline font-mono text-[13px]">
-                    {p.specs.slice(0, 3).map((s) => (
-                      <div key={s.label} className="grid grid-cols-[8rem_minmax(0,1fr)] gap-4 border-b border-hairline py-2">
-                        <dt className="text-graphite">{s.label}</dt>
-                        <dd>{s.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-                <div className="flex flex-col items-start gap-3 md:col-span-3 md:items-end md:text-right">
-                  {p.status === "in-development" ? (
-                    <p className="font-mono text-[14px] text-graphite">In development</p>
-                  ) : from ? (
-                    <p className="font-mono text-[15px]">
-                      <span className="text-graphite">from </span>
-                      <span className="text-xl text-signal">{from}</span>
-                    </p>
-                  ) : (
-                    <p className="font-mono text-[14px] text-graphite">Price on request</p>
-                  )}
-                  {p.models.length > 1 && <p className="caption">{p.models.length} models</p>}
-                  <ButtonLink href={`/products/${p.slug}`} variant="link" className="mt-1">
-                    {p.name} details
-                  </ButtonLink>
-                </div>
-              </li>
+                    </span>
+                    <span className="mb-5 mt-2 text-[15px] leading-relaxed text-graphite">{p.summary}</span>
+                    <span className="mt-auto flex items-baseline justify-between gap-4 border-t border-hairline pt-4">
+                      {p.status === "in-development" ? (
+                        <span className="chip">In development</span>
+                      ) : from ? (
+                        <span className="text-[15px]">
+                          <span className="text-graphite">From </span>
+                          <span className="font-mono text-[17px] font-medium tabular-nums text-signal">{from}</span>
+                        </span>
+                      ) : (
+                        <span className="text-[15px] text-graphite">Price on request</span>
+                      )}
+                      <span className="text-[14px] font-medium text-teal-ink">
+                        {p.models.length > 1 ? `${p.models.length} models ` : "Details "}
+                        <span aria-hidden className="inline-block transition-transform duration-200 ease-out group-hover:translate-x-0.5">
+                          →
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                </Link>
+              </Reveal>
             );
           })}
         </ul>

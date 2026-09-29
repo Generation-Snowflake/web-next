@@ -45,17 +45,16 @@ function usePrefersReducedMotion() {
 type Status = "idle" | "loading" | "ready" | "error" | "unsupported";
 
 /**
- * Interactive 3D model on a paper-grey studio backdrop. Shows the poster
+ * Interactive 3D model on a light-grey (paper-3) studio backdrop. Shows the poster
  * until the model has loaded (and keeps it if loading fails or WebGL is
  * missing). Rendering stops while the figure is off screen.
  */
 export default function Product3DViewer({
   model,
-  figure = 1,
   className = "aspect-[4/3] md:aspect-[16/9]",
 }: {
   model: Model3D;
-  /** FIG. number in the caption. */
+  /** @deprecated figure numbers are no longer shown. */
   figure?: number;
   className?: string;
 }) {
@@ -89,7 +88,7 @@ export default function Product3DViewer({
 
   return (
     <figure>
-      <div ref={ref} className={`relative overflow-hidden bg-paper-3 ${className}`}>
+      <div ref={ref} className={`relative overflow-hidden rounded-xl border border-hairline bg-paper-3 ${className}`}>
         <div role="img" aria-label={model.label} className="absolute inset-0">
         {status !== "ready" && (
           <Image
@@ -116,27 +115,26 @@ export default function Product3DViewer({
         )}
         </div>
         {status === "loading" && (
-          <p className="absolute left-3 top-3 bg-paper-3 px-1.5 font-mono text-[12px] text-graphite">Loading 3D model…</p>
+          <p className="absolute left-3 top-3 rounded-full border border-hairline bg-paper px-3 py-1 text-[13px] font-medium text-graphite shadow-xs">Loading 3D model…</p>
         )}
         {status === "ready" && !reduced && (
           <button
             type="button"
             onClick={() => setPaused((p) => !p)}
             aria-pressed={paused}
-            className="absolute bottom-3 right-3 rounded-sm border border-ink bg-paper px-3 py-1.5 font-mono text-[12px] text-ink transition-colors duration-150 hover:bg-ink hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-ink"
+            className="absolute bottom-3 right-3 rounded-lg border border-hairline-strong bg-paper px-3 py-1.5 text-[13px] font-medium text-ink shadow-xs transition-colors duration-200 hover:bg-paper-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-ink"
           >
             {paused ? "Play motion" : "Pause motion"}
           </button>
         )}
       </div>
-      <figcaption className="caption mt-2">
-        FIG. {figure} —{" "}
+      <figcaption className="caption mt-3 font-normal">
         {status === "ready"
           ? `${model.label}. Drag to rotate`
           : status === "error"
-            ? "the 3D model could not load, showing a still render"
+            ? "The 3D model could not load, showing a still render"
             : status === "unsupported"
-              ? "still render (3D needs WebGL)"
+              ? "Still render (3D needs WebGL)"
               : `${model.label}. Drag to rotate`}
       </figcaption>
     </figure>

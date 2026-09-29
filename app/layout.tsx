@@ -26,7 +26,7 @@ const plexThai = IBM_Plex_Sans_Thai({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#F3F1EC",
+  themeColor: "#FFFFFF",
 };
 
 export const metadata: Metadata = {

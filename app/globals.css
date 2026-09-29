@@ -5,8 +5,8 @@
 /* Design system: docs/design-system.md */
 
 html {
-  background: #f3f1ec;
-  color: #16181a;
+  background: #ffffff;
+  color: #0b0c0e;
   scroll-behavior: smooth;
   /* clip (not hidden) so position: sticky keeps working */
   overflow-x: clip;
@@ -26,8 +26,8 @@ body {
 }
 
 ::selection {
-  background: #16181a;
-  color: #f3f1ec;
+  background: #ccefed;
+  color: #0b0c0e;
 }
 
 :focus-visible {
@@ -40,22 +40,53 @@ body {
 }
 
 @layer components {
-  /* Underlined text link, the default "secondary action". */
+  /* Text link: teal-ink, underline appears on hover. */
   .link {
-    @apply text-teal-ink underline decoration-1 underline-offset-4 transition-colors hover:text-ink;
+    @apply font-medium text-teal-ink underline decoration-teal-ink/30 decoration-1 underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-ink/40;
   }
   .night .link {
     @apply text-night-text decoration-night-muted hover:decoration-teal;
   }
-  /* Small monospace caption: FIG labels, SKUs, units. Sentence case. */
+  /* Small secondary label: field names, categories, units. */
   .caption {
-    @apply font-mono text-[13px] leading-5 text-graphite;
+    @apply text-[13px] font-medium leading-5 text-graphite;
   }
+  /* Raised white card: 1px border, soft shadow. */
+  .card {
+    @apply rounded-xl border border-hairline bg-paper shadow-card;
+  }
+  /* Card that is a link: gentle lift on hover. */
+  .card-hover {
+    @apply transition-[box-shadow,transform,border-color] duration-300 ease-out hover:-translate-y-0.5 hover:border-hairline-strong hover:shadow-card-hover motion-reduce:hover:translate-y-0;
+  }
+  /* Small rounded tag. */
+  .chip {
+    @apply inline-flex items-center rounded-full border border-hairline bg-paper px-2.5 py-0.5 text-[13px] font-medium leading-5 text-graphite;
+  }
+}
+
+/* Scroll reveal (components/ui/Reveal). Content is visible without JS; the
+   client only hides elements that are still below the fold, then fades them in. */
+.reveal-pending {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.reveal-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .reveal-pending {
+    opacity: 1;
+    transform: none;
   }
   *,
   *::before,

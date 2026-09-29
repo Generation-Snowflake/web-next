@@ -22,12 +22,16 @@ export default function PortfolioPage() {
         description="The kinds of projects we build. We keep client names and details private, but we're happy to talk them through on a call."
       />
 
-      <section aria-labelledby="projects" className="py-14 md:py-20">
+      <section aria-labelledby="projects" className="py-20 md:py-28">
         <Container>
           <SectionHeading label="Projects" title={<span id="projects">What we work on</span>} />
-          <div className="mt-10 border-t border-ink">
-            {caseStudies.map((s) => (
-              <CaseNote key={s.slug} study={s} />
+          <div className="mt-12 grid gap-4 sm:grid-cols-2">
+            {caseStudies.map((s, i) => (
+              <CaseNote
+                key={s.slug}
+                study={s}
+                className={i === caseStudies.length - 1 && caseStudies.length % 2 === 1 ? "sm:col-span-2" : ""}
+              />
             ))}
           </div>
         </Container>
