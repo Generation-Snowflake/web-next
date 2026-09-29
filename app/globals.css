@@ -1,50 +1,67 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* Design system: docs/design-system.md */
 
-html,
-body {
-  background: radial-gradient(circle at 20% 20%, #0a1f33, #030712 60%);
-  color: #e2f3ff;
+html {
+  background: #f3f1ec;
+  color: #16181a;
   scroll-behavior: smooth;
-  font-family: "Inter", sans-serif;
-  overflow-x: hidden; /* ป้องกัน horizontal overflow โดยไม่ตั้งใจ */
+  /* clip (not hidden) so position: sticky keeps working */
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(
-      circle at 10% 80%,
-      rgba(0, 255, 255, 0.08),
-      transparent 60%
-    ),
-    radial-gradient(circle at 85% 20%, rgba(0, 150, 255, 0.08), transparent 50%);
-  z-index: -1;
+body {
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
 }
 
-/* Selection */
+/* Thai needs room for tone marks and stacked vowels. */
+:lang(th),
+.thai {
+  line-height: 1.7;
+  letter-spacing: 0;
+}
+
 ::selection {
-  background: #00d4ff;
-  color: black;
+  background: #16181a;
+  color: #f3f1ec;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+:focus-visible {
+  outline: 2px solid #00736e;
+  outline-offset: 2px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #00d4ff;
-  border-radius: 20px;
+.night :focus-visible {
+  outline-color: #00b4ae;
+}
+
+@layer components {
+  /* Underlined text link, the default "secondary action". */
+  .link {
+    @apply text-teal-ink underline decoration-1 underline-offset-4 transition-colors hover:text-ink;
+  }
+  .night .link {
+    @apply text-night-text decoration-night-muted hover:decoration-teal;
+  }
+  /* Small monospace caption: FIG labels, SKUs, units. Sentence case. */
+  .caption {
+    @apply font-mono text-[13px] leading-5 text-graphite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

@@ -1,0 +1,16 @@
+XLeRobot media attribution (GSF Robotics & AI website)
+=======================================================
+
+Source project: XLeRobot
+  https://github.com/Vector-Wangel/XLeRobot
+  Licensed under the Apache License, Version 2.0
+  (full text: http://www.apache.org/licenses/LICENSE-2.0 and in
+  public/products/lerobot/so101-ATTRIBUTION.txt).
+
+Files
+  /models/xlerobot.glb                        Built from the XLeRobot ManiSkill URDF and meshes
+  /products/xlerobot/xlerobot-1..4.webp        Photos from the XLeRobot project, resized and re-encoded as WebP
+  /products/xlerobot/xlerobot-3d-poster.webp   Render of /models/xlerobot.glb (product page 3D viewer still)
+
+Modifications made by GSF: URDF meshes converted to a glTF node hierarchy
+following the URDF joints, and Draco-compressed.
