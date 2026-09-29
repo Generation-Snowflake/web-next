@@ -4,6 +4,7 @@ import Hero from "@/components/home/Hero";
 import PriceStrip from "@/components/home/PriceStrip";
 import ServicesList from "@/components/home/ServicesList";
 import RobotsWeSell from "@/components/home/RobotsWeSell";
+import Classes from "@/components/home/Classes";
 import TrackRecord from "@/components/home/TrackRecord";
 import WorkNotes from "@/components/home/WorkNotes";
 import { site } from "@/lib/site";
@@ -34,6 +35,7 @@ export default function HomePage() {
       <PriceStrip />
       <ServicesList />
       <RobotsWeSell />
+      <Classes />
       <TrackRecord />
       <WorkNotes />
       <CtaBand

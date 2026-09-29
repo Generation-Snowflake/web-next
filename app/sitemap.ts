@@ -13,6 +13,7 @@ const staticRoutes: Entry[] = [
   { path: "/services", priority: 0.9, changeFrequency: "monthly" },
   { path: "/products", priority: 0.9, changeFrequency: "weekly" },
   { path: "/contact", priority: 0.8, changeFrequency: "yearly" },
+  { path: "/training", priority: 0.8, changeFrequency: "monthly" },
   { path: "/portfolio", priority: 0.7, changeFrequency: "monthly" },
   { path: "/workflow", priority: 0.6, changeFrequency: "yearly" },
   { path: "/about", priority: 0.6, changeFrequency: "yearly" },

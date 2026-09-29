@@ -11,11 +11,12 @@ import { products, allModels } from "@/lib/products";
 /* Options                                                             */
 /* ------------------------------------------------------------------ */
 
-type Interest = "project" | "product" | "partnership" | "other";
+type Interest = "project" | "product" | "classes" | "partnership" | "other";
 
 const INTERESTS: { value: Interest; label: string; hint: string }[] = [
   { value: "project", label: "A custom project", hint: "Software, AI or robotics built for you" },
   { value: "product", label: "Buying a product", hint: "Robots and kits: quotes, school and bulk orders" },
+  { value: "classes", label: "Robotics classes", hint: "Courses for kids, school clubs, colleges and teachers" },
   { value: "partnership", label: "Partnership", hint: "Resellers, research and joint projects" },
   { value: "other", label: "Something else", hint: "Anything you want to ask" },
 ];
@@ -156,6 +157,8 @@ function compose(v: Values) {
     details.push(["Service", s || "Not sure yet, please advise"]);
     if (v.budget) details.push(["Budget range", v.budget]);
     if (v.timeline) details.push(["Timeline", v.timeline]);
+  } else if (v.interest === "classes") {
+    subject = `Class enquiry: ${who}`;
   } else if (v.interest === "partnership") {
     subject = `Partnership enquiry: ${who}`;
   }
