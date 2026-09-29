@@ -332,7 +332,7 @@ export const products: Product[] = [
     slug: "robopark",
     group: "education",
     status: "in-development",
-    siteUrl: "https://www.robopark.fun",
+    // Site link hidden until robopark.fun is ready: siteUrl "https://www.robopark.fun".
     name: "RoboPark",
     maker: "GSF Robotics & AI",
     category: "Online robotics learning platform",
@@ -382,7 +382,7 @@ export const products: Product[] = [
     image: "/products/robopark/robopark-1.webp",
     imageAlt: "A robot maze in the RoboPark simulator",
     gallery: [{ src: "/products/robopark/robopark-1.webp", alt: "A robot maze in the RoboPark simulator" }],
-    links: [{ label: "robopark.fun", href: "https://www.robopark.fun" }],
+    links: [],
     accent: "teal",
   },
   {
