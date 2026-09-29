@@ -18,8 +18,8 @@ export default function Demo3DPage() {
           3D Model Preview
         </h1>
         <p className="mb-10 max-w-2xl leading-relaxed text-softwhite/70">
-          ตัวอย่างการแสดงผลและขยับโมเดล 3 มิติแบบเรียลไทม์ด้วย Three.js —
-          ลากเพื่อหมุน, ซูม, เล่นแอนิเมชัน และสลับโหมดการแสดงผลได้
+          A real-time 3D model viewer built with Three.js. Drag to rotate, zoom,
+          play animations and switch display modes.
         </p>
       </FadeIn>
 
@@ -32,22 +32,22 @@ export default function Demo3DPage() {
           <div className="rounded-xl border border-ice/20 bg-white/5 p-6 backdrop-blur-sm">
             <h3 className="mb-2 text-lg font-semibold text-ice">Real-time</h3>
             <p className="text-sm text-softwhite/70">
-              เรนเดอร์ด้วย WebGL ผ่าน react-three-fiber รองรับเงา แสง
-              และ environment lighting
+              Rendered with WebGL through react-three-fiber, with shadows, lights
+              and environment lighting.
             </p>
           </div>
           <div className="rounded-xl border border-ice/20 bg-white/5 p-6 backdrop-blur-sm">
             <h3 className="mb-2 text-lg font-semibold text-ice">Interactive</h3>
             <p className="text-sm text-softwhite/70">
-              ควบคุมกล้องด้วย OrbitControls — หมุน, ซูม, เลื่อน
-              และรีเซ็ตมุมมองได้อิสระ
+              OrbitControls camera: rotate, zoom, pan
+              and reset the view freely.
             </p>
           </div>
           <div className="rounded-xl border border-ice/20 bg-white/5 p-6 backdrop-blur-sm">
             <h3 className="mb-2 text-lg font-semibold text-ice">Animated</h3>
             <p className="text-sm text-softwhite/70">
-              เล่นแอนิเมชันที่ฝังมากับไฟล์ GLB พร้อมสลับคลิปและ
-              สลับโหมด wireframe
+              Plays the animations embedded in the GLB file, with clip switching
+              and a wireframe mode.
             </p>
           </div>
         </div>

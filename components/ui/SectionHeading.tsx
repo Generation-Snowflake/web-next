@@ -16,7 +16,7 @@ type Props = {
   children?: React.ReactNode;
 };
 
-/** Mono label, e.g. "Services · บริการ". No caps, no tracking, no decoration. */
+/** Mono label, e.g. "Services". No caps, no tracking, no decoration. */
 export function Label({
   children,
   th,

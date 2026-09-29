@@ -42,13 +42,12 @@ export default function PortfolioPage() {
       <PageHeader
         crumbs={[{ label: "Work" }]}
         title="Work"
-        titleTh="ผลงาน"
         description="Four projects, described without naming the clients, and two 3D demos you can open right now."
       />
 
       <section aria-labelledby="projects" className="py-14 md:py-20">
         <Container>
-          <SectionHeading label="Projects" labelTh="โปรเจกต์" title={<span id="projects">Case notes</span>} />
+          <SectionHeading label="Projects" title={<span id="projects">Case notes</span>} />
           <div className="mt-10 border-t border-ink">
             {caseStudies.map((s) => (
               <CaseNote key={s.slug} study={s} />
@@ -90,7 +89,6 @@ export default function PortfolioPage() {
 
       <CtaBand
         title="Have a project like one of these?"
-        titleTh="มีงานแบบนี้อยากให้เราช่วย"
         description="Tell us what the problem is, what you use now, and when you need it fixed."
       />
     </>

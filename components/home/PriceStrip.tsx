@@ -24,7 +24,7 @@ export default function PriceStrip() {
       <Container className="pb-8 pt-7">
         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
           <h2 id="price-list" className="font-mono text-[13px] text-graphite">
-            Price list · <span lang="th">ราคา</span>
+            Price list
           </h2>
           {priceNote && <p className="caption">{priceNote}</p>}
         </div>

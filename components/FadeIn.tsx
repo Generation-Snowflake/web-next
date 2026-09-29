@@ -20,7 +20,7 @@ export default function FadeIn({ children, delay = 0 }: Props) {
   return (
     <motion.div
       ref={(el) => {
-        // ให้ inView ref attach กับ motion DOM โดยตรง
+        // Attach the inView ref directly to the motion DOM node.
         ref(el);
       }}
       initial="hidden"

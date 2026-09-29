@@ -36,9 +36,6 @@ export default function Hero() {
             >
               We write the software, and we sell the robots it runs on.
             </h1>
-            <p lang="th" className="mt-4 text-lg text-night-muted sm:text-xl">
-              ทีมวิศวกรซอฟต์แวร์และหุ่นยนต์ จากปากเกร็ด นนทบุรี
-            </p>
             <p className="mt-6 max-w-[34rem] text-[17px] leading-relaxed text-night-text/85">
               For companies we build computer vision, ROS 2 robot software, IoT systems and the web and
               mobile apps around them. For classrooms we sell Makerzoid robot kits, and for AI labs the

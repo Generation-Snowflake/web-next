@@ -53,7 +53,7 @@ export default function Footer() {
         <div className="mt-10 grid gap-x-8 gap-y-10 border-t border-night-line pt-8 text-[15px] sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <ColumnTitle>Office</ColumnTitle>
-            <address lang="th" className="mt-3 not-italic leading-relaxed">
+            <address className="mt-3 not-italic leading-relaxed">
               {site.address.lines.map((line) => (
                 <span key={line} className="block">
                   {line}

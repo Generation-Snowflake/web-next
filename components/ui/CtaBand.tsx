@@ -8,12 +8,10 @@ import { site } from "@/lib/site";
  */
 export default function CtaBand({
   title = "Talk to the people who build it",
-  titleTh = "คุยกับทีมวิศวกรได้โดยตรง",
   description = "Call, email, or send the form. Tell us what you want to build or buy, and roughly when.",
   primary = { label: "Send us a message", href: "/contact" },
 }: {
   title?: string;
-  titleTh?: string;
   description?: string;
   primary?: { label: string; href: string };
   /** @deprecated no longer shown. */
@@ -24,11 +22,6 @@ export default function CtaBand({
       <Container className="grid gap-10 py-14 md:grid-cols-12 md:py-20">
         <div className="md:col-span-6">
           <h2 className="text-[1.75rem] font-medium leading-tight tracking-[-0.015em] sm:text-4xl">{title}</h2>
-          {titleTh && (
-            <p lang="th" className="mt-2 text-lg text-graphite">
-              {titleTh}
-            </p>
-          )}
           <p className="mt-4 max-w-prose text-[17px] leading-relaxed text-graphite">{description}</p>
           <div className="mt-7">
             <ButtonLink href={primary.href} size="lg" arrow>
@@ -57,7 +50,7 @@ export default function CtaBand({
           </div>
           <div className="border-t border-hairline pt-3">
             <dt className="caption">Office</dt>
-            <dd lang="th" className="mt-1 leading-relaxed">
+            <dd className="mt-1 leading-relaxed">
               {site.address.lines.map((l) => (
                 <span key={l} className="block">
                   {l}

@@ -16,9 +16,9 @@ export const site = {
   ],
   address: {
     lines: [
-      "52/9 หมู่บ้านสุชาวดี หมู่ที่ 3 ซอยสุขาประชาสรรค์ 3",
-      "ถนนติวานนท์ ตำบลบางพูด",
-      "อำเภอปากเกร็ด จ.นนทบุรี 11120",
+      "52/9 Suchawadee Village, Moo 3, Soi Sukhaprachasan 3",
+      "Tiwanon Road, Bang Phut",
+      "Pak Kret, Nonthaburi 11120",
     ],
     locality: "Pak Kret, Nonthaburi",
     country: "Thailand",
@@ -32,19 +32,19 @@ export const site = {
 export type NavItem = { label: string; labelTh?: string; href: string };
 
 export const mainNav: NavItem[] = [
-  { label: "Services", labelTh: "บริการ", href: "/services" },
-  { label: "Products", labelTh: "สินค้า", href: "/products" },
-  { label: "Work", labelTh: "ผลงาน", href: "/portfolio" },
-  { label: "About", labelTh: "เกี่ยวกับเรา", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Products", href: "/products" },
+  { label: "Work", href: "/portfolio" },
+  { label: "About", href: "/about" },
 ];
 
 /** Secondary links (footer). */
 export const moreNav: NavItem[] = [
-  { label: "How we work", labelTh: "ขั้นตอนการทำงาน", href: "/workflow" },
-  { label: "Contact", labelTh: "ติดต่อเรา", href: "/contact" },
+  { label: "How we work", href: "/workflow" },
+  { label: "Contact", href: "/contact" },
 ];
 
-export const primaryCta: NavItem = { label: "Talk to us", labelTh: "คุยกับเรา", href: "/contact" };
+export const primaryCta: NavItem = { label: "Talk to us", href: "/contact" };
 
 /** mailto: link with a prefilled subject (and optional body). */
 export function mailto(subject: string, body?: string) {

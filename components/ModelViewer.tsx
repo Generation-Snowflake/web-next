@@ -187,11 +187,11 @@ export default function ModelViewer() {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-wrap items-center justify-center gap-2 p-4">
         <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-2 rounded-xl border border-ice/15 bg-darkbg/60 p-2 backdrop-blur-md">
           <ControlButton active={autoRotate} onClick={() => setAutoRotate((v) => !v)}>
-            {autoRotate ? "หยุดหมุน" : "หมุนอัตโนมัติ"}
+            {autoRotate ? "Stop rotating" : "Auto-rotate"}
           </ControlButton>
           {clips.length > 0 && (
             <ControlButton active={playing} onClick={() => setPlaying((v) => !v)}>
-              {playing ? "⏸ หยุด Animation" : "▶ เล่น Animation"}
+              {playing ? "⏸ Pause animation" : "▶ Play animation"}
             </ControlButton>
           )}
           <ControlButton active={wireframe} onClick={() => setWireframe((v) => !v)}>
@@ -200,7 +200,7 @@ export default function ModelViewer() {
           <ControlButton active={grid} onClick={() => setGrid((v) => !v)}>
             Grid
           </ControlButton>
-          <ControlButton onClick={resetView}>รีเซ็ตมุมมอง</ControlButton>
+          <ControlButton onClick={resetView}>Reset view</ControlButton>
         </div>
       </div>
 
@@ -228,7 +228,7 @@ export default function ModelViewer() {
 
       {/* Hint */}
       <div className="pointer-events-none absolute left-4 top-4 rounded-lg border border-ice/10 bg-darkbg/50 px-3 py-2 text-xs text-softwhite/60 backdrop-blur-md">
-        ลากเพื่อหมุน · สครอลล์เพื่อซูม · คลิกขวาลากเพื่อเลื่อน
+        Drag to rotate · Scroll to zoom · Right-drag to pan
       </div>
     </div>
   );

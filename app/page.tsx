@@ -38,7 +38,6 @@ export default function HomePage() {
       <WorkNotes />
       <CtaBand
         title="Tell us what you're building"
-        titleTh="เล่าให้เราฟังว่าคุณกำลังทำอะไร"
         description="A software project, a robot for a classroom or lab, or both. Tell us what it should do and roughly when you need it, and an engineer will reply."
         primary={{ label: "Describe your project", href: "/contact" }}
       />

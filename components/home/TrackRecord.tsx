@@ -11,9 +11,7 @@ export default function TrackRecord() {
           <div className="lg:col-span-4">
             <SectionHeading
               label="Team"
-              labelTh="ทีมงาน"
               title={<span id="team-title">Who you&apos;ll be talking to</span>}
-              titleTh="คุยกับวิศวกรที่ลงมือทำเอง"
               description="You talk directly to the engineers who write the code and build the robots."
             />
             <ButtonLink href="/about" variant="link" className="mt-6">
@@ -75,7 +73,7 @@ export default function TrackRecord() {
             </table>
 
             <h3 className="mt-10 font-mono text-[13px] text-graphite">
-              Teaching · <span lang="th">การสอน</span>
+              Teaching
             </h3>
             <ul className="mt-2 border-t border-hairline text-[15px]">
               {teaching.map((t) => (

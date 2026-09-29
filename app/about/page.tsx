@@ -22,7 +22,6 @@ export default function AboutPage() {
       <PageHeader
         crumbs={[{ label: "About" }]}
         title="About GSF"
-        titleTh="เกี่ยวกับเรา"
         description="A small engineering team in Pak Kret, Nonthaburi. We write software for other companies and sell robots for classrooms and labs."
       />
 
@@ -44,7 +43,7 @@ export default function AboutPage() {
       {/* Team */}
       <section aria-labelledby="team" className="border-t border-ink py-14 md:py-20">
         <Container>
-          <SectionHeading label="Team" labelTh="ทีม" title={<span id="team">The people you will talk to</span>} />
+          <SectionHeading label="Team" title={<span id="team">The people you will talk to</span>} />
           <TeamList />
         </Container>
       </section>
@@ -112,7 +111,7 @@ export default function AboutPage() {
           </h2>
           <div className="md:col-span-8">
             <p className="text-[17px]">{site.address.locality}, {site.address.country}</p>
-            <address lang="th" className="mt-3 not-italic leading-relaxed text-graphite">
+            <address className="mt-3 not-italic leading-relaxed text-graphite">
               {site.address.lines.map((l) => (
                 <span key={l} className="block">
                   {l}
@@ -134,7 +133,6 @@ export default function AboutPage() {
 
       <CtaBand
         title="Come and meet us"
-        titleTh="แวะมาคุยกับทีมได้"
         description="Call or email before you come over, so someone is in the office. Or send the form and tell us what you need."
       />
     </>

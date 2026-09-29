@@ -23,9 +23,6 @@ export default function NotFound() {
         <h1 className="mt-4 text-[2.5rem] font-medium leading-[1.08] tracking-[-0.015em] sm:text-5xl">
           This page doesn&rsquo;t exist
         </h1>
-        <p lang="th" className="mt-2 text-lg text-graphite">
-          ไม่พบหน้าที่คุณต้องการ
-        </p>
         <p className="mt-4 max-w-prose text-[17px] leading-relaxed text-graphite">
           The link may be old or the address mistyped. One of these should get you where you were going.
         </p>

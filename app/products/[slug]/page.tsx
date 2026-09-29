@@ -237,7 +237,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
         </div>
       </Band>
 
-      <Band label="From us" labelTh="บริการของเรา" title="What we add to the hardware">
+      <Band label="From us" title="What we add to the hardware">
         <dl className="border-t border-ink">
           {productSupport.map((s) => (
             <div key={s.title} className="grid gap-1 border-b border-hairline py-4 sm:grid-cols-[14rem_1fr] sm:gap-6">
@@ -284,7 +284,6 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
 
       <CtaBand
         title={from !== undefined ? `Order ${name} kits or ask a question` : `Ask about ${name} price and lead time`}
-        titleTh={from !== undefined ? "สั่งซื้อหรือสอบถามเพิ่มเติม" : "สอบถามราคาและระยะเวลาจัดส่ง"}
         description={
           from !== undefined
             ? "Tell us which kit and how many. For schools and bulk orders we quote per order."

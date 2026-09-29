@@ -97,7 +97,6 @@ export default function ProductsPage() {
       <PageHeader
         crumbs={[{ label: "Products" }]}
         title="Robot kits and arms we sell"
-        titleTh="หุ่นยนต์และชุดคิทที่เราจำหน่าย"
         description="STEM kits for schools and research robots for labs. We import them, assemble and calibrate them if you want, and answer questions in Thai after you buy."
       >
         <nav aria-label="Product lines" className="w-full">
@@ -142,7 +141,7 @@ export default function ProductsPage() {
         </section>
       ))}
 
-      <Band label="From us" labelTh="บริการของเรา" title="What we add to the hardware" tone="paper-2">
+      <Band label="From us" title="What we add to the hardware" tone="paper-2">
         <dl className="border-t border-ink">
           {productSupport.map((s) => (
             <div key={s.title} className="grid gap-1 border-b border-hairline py-4 sm:grid-cols-[14rem_1fr] sm:gap-6">
@@ -162,7 +161,6 @@ export default function ProductsPage() {
 
       <CtaBand
         title="Ask which kit or robot fits"
-        titleTh="สอบถามว่ารุ่นไหนเหมาะกับคุณ"
         description="Tell us who will use it, how many students or engineers, and when you need it. We reply with a recommendation and a price."
         primary={{ label: "Ask for a quote", href: "/contact?interest=product" }}
       />

@@ -12,9 +12,7 @@ export default function RobotsWeSell() {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
             label="Products"
-            labelTh="สินค้า"
             title={<span id="robots-title">Robots we sell</span>}
-            titleTh="หุ่นยนต์และชุดคิทที่เราขาย"
             description="Kits for classrooms and arms for AI labs. We can assemble, calibrate and teach with them."
           />
           <ButtonLink href="/products" variant="link">

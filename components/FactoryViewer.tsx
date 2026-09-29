@@ -7,22 +7,22 @@ import * as THREE from "three";
 
 const factoryData = {
   zoneA: {
-    name: "คลังสินค้า (Warehouse)",
+    name: "Warehouse",
     position: [-4, 0.75, 0] as [number, number, number],
     color: "#ff6b6b",
-    info: "พื้นที่จัดเก็บวัตถุดิบและสินค้าสำเร็จรูป รองรับการโหลดสินค้า 24 ชม.",
+    info: "Storage for raw materials and finished goods, with 24-hour loading.",
   },
   zoneB: {
-    name: "ไลน์การผลิต (Production Line)",
+    name: "Production line",
     position: [0, 1, 0] as [number, number, number],
     color: "#4dadf7",
-    info: "สายพานการผลิตหลัก ติดตั้งหุ่นยนต์ประกอบชิ้นส่วนอัตโนมัติ 5 ตัว",
+    info: "The main conveyor line, with 5 automated assembly robots.",
   },
   zoneC: {
-    name: "ห้องควบคุม (Control Room)",
+    name: "Control room",
     position: [4, 0.75, 0] as [number, number, number],
     color: "#51cf66",
-    info: "ศูนย์บัญชาการระบบดิจิทัล ตรวจสอบสถานะเครื่องจักรแบบ Real-time",
+    info: "The digital control centre, monitoring machine status in real time.",
   },
 };
 
@@ -130,17 +130,17 @@ export default function FactoryViewer() {
       {/* Zone menu — top left */}
       <div className="absolute left-4 top-4 w-56 rounded-xl border border-ice/20 bg-black/70 p-4 backdrop-blur-sm">
         <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-ice/70">
-          🏭 เลือกโซน
+          🏭 Choose a zone
         </p>
         {[null, "zoneA", "zoneB", "zoneC"].map((key) => {
           const isOverview = key === null;
           const label = isOverview
-            ? "ภาพรวมโรงงาน"
+            ? "Factory overview"
             : key === "zoneA"
-            ? "โซน A: คลังสินค้า"
+            ? "Zone A: Warehouse"
             : key === "zoneB"
-            ? "โซน B: ไลน์การผลิต"
-            : "โซน C: ห้องควบคุม";
+            ? "Zone B: Production line"
+            : "Zone C: Control room";
           const active = isOverview
             ? activeZone === null
             : activeZone?.name === factoryData[key as ZoneKey].name;
@@ -174,13 +174,13 @@ export default function FactoryViewer() {
           </p>
           <div className="mt-4 flex gap-2">
             <button className="flex-1 rounded-lg bg-ice/90 py-2 text-sm font-semibold text-darkbg transition hover:bg-ice">
-              ดูระบบภายใน
+              See inside
             </button>
             <button
               onClick={() => handleSelectZone(null)}
               className="rounded-lg bg-white/10 px-3 py-2 text-sm text-softwhite/70 transition hover:bg-white/20"
             >
-              ปิด
+              Close
             </button>
           </div>
         </div>
@@ -188,7 +188,7 @@ export default function FactoryViewer() {
 
       {/* Hint */}
       <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-softwhite/30">
-        คลิกที่โมเดลหรือเมนูเพื่อซูม · ลากเพื่อหมุนกล้อง
+        Click the model or menu to zoom · Drag to orbit
       </p>
     </div>
   );

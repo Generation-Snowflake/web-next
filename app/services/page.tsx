@@ -23,7 +23,6 @@ export default function ServicesPage() {
       <PageHeader
         crumbs={[{ label: "Services" }]}
         title="What we build for clients"
-        titleTh="งานที่เรารับทำ"
         description="Custom software, AI and robotics projects. You bring the problem, we write the code, wire up the hardware and stay around after launch."
       >
         <ButtonLink href="/contact?interest=project" size="lg" arrow>
@@ -98,7 +97,6 @@ export default function ServicesPage() {
         <Container className="py-14 md:py-20">
           <SectionHeading
             title={<span id="billing-title">How we bill</span>}
-            titleTh="รูปแบบการคิดค่าบริการ"
             description="Which one fits depends on how sure you are about the scope."
           />
           <dl className="mt-10 border-t border-ink">
@@ -124,9 +122,6 @@ export default function ServicesPage() {
             <h2 id="process-title" className="text-[1.75rem] font-medium leading-tight tracking-[-0.015em] sm:text-4xl">
               How a project runs
             </h2>
-            <p lang="th" className="mt-2 text-lg text-graphite">
-              ขั้นตอนการทำงาน
-            </p>
             <p className="mt-6">
               <ButtonLink href="/workflow" variant="link">
                 More on how we work
@@ -150,9 +145,6 @@ export default function ServicesPage() {
             <h2 id="faq-title" className="text-[1.75rem] font-medium leading-tight tracking-[-0.015em] sm:text-4xl">
               Questions clients ask
             </h2>
-            <p lang="th" className="mt-2 text-lg text-graphite">
-              คำถามที่พบบ่อย
-            </p>
           </div>
           <div className="border-t border-ink md:col-span-8">
             {serviceFaqs.map((f) => (
@@ -182,7 +174,6 @@ export default function ServicesPage() {
 
       <CtaBand
         title="Tell us what you need built"
-        titleTh="เล่าให้เราฟังว่าอยากสร้างอะไร"
         description="A few lines is enough: what the problem is, who will use the result and when you need it. We reply with questions and a rough estimate."
         primary={{ label: "Describe your project", href: "/contact?interest=project" }}
       />

@@ -29,9 +29,7 @@ export default function ServicesList() {
         <div className="lg:col-span-4">
           <SectionHeading
             label="Services"
-            labelTh="บริการ"
             title={<span id="services-title">What we build</span>}
-            titleTh="งานซอฟต์แวร์ที่เรารับทำ"
             description="Custom software for companies, often with a camera, a sensor or a robot on the other end."
           />
           <ButtonLink href="/services" variant="link" className="mt-6">

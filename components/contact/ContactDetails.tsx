@@ -27,7 +27,7 @@ export default function ContactDetails() {
         <div className="grid grid-cols-[6rem_1fr] gap-4 py-4">
           <dt className="caption pt-0.5">Office</dt>
           <dd>
-            <address lang="th" className="not-italic leading-relaxed">
+            <address className="not-italic leading-relaxed">
               {site.address.lines.map((l) => (
                 <span key={l} className="block">
                   {l}

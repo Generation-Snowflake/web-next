@@ -29,9 +29,7 @@ export default function WorkNotes() {
         <div className="lg:col-span-4">
           <SectionHeading
             label="Work"
-            labelTh="ผลงาน"
             title={<span id="work-title">Recent work</span>}
-            titleTh="งานที่ผ่านมา"
             description="Client names are left out. Ask us on a call and we can walk you through the details."
           />
           <ButtonLink href="/portfolio" variant="link" className="mt-6">
@@ -57,7 +55,7 @@ export default function WorkNotes() {
           </ul>
 
           <h3 className="mt-12 font-mono text-[13px] text-graphite">
-            Live demos, open them in your browser · <span lang="th">เดโมที่เปิดดูได้</span>
+            Live demos, open them in your browser
           </h3>
           <ul className="mt-2 grid border-t border-ink sm:grid-cols-2">
             {demos.map((d, i) => (

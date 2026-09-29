@@ -21,7 +21,6 @@ export default function WorkflowPage() {
       <PageHeader
         crumbs={[{ label: "Services", href: "/services" }, { label: "How we work" }]}
         title="How we work"
-        titleTh="วิธีการทำงานของเรา"
         description="Every project goes through the same steps. Small jobs move through them in a few weeks; bigger ones take longer, but you see working software along the way."
       >
         <ButtonLink href="/contact?interest=project" size="lg" arrow>
@@ -62,9 +61,6 @@ export default function WorkflowPage() {
             <h2 id="comms-title" className="text-[1.75rem] font-medium leading-tight tracking-[-0.015em] sm:text-4xl">
               Staying in touch
             </h2>
-            <p lang="th" className="mt-2 text-lg text-graphite">
-              การสื่อสารระหว่างโปรเจกต์
-            </p>
           </div>
           <div className="max-w-prose space-y-4 text-[17px] leading-relaxed md:col-span-8 md:pt-2">
             <p>
@@ -82,7 +78,6 @@ export default function WorkflowPage() {
 
       <CtaBand
         title="Start with a call"
-        titleTh="เริ่มจากการคุยกันก่อน"
         description="Tell us the problem and what you already have. After the call we send a written summary and a rough estimate."
         primary={{ label: "Describe your project", href: "/contact?interest=project" }}
       />
