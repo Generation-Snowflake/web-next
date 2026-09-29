@@ -6,8 +6,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      // Internal model-preview sandbox; not a public page.
-      disallow: ["/demo3d"],
     },
     sitemap: new URL("/sitemap.xml", site.url).toString(),
     host: site.url,

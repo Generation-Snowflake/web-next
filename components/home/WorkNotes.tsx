@@ -13,13 +13,6 @@ const demos = [
     description:
       "A 3D power plant in the browser. Click one of the 5 hotspots, from the reactor building to the switchyard, and the camera flies there and explains that part.",
   },
-  {
-    href: "/factory",
-    image: "/work/factory.webp",
-    title: "Factory viewer",
-    tech: "Three.js · WebGL",
-    description: "A 3D factory model you can orbit and zoom. Pick a zone to see its details.",
-  },
 ];
 
 export default function WorkNotes() {
@@ -29,8 +22,8 @@ export default function WorkNotes() {
         <div className="lg:col-span-4">
           <SectionHeading
             label="Work"
-            title={<span id="work-title">Recent work</span>}
-            description="Client names are left out. Ask us on a call and we can walk you through the details."
+            title={<span id="work-title">What we work on</span>}
+            description="Web and mobile apps, AI, IoT and robot software. Ask us on a call about similar projects."
           />
           <ButtonLink href="/portfolio" variant="link" className="mt-6">
             All work
@@ -44,7 +37,7 @@ export default function WorkNotes() {
                 key={c.slug}
                 className="grid gap-1 border-b border-hairline py-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-6"
               >
-                <p className="caption pt-0.5">{c.sector}</p>
+                <p className="caption pt-0.5">{c.area}</p>
                 <div>
                   <h3 className="font-medium">{c.title}</h3>
                   <p className="mt-1 text-[15px] leading-relaxed text-graphite">{c.summary}</p>
@@ -55,26 +48,28 @@ export default function WorkNotes() {
           </ul>
 
           <h3 className="mt-12 font-mono text-[13px] text-graphite">
-            Live demos, open them in your browser
+            A live demo, open it in your browser
           </h3>
-          <ul className="mt-2 grid border-t border-ink sm:grid-cols-2">
-            {demos.map((d, i) => (
+          <ul className="mt-2 border-t border-ink">
+            {demos.map((d) => (
               <li
                 key={d.href}
-                className={`border-b border-hairline py-5 ${i === 0 ? "sm:border-r sm:pr-6" : "sm:pl-6"}`}
+                className="grid gap-6 border-b border-hairline py-5 sm:grid-cols-2"
               >
                 <ImageFrame
                   src={d.image}
                   alt={`Screenshot of the ${d.title.toLowerCase()}`}
-                  className="mb-4 aspect-[16/10]"
+                  className="aspect-[16/10]"
                   sizes="(min-width: 1024px) 30vw, 100vw"
                 />
+                <div>
                 <p className="caption">{d.tech}</p>
                 <h4 className="mt-1 text-lg font-medium">{d.title}</h4>
                 <p className="mt-1 text-[15px] leading-relaxed text-graphite">{d.description}</p>
                 <ButtonLink href={d.href} variant="link" className="mt-3">
                   Open {d.title.toLowerCase()}
                 </ButtonLink>
+                </div>
               </li>
             ))}
           </ul>

@@ -17,7 +17,6 @@ const staticRoutes: Entry[] = [
   { path: "/workflow", priority: 0.6, changeFrequency: "yearly" },
   { path: "/about", priority: 0.6, changeFrequency: "yearly" },
   { path: "/power-plant", priority: 0.4, changeFrequency: "yearly" },
-  { path: "/factory", priority: 0.3, changeFrequency: "yearly" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
