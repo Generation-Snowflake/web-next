@@ -54,7 +54,7 @@ Plain, specific, first person plural. Banned: seamless, cutting-edge, empower,
 unlock, elevate, leverage, robust, innovative, transform, harness, intelligent,
 "end-to-end", "real world", "from X to Y", "we don't just…". No em dashes in body
 copy. Don't list in threes by reflex. Never invent numbers, clients, testimonials,
-stock status or policies. Facts live in `lib/*.ts` (site, services, products, team, work).
+stock status or policies. Facts live in `lib/*.ts` (site, services, products, training, work).
 
 ## Shared pieces
 

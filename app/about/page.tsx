@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/ui/PageHeader";
 import Container from "@/components/ui/Container";
-import SectionHeading from "@/components/ui/SectionHeading";
 import CtaBand from "@/components/ui/CtaBand";
-import TeamList from "@/components/about/TeamList";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -32,17 +30,8 @@ export default function AboutPage() {
           <p className="max-w-prose text-[17px] leading-relaxed md:col-span-7 md:col-start-6">
             GSF stands for Generation Snowflake. We are a young team. One snowflake is small and no
             two are the same, but a lot of them together can cover a whole field. That is how we
-            work: three of us studied robotics engineering at KMUTNB, one looks after finance and
-            operations, and we get more done together than any of us would alone.
+            work: different skills, one team, and more done together than any of us would alone.
           </p>
-        </Container>
-      </section>
-
-      {/* Team */}
-      <section aria-labelledby="team" className="border-t border-ink py-14 md:py-20">
-        <Container>
-          <SectionHeading label="Team" title={<span id="team">The people you will talk to</span>} />
-          <TeamList />
         </Container>
       </section>
 
