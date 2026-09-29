@@ -12,8 +12,8 @@ export default function RobotsWeSell() {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
             label="Products"
-            title={<span id="robots-title">Robots we sell</span>}
-            description="Kits for classrooms and arms for AI labs. We can assemble, calibrate and teach with them."
+            title={<span id="robots-title">What we sell</span>}
+            description="Robot kits and a learning platform for kids, research robots for AI labs, and our own software."
           />
           <ButtonLink href="/products" variant="link">
             All products
@@ -55,7 +55,9 @@ export default function RobotsWeSell() {
                   </dl>
                 </div>
                 <div className="flex flex-col items-start gap-3 md:col-span-3 md:items-end md:text-right">
-                  {from ? (
+                  {p.status === "in-development" ? (
+                    <p className="font-mono text-[14px] text-graphite">In development</p>
+                  ) : from ? (
                     <p className="font-mono text-[15px]">
                       <span className="text-graphite">from </span>
                       <span className="text-xl text-signal">{from}</span>

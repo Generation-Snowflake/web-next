@@ -62,6 +62,8 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
   const quoteId = productQuoteId(product);
   const related = products.filter((p) => p.slug !== product.slug);
   const name = shortName(product.name);
+  const dev = product.status === "in-development";
+  const hardware = product.group !== "software" && product.slug !== "robopark";
   let fig = 1;
   const nextFig = () => fig++;
   const galleryFig = nextFig();
@@ -77,7 +79,9 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
         description={product.tagline}
       >
         <p className="font-mono text-[15px]">
-          {from !== undefined ? (
+          {dev ? (
+            <span className="text-graphite">In development · testing with early users</span>
+          ) : from !== undefined ? (
             <>
               <span className="text-graphite">{multi ? "From " : ""}</span>
               <span className="text-[1.25rem] text-signal">{formatTHB(from)}</span>
@@ -87,18 +91,25 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
           )}
         </p>
         <ButtonLink href={quoteHref(quoteId)} size="lg" arrow>
-          {from !== undefined ? "Order or ask a question" : "Ask for a quote"}
+          {dev ? "Ask for early access" : from !== undefined ? "Order or ask a question" : "Ask for a quote"}
         </ButtonLink>
+        {product.siteUrl && (
+          <ButtonLink href={product.siteUrl} variant="link">
+            Visit {product.siteUrl.replace(/^https?:\/\/(www\.)?/, "")}
+          </ButtonLink>
+        )}
       </PageHeader>
 
       {/* Photos + overview */}
       <section>
         <Container className="grid gap-10 py-12 md:grid-cols-12 md:py-16">
-          <div className="md:col-span-7">
-            <ProductGallery photos={photos} figure={galleryFig} priority />
-            {product.credits && <p className="caption mt-4">{product.credits}</p>}
-          </div>
-          <div className="md:col-span-5">
+          {photos.length > 0 && (
+            <div className="md:col-span-7">
+              <ProductGallery photos={photos} figure={galleryFig} priority />
+              {product.credits && <p className="caption mt-4">{product.credits}</p>}
+            </div>
+          )}
+          <div className={photos.length > 0 ? "md:col-span-5" : "md:col-span-7"}>
             <div className="space-y-4 text-[17px] leading-relaxed">
               {product.overview.map((p) => (
                 <p key={p}>{p}</p>
@@ -116,16 +127,18 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
                 </div>
               ))}
               <div className="grid grid-cols-[7rem_1fr] gap-4 border-b border-hairline py-2.5">
-                <dt className="text-graphite">Price</dt>
+                <dt className="text-graphite">{dev ? "Status" : "Price"}</dt>
                 <dd>
-                  {from !== undefined ? (
+                  {dev ? (
+                    "In development, testing with early users"
+                  ) : from !== undefined ? (
                     <span className="font-mono text-signal">
                       {multi ? `${formatTHB(from)} to ${formatTHB(Math.max(...product.models.map((m) => m.priceTHB ?? 0)))}` : formatTHB(from)}
                     </span>
                   ) : (
                     "On request"
                   )}
-                  {product.priceNote && (
+                  {!dev && product.priceNote && (
                     <span className="mt-1 block text-[14px] text-graphite">
                       {from !== undefined ? product.priceNote : priceNoteDetail(product.priceNote)}
                     </span>
@@ -205,7 +218,8 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
       )}
 
       {/* Use cases, links, support */}
-      <Band label="Use" title="Where it gets used">
+      {(product.useCases.length > 0 || product.links.length > 0) && (
+      <Band label="Use" title={product.useCases.length > 0 ? "Where it gets used" : "Links"}>
         <div className="grid gap-10 sm:grid-cols-2">
           {product.useCases.length > 0 && (
             <div>
@@ -221,7 +235,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
           )}
           {product.links.length > 0 && (
             <div>
-              <h3 className="mb-3 text-[15px] font-medium">Upstream docs and source</h3>
+              <h3 className="mb-3 text-[15px] font-medium">{hardware ? "Upstream docs and source" : "Website"}</h3>
               <ul className="border-t border-ink">
                 {product.links.map((l) => (
                   <li key={l.href} className="border-b border-hairline py-2.5">
@@ -236,7 +250,9 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
           )}
         </div>
       </Band>
+      )}
 
+      {hardware && (
       <Band label="From us" title="What we add to the hardware">
         <dl className="border-t border-ink">
           {productSupport.map((s) => (
@@ -247,6 +263,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
           ))}
         </dl>
       </Band>
+      )}
 
       {/* Related */}
       <Band wide label="Also from GSF" title="Other products">
@@ -268,7 +285,9 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
                     </span>
                     <span className="mt-1 block text-[15px] leading-relaxed text-graphite">{p.tagline}</span>
                     <span className="mt-2 block font-mono text-[14px]">
-                      {start !== undefined ? (
+                      {p.status === "in-development" ? (
+                        <span className="text-graphite">In development</span>
+                      ) : start !== undefined ? (
                         <span className="text-signal">From {formatTHB(start)}</span>
                       ) : (
                         <span className="text-graphite">Price on request</span>
@@ -283,9 +302,17 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
       </Band>
 
       <CtaBand
-        title={from !== undefined ? `Order ${name} kits or ask a question` : `Ask about ${name} price and lead time`}
+        title={
+          dev
+            ? `Try ${name} early`
+            : from !== undefined
+              ? `Order ${name} kits or ask a question`
+              : `Ask about ${name} price and lead time`
+        }
         description={
-          from !== undefined
+          dev
+            ? `${name} is still being built and tested. Tell us who would use it and we'll get in touch about early access.`
+            : from !== undefined
             ? "Tell us which kit and how many. For schools and bulk orders we quote per order."
             : "Tell us what you want to use it for and whether you want it assembled. We reply with a price and a delivery estimate."
         }

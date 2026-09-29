@@ -5,7 +5,7 @@ import { formatTHB, products } from "@/lib/products";
 type Row = { key: string; name: string; maker: string; spec: string; price?: string; href: string };
 
 // Every model we sell, cheapest kit first, so prices are visible on the first scroll.
-const rows: Row[] = products.flatMap((p) =>
+const rows: Row[] = products.filter((p) => !p.status).flatMap((p) =>
   p.models.map((m) => ({
     key: m.id,
     name: m.name,

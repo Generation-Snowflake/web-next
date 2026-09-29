@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import PageHeader from "@/components/ui/PageHeader";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -70,6 +71,16 @@ export default function TrainingPage() {
               <div className="border-t border-hairline pt-3">
                 <dt className="caption">Length</dt>
                 <dd className="mt-1">{mazeCourse.format}</dd>
+              </div>
+              <div className="border-t border-hairline pt-3">
+                <dt className="caption">Platform</dt>
+                <dd className="mt-1">
+                  Runs on{" "}
+                  <Link href="/products/robopark" className="link">
+                    RoboPark
+                  </Link>
+                  , our online robot simulator (in development)
+                </dd>
               </div>
               <div className="border-t border-hairline pt-3">
                 <dt className="caption">Price</dt>

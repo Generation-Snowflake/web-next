@@ -51,8 +51,22 @@ export type ProductModel = {
   gallery?: Photo[];
 };
 
+export type ProductGroup = "education" | "research" | "software";
+
+/** Section headings for the product groups, in page order. */
+export const productGroups: { id: ProductGroup; title: string; description: string }[] = [
+  { id: "education", title: "For schools and kids", description: "Robot kits and an online platform for learning to code and build robots." },
+  { id: "research", title: "For research labs", description: "Open-source robots for AI and robot-learning research and teaching." },
+  { id: "software", title: "Software", description: "Tools we build and run ourselves." },
+];
+
 export type Product = {
   slug: string;
+  group: ProductGroup;
+  /** Still being built / tested with early users: no price, early-access CTA. */
+  status?: "in-development";
+  /** Live site for software products. */
+  siteUrl?: string;
   name: string;
   /** Who makes it. */
   maker: string;
@@ -88,6 +102,7 @@ export type Product = {
 export const products: Product[] = [
   {
     slug: "makerzoid",
+    group: "education",
     name: "Makerzoid",
     maker: "Makerzoid",
     category: "STEM robot kits",
@@ -314,7 +329,65 @@ export const products: Product[] = [
     priceNote: "Prices in Thai baht. School and bulk orders: ask us for a quote.",
   },
   {
+    slug: "robopark",
+    group: "education",
+    status: "in-development",
+    siteUrl: "https://www.robopark.fun",
+    name: "RoboPark",
+    maker: "GSF Robotics & AI",
+    category: "Online robotics learning platform",
+    tagline: "Learn to program robots in an online simulator, no hardware needed.",
+    summary:
+      "A robotics learning platform for kids that runs in the browser. Students code a robot in a 3D simulation, follow courses, build their own levels and take part in competitions.",
+    overview: [
+      "RoboPark is our own learning platform. Kids write drag-and-drop block code and watch a simulated robot run it straight away, so they can learn robotics at home or at school without buying hardware first.",
+      "Courses start from the basics and work up to maze solving with motion and colour sensors. Students can also build their own levels and run their robots on them, and competition mode lets a class or a group of friends race their robots on the same course.",
+      "RoboPark is in development and we're testing it with early users. If you'd like to try it with your class or your kids, tell us.",
+    ],
+    audience: ["Kids and beginners", "Schools and coding clubs", "Parents"],
+    features: [
+      {
+        title: "Courses",
+        description: "Step-by-step lessons from first programs to maze-solving robots. The same course we teach in our maze robot classes.",
+      },
+      {
+        title: "Build your own levels",
+        description: "Design a stage, then write a program to get the robot through it.",
+      },
+      {
+        title: "Competition mode",
+        description: "Everyone runs their robot on the same course, for friendly contests in class or at home.",
+      },
+      {
+        title: "Online simulation",
+        description: "Runs in a web browser. A 3D robot with motion and colour sensors, so there is nothing to install and no kit to buy.",
+      },
+    ],
+    specs: [
+      { label: "Runs on", value: "Web browser" },
+      { label: "Coding", value: "Drag-and-drop blocks" },
+    ],
+    inTheBox: [],
+    useCases: ["Robotics and coding lessons at school", "Practice at home between classes", "Class competitions"],
+    models: [
+      {
+        id: "robopark",
+        name: "RoboPark",
+        tagline: "Online robotics learning platform",
+        audience: "Kids, schools and parents",
+        highlights: ["Courses", "Level builder", "Competition mode"],
+        specs: [],
+      },
+    ],
+    image: "/products/robopark/robopark-1.webp",
+    imageAlt: "A robot maze in the RoboPark simulator",
+    gallery: [{ src: "/products/robopark/robopark-1.webp", alt: "A robot maze in the RoboPark simulator" }],
+    links: [{ label: "robopark.fun", href: "https://www.robopark.fun" }],
+    accent: "teal",
+  },
+  {
     slug: "xlerobot",
+    group: "research",
     name: "XLeRobot",
     maker: "XLeRobot open-source project (kit by WowRobo)",
     category: "Dual-arm mobile robot",
@@ -406,6 +479,7 @@ export const products: Product[] = [
   },
   {
     slug: "lerobot",
+    group: "research",
     name: "LeRobot SO-101",
     maker: "TheRobotStudio × Hugging Face (open hardware)",
     category: "Robot arm kit",
@@ -492,6 +566,41 @@ export const products: Product[] = [
     ],
     accent: "violet",
     priceNote: "Price on request. It depends on the servo option (5 V or 12 V follower) and cameras.",
+  },
+  {
+    slug: "taktic",
+    group: "software",
+    status: "in-development",
+    siteUrl: "https://taktic.gsfrobotics.com",
+    name: "Taktic",
+    maker: "GSF Robotics & AI",
+    category: "Project management tool",
+    tagline: "A project management tool for teams.",
+    summary: "Our own project management tool for planning work, tracking tasks and keeping a team on the same page.",
+    overview: [
+      "Taktic is a project management tool we are building for teams. It's where work gets planned, tasks get assigned and progress is easy to see.",
+      "It's in development and being tested with early users. If your team would like to try it, get in touch.",
+    ],
+    audience: ["Teams and small companies"],
+    features: [],
+    specs: [
+      { label: "Runs on", value: "Web browser" },
+    ],
+    inTheBox: [],
+    useCases: [],
+    models: [
+      {
+        id: "taktic",
+        name: "Taktic",
+        tagline: "Project management tool",
+        audience: "Teams",
+        highlights: ["Web app"],
+        specs: [],
+      },
+    ],
+    gallery: [],
+    links: [{ label: "taktic.gsfrobotics.com", href: "https://taktic.gsfrobotics.com" }],
+    accent: "ice",
   },
 ];
 
