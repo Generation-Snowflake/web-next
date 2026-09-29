@@ -11,7 +11,7 @@ const links = [
   { href: "/", label: "Home", note: "Start again from the front page" },
   { href: "/services", label: "Services", note: "Software, AI and robotics work we do for clients" },
   { href: "/products", label: "Products", note: "Makerzoid kits, SO-101 and XLeRobot" },
-  { href: "/portfolio", label: "Work", note: "Case notes and 3D demos" },
+  { href: "/portfolio", label: "Work", note: "The kinds of projects we build" },
   { href: "/contact", label: "Contact", note: "Phone, email and the contact form" },
 ];
 

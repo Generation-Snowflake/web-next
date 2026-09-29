@@ -60,7 +60,7 @@ export const caseStudies: CaseStudy[] = [
     slug: "3d-web",
     title: "Interactive 3D on the web",
     area: "Web",
-    summary: "3D models and site tours that run in the browser, like the power plant tour below.",
+    summary: "3D models, product viewers and site tours that run in the browser.",
     tags: ["Three.js", "WebGL"],
   },
 ];

@@ -2,7 +2,7 @@ import Navbar, { HideOnRoutes } from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 // Routes that render full-bleed without the site navbar/footer.
-const BARE_ROUTES = ["/power-plant"];
+const BARE_ROUTES: string[] = [];
 
 /**
  * Site shell. A server component so the Footer stays server-rendered; only the

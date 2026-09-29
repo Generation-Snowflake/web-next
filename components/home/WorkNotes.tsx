@@ -1,19 +1,7 @@
 import Container from "@/components/ui/Container";
 import ButtonLink from "@/components/ui/Button";
 import SectionHeading from "@/components/ui/SectionHeading";
-import ImageFrame from "@/components/ui/ImageFrame";
 import { caseStudies } from "@/lib/work";
-
-const demos = [
-  {
-    href: "/power-plant",
-    image: "/work/power-plant.webp",
-    title: "Power plant tour",
-    tech: "Three.js · WebGL",
-    description:
-      "A 3D power plant in the browser. Click one of the 5 hotspots, from the reactor building to the switchyard, and the camera flies there and explains that part.",
-  },
-];
 
 export default function WorkNotes() {
   return (
@@ -42,33 +30,6 @@ export default function WorkNotes() {
                   <h3 className="font-medium">{c.title}</h3>
                   <p className="mt-1 text-[15px] leading-relaxed text-graphite">{c.summary}</p>
                   <p className="mt-2 font-mono text-[12px] text-graphite">{c.tags.join(" · ")}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-
-          <h3 className="mt-12 font-mono text-[13px] text-graphite">
-            A live demo, open it in your browser
-          </h3>
-          <ul className="mt-2 border-t border-ink">
-            {demos.map((d) => (
-              <li
-                key={d.href}
-                className="grid gap-6 border-b border-hairline py-5 sm:grid-cols-2"
-              >
-                <ImageFrame
-                  src={d.image}
-                  alt={`Screenshot of the ${d.title.toLowerCase()}`}
-                  className="aspect-[16/10]"
-                  sizes="(min-width: 1024px) 30vw, 100vw"
-                />
-                <div>
-                <p className="caption">{d.tech}</p>
-                <h4 className="mt-1 text-lg font-medium">{d.title}</h4>
-                <p className="mt-1 text-[15px] leading-relaxed text-graphite">{d.description}</p>
-                <ButtonLink href={d.href} variant="link" className="mt-3">
-                  Open {d.title.toLowerCase()}
-                </ButtonLink>
                 </div>
               </li>
             ))}
