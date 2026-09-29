@@ -1,5 +1,6 @@
 import Navbar, { HideOnRoutes } from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import RobotCompanionMount from "@/components/robot-companion/RobotCompanionMount";
 
 // Routes that render full-bleed without the site navbar/footer.
 const BARE_ROUTES: string[] = [];
@@ -25,6 +26,9 @@ export default function Chrome({ children }: { children: React.ReactNode }) {
       </main>
       <HideOnRoutes routes={BARE_ROUTES}>
         <Footer />
+        {/* One fixed, transparent WebGL canvas for the whole site; it stays
+            mounted across route changes so the robot flies between pages. */}
+        <RobotCompanionMount />
       </HideOnRoutes>
     </>
   );

@@ -5,7 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, type RefObject } from "react";
 import type * as THREE from "three";
 import { DIM } from "./config";
-import { NODE, RobotController } from "./controller";
+import { NODE, RobotController, type FrameOptions } from "./controller";
 import { HEAD, TORSO_Z, createRobotGeometries, disposeGeometries, torsoRadiusAt, type RobotGeometries } from "./geometry";
 import type { RobotInput } from "./input";
 import { createRobotMaterials, disposeMaterials, type RobotMaterials } from "./materials";
@@ -121,10 +121,11 @@ function Torso({ geo, mat }: Kit) {
 
 type Props = {
   input: RefObject<RobotInput>;
-  reducedMotion: boolean;
+  /** Mutable per-frame options (reduced motion, arm reach, fingertip out). */
+  frame: RefObject<FrameOptions>;
 };
 
-export default function RobotModel({ input, reducedMotion }: Props) {
+export default function RobotModel({ input, frame }: Props) {
   const geo = useMemo(() => createRobotGeometries(), []);
   const mat = useMemo(() => createRobotMaterials(), []);
   const controller = useMemo(() => new RobotController(mat), [mat]);
@@ -151,7 +152,7 @@ export default function RobotModel({ input, reducedMotion }: Props) {
   }, [mat]);
 
   useFrame((state, delta) => {
-    if (rootRef.current) controller.update(rootRef.current, state, delta, input.current, { reducedMotion });
+    if (rootRef.current) controller.update(rootRef.current, state, delta, input.current, frame.current);
   });
 
   const headPivot = DIM.headPivotY - DIM.neckY;

@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { COLORS } from "./config";
 import { VISOR } from "./geometry";
 
-// Materials for the hero robot: a product-photo look on a dark stage.
+// Materials for the robot: a product-photo look that reads on light pages.
 // Satin off-white shells, graphite joints, a dark glass visor. Teal is the
 // only colour and only on small LEDs (eyes, chest emblem, ear rings).
 //
@@ -169,6 +169,24 @@ void main() {
 }
 `;
 
+const EDGE_FRAG = /* glsl */ `
+{
+  float gsfFacing = abs(dot(normalize(vViewPosition), normal));
+  outgoingLight *= 1.0 - uEdge * pow(1.0 - gsfFacing, 2.2);
+}
+#include <opaque_fragment>
+`;
+
+function withEdge(mat: THREE.Material, key: string, amount: number) {
+  mat.onBeforeCompile = (shader) => {
+    shader.uniforms.uEdge = { value: amount };
+    shader.fragmentShader = shader.fragmentShader
+      .replace("#include <common>", "#include <common>\nuniform float uEdge;")
+      .replace("#include <opaque_fragment>", EDGE_FRAG);
+  };
+  mat.customProgramCacheKey = () => key;
+}
+
 /** LED colours at rest; the controller rescales them per frame. */
 export const LED = {
   ear: linear(COLORS.teal).multiplyScalar(1.1),
@@ -261,6 +279,12 @@ export function createRobotMaterials() {
     transparent: true,
     depthWrite: false,
   });
+
+  // Light pages: a white shell against a white page would lose its outline,
+  // so both shells darken a little toward grazing angles (like a studio shot
+  // with black flags), which draws a soft grey edge around the silhouette.
+  withEdge(shell, "gsf-robot-shell-edge-1", 0.3);
+  withEdge(shellShade, "gsf-robot-shade-edge-1", 0.22);
 
   return {
     visorUniforms,
