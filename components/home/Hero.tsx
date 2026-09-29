@@ -2,7 +2,7 @@ import Container from "@/components/ui/Container";
 import HeroActions from "./HeroActions";
 import HeroRobotStage from "./HeroRobotStage";
 
-const CAPTION = "FIG. 1 — GSF-01, our mascot. Not for sale. It follows your cursor.";
+const CAPTION = "It follows your cursor.";
 
 /**
  * Layout contract with components/hero/HeroRobot (it fills this section):
@@ -28,7 +28,7 @@ export default function Hero() {
         <div className="flex flex-1 items-center pb-14 lg:pb-24 lg:pt-32">
           <div className="pointer-events-auto max-w-[36rem] lg:w-1/2 lg:max-w-none lg:pr-8 xl:pr-12">
             <p className="font-mono text-[13px] leading-5 text-night-muted">
-              Software house + robot supplier · Pak Kret, Nonthaburi
+              Software house + robot supplier
             </p>
             <h1
               id="hero-title"
