@@ -25,12 +25,12 @@ export default function KitComparisonTable({
     for (const e of m.extras ?? []) if (!extraLabels.includes(extraKey(e.label))) extraLabels.push(extraKey(e.label));
 
   const spec = (i: number, label: string) => models[i].specs.find((s) => s.label === label)?.value ?? "—";
-  const th = "sticky left-0 z-10 bg-paper py-2.5 pr-4 text-left align-top font-normal text-graphite";
-  const td = "py-2.5 pr-4 align-top";
+  const th = "sticky left-0 z-10 bg-paper px-4 py-3 text-left align-top font-medium text-graphite";
+  const td = "px-4 py-3 align-top";
 
   return (
     <div>
-      <div className="-mx-5 overflow-x-auto px-5 sm:mx-0 sm:px-0" tabIndex={0} role="region" aria-label={caption ?? `${product.name} kits compared`}>
+      <div className="-mx-5 overflow-x-auto border-y border-hairline bg-paper sm:mx-0 sm:rounded-xl sm:border sm:shadow-card" tabIndex={0} role="region" aria-label={caption ?? `${product.name} kits compared`}>
         <table className="w-full min-w-[50rem] table-fixed border-collapse text-[15px]">
           {caption && <caption className="sr-only">{caption}</caption>}
           <colgroup>
@@ -40,21 +40,21 @@ export default function KitComparisonTable({
             ))}
           </colgroup>
           <thead>
-            <tr className="border-b border-ink">
+            <tr className="border-b border-hairline">
               <td className="sticky left-0 z-10 bg-paper" />
               {models.map((m) => (
-                <th key={m.id} scope="col" className="w-1/4 pb-4 pr-4 text-left align-bottom font-normal">
+                <th key={m.id} scope="col" className="w-1/4 p-4 text-left align-bottom font-normal">
                   {m.image && (
-                    <Link href={`/products/${product.slug}#${m.id}`} className="relative mb-3 block aspect-[4/3] bg-paper-3">
-                      <Image src={m.image} alt="" fill sizes="16rem" className="object-contain mix-blend-multiply" />
+                    <Link href={`/products/${product.slug}#${m.id}`} className="group relative mb-3 block aspect-[4/3] overflow-hidden rounded-lg border border-hairline bg-paper">
+                      <Image src={m.image} alt="" fill sizes="16rem" className="object-contain p-[4%] mix-blend-multiply transition-transform duration-500 ease-out group-hover:scale-[1.03]" />
                     </Link>
                   )}
-                  <span className="block text-[17px] font-medium leading-snug tracking-[-0.01em]">
-                    <Link href={`/products/${product.slug}#${m.id}`} className="hover:text-teal-ink">
+                  <span className="block text-[17px] font-semibold leading-snug tracking-tightish">
+                    <Link href={`/products/${product.slug}#${m.id}`} className="transition-colors duration-200 hover:text-teal-ink">
                       {m.name}
                     </Link>
                   </span>
-                  {m.sku && <p className="caption mt-0.5">{m.sku}</p>}
+                  {m.sku && <p className="mt-0.5 font-mono text-[12px] text-graphite">{m.sku}</p>}
                 </th>
               ))}
             </tr>
@@ -65,7 +65,7 @@ export default function KitComparisonTable({
                 Price
               </th>
               {models.map((m) => (
-                <td key={m.id} className={`${td} font-mono text-[15px] text-signal`}>
+                <td key={m.id} className={`${td} font-mono text-[15px] font-medium tabular-nums text-signal`}>
                   {formatTHB(m.priceTHB) ?? "On request"}
                 </td>
               ))}
@@ -93,7 +93,7 @@ export default function KitComparisonTable({
               </tr>
             ))}
             {extraLabels.map((label) => (
-              <tr key={label} className="border-b border-hairline">
+              <tr key={label} className="border-b border-hairline last:border-b-0">
                 <th scope="row" className={th}>
                   {label}
                 </th>
@@ -106,7 +106,7 @@ export default function KitComparisonTable({
                         <span className="text-graphite">—</span>
                       ) : e.included ? (
                         <span>
-                          <span aria-hidden>✓</span>
+                          <span aria-hidden className="text-teal-ink">✓</span>
                           <span className="sr-only">Included</span> {extra}
                         </span>
                       ) : (

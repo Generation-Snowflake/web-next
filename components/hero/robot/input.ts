@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 
-export type RobotCommand = "wave" | "excited" | "calm";
+export type RobotCommand = "wave" | "excited" | "calm" | "happy";
 
 /** Mutable, per-frame input snapshot written by window listeners and read in
  *  useFrame. The canvas itself is `pointer-events: none`, so every bit of
@@ -58,7 +58,7 @@ function createInput(): RobotInput {
   };
 }
 
-const COMMANDS: readonly RobotCommand[] = ["wave", "excited", "calm"];
+const COMMANDS: readonly RobotCommand[] = ["wave", "excited", "calm", "happy"];
 
 export function useRobotInput(wrapRef: RefObject<HTMLDivElement | null>) {
   const inputRef = useRef<RobotInput>(createInput());

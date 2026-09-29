@@ -144,6 +144,11 @@ export class RobotBrain {
       // Held until "calm"; the timeout is only a safety net.
       this.excitedUntil = t + 12;
       if (!reduced && !wasExcited) this.hop(1);
+    } else if (cmd === "happy") {
+      // Small "done!" after pressing something for the visitor.
+      this.happyUntil = Math.max(this.happyUntil, t + 1.6);
+      this.flash = Math.max(this.flash, 0.6);
+      if (!reduced) this.hop();
     } else {
       this.excitedUntil = -1;
       this.happyUntil = Math.min(this.happyUntil, t + 0.25);

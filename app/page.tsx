@@ -4,7 +4,7 @@ import Hero from "@/components/home/Hero";
 import PriceStrip from "@/components/home/PriceStrip";
 import ServicesList from "@/components/home/ServicesList";
 import RobotsWeSell from "@/components/home/RobotsWeSell";
-import TrackRecord from "@/components/home/TrackRecord";
+import Classes from "@/components/home/Classes";
 import WorkNotes from "@/components/home/WorkNotes";
 import { site } from "@/lib/site";
 
@@ -34,11 +34,10 @@ export default function HomePage() {
       <PriceStrip />
       <ServicesList />
       <RobotsWeSell />
-      <TrackRecord />
+      <Classes />
       <WorkNotes />
       <CtaBand
         title="Tell us what you're building"
-        titleTh="เล่าให้เราฟังว่าคุณกำลังทำอะไร"
         description="A software project, a robot for a classroom or lab, or both. Tell us what it should do and roughly when you need it, and an engineer will reply."
         primary={{ label: "Describe your project", href: "/contact" }}
       />

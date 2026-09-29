@@ -1,65 +1,118 @@
 # GSF site design system
 
-Goal: the site must not look AI-generated. It should read like an engineering
-company's datasheet: real facts, real photos, ruled tables, plain words.
-Layout = **dark hero on the home page only**, light "paper" everywhere else,
-dark footer.
+Goal: a clean, modern, light product site (think Linear / Vercel / Stripe in
+light mode) that still reads as a real engineering company: real prices, real
+photos, plain words. Crisp white pages, cool light-grey surfaces, bold
+headings, softly rounded cards with subtle shadows, plenty of whitespace.
+Everything is light, including the home hero and the footer.
 
 ## Tokens (tailwind.config.js)
 
+Token names were kept from the previous system, so existing classes follow the
+new values.
+
 | Token | Hex | Use |
 |---|---|---|
-| `paper` | #F3F1EC | page background |
-| `paper-2` | #E9E6DE | alternate bands, table headers, contact block |
-| `paper-3` | #E4E0D7 | photo backdrop |
-| `ink` | #16181A | text, 1px section rules, primary button |
-| `graphite` | #55595D | secondary text |
-| `hairline` | #D5D1C7 | inner dividers |
-| `teal-ink` | #00736E | links, focus ring, active nav |
-| `teal` | #00B4AE | logo teal / LED dots on dark only. Never text on paper |
-| `signal` | #B93A15 | prices, errors |
-| `night` / `night-2` / `night-line` / `night-text` / `night-muted` | #0F1011 / #16181A / #2A2D30 / #E9E6DF / #8E9194 | home hero + footer |
+| `paper` | #FFFFFF | page background, card background |
+| `paper-2` | #F6F7F9 | alternate sections, footer, table headers, CTA panel, hover fills |
+| `paper-3` | #EEF0F3 | photo placeholders, 3D viewer backdrop (`ViewerScene` uses the same hex) |
+| `ink` | #0B0C0E | text, primary button |
+| `graphite` | #5B616B | secondary text (6.3:1 on white, AA on paper-2) |
+| `hairline` | #E5E7EB | borders and dividers |
+| `hairline-strong` | #D0D5DD | form controls, outline buttons, hovered cards |
+| `teal-ink` | #00736E | links, section labels, text accents (AA on white and paper-2) |
+| `teal` | #00B4AE | logo teal: dots, selected states, icon fills. Never body text |
+| `teal-wash` | #E6F7F6 | tinted chip / step-number backgrounds |
+| `signal` | #C2410C | prices, errors (5.2:1 on white) |
+| `night*` | | dark palette, currently unused by site pages |
 
-The old tokens (`darkbg`, `ice`, `softwhite`, `glass`, `shadow-glow`, `font-display`)
-no longer exist. Remove every use.
+Legacy tokens (`ice`, `darkbg`, `softwhite`, `glass`, `shadow-glow`) exist only
+for the standalone 3D demos. Don't use them in site pages.
 
-Fonts: `font-sans` = Anuphan (Thai + Latin). `font-mono` = IBM Plex Mono (Thai
-falls back to IBM Plex Sans Thai). Mono only for real data: SKUs, specs,
-units, dates, FIG captions, breadcrumbs.
+Shadows: `shadow-xs` (buttons, inputs), `shadow-card` (resting card),
+`shadow-card-hover` (hovered card), `shadow-nav` (scrolled navbar).
+Tracking: `tracking-tightish` (-0.015em, small headings), `tracking-heading`
+(-0.025em, section headings), `tracking-display` (-0.035em, H1s).
+Easing: `ease-out` is `cubic-bezier(0.22, 1, 0.36, 1)`.
+
+## Typography
+
+- `font-sans` = Anuphan (Thai + Latin) everywhere.
+- Headings are `font-semibold` with tight tracking and `text-balance`:
+  - Home H1: 44px mobile to 76px desktop (`tracking-display`, leading 1.02).
+  - Page H1 (`PageHeader`): 40px to 64px.
+  - Section H2 (`SectionHeading`): 32px to 44px. Product `Band` H2: 28px to 36px.
+- Lead paragraphs are `text-lg text-graphite`.
+- `font-mono` (IBM Plex Mono) only for prices, SKUs and spec values
+  (`SpecTable`, `KitComparisonTable`). Add `tabular-nums` to prices.
+- No "FIG. n" captions, no mono labels. Small labels use the `.caption` class
+  (13px, medium, graphite).
+
+## Components
+
+`app/globals.css` component classes:
+
+- `.card`: `rounded-xl border border-hairline bg-paper shadow-card`.
+- `.card-hover`: add to cards that are links. Lifts 2px, stronger shadow and
+  border, 300ms ease-out (no lift with reduced motion).
+- `.chip`: small rounded-full tag (tech stack, case-study area, status).
+- `.link`: teal-ink text link with a soft underline.
+- `.caption`: small label (field names, categories).
+
+`components/ui/`:
+
+- **Button** (`ButtonLink`): `primary` (near-black, rounded-lg, h-10/h-12),
+  `outline` (white, `hairline-strong` border), `link` (teal-ink text with a
+  trailing arrow that nudges on hover). `tone="night"` is deprecated and renders
+  the light variants.
+- **SectionHeading** + `Label`: teal-ink sentence-case label, big semibold title,
+  graphite description.
+- **PageHeader**: breadcrumb (sans, graphite), H1, lead, actions; hairline below.
+- **CtaBand**: page-specific closing panel on `paper-2`, rounded-xl, contact
+  details as small white cards. Give each page its own title.
+- **ImageFrame**: rounded-xl frame; optional short caption.
+- **Reveal**: gentle fade + 12px slide-in (600ms) the first time a block scrolls
+  into view. Server HTML is visible; only blocks below the fold get hidden on
+  the client. Disabled with `prefers-reduced-motion`. Use for section content,
+  small stagger via `delay` (0 to 240ms).
+
+Patterns:
+
+- Lists of things (services, products, work, class formats, steps) are card
+  grids with `gap-4`. With an odd count in a 2-column grid, let the last card
+  span both columns.
+- Tables and definition lists live inside a `.card` with `divide-y
+  divide-hairline`; table headers sit on `paper-2`.
+- A dense index (the six smaller services) can use the `gap-px bg-hairline`
+  grid trick for clean inner lines.
+- Product photos sit on white (`mix-blend-multiply` for studio shots) in a
+  rounded frame; lifestyle photos use `object-cover`.
+- Sections alternate `paper` / `paper-2` with a `border-hairline` top rule;
+  vertical padding `py-20 md:py-28` (sub-sections `py-16 md:py-24`).
+- Navbar: transparent at the top; once scrolled `bg-paper/80` + backdrop blur +
+  hairline bottom border + `shadow-nav`. Active link is a `paper-2` pill.
+- Footer: light, `paper-2`, `logo-ink.png`.
 
 ## Rules
 
-- **No**: gradients, glow shadows, blur/backdrop-blur, glassmorphism, `rounded-2xl`
-  and bigger, pill buttons, hover lift (`-translate-y`), scroll fade-ins,
-  marquees, particles, uppercase tracked "eyebrow" labels, icon-in-a-square card
-  grids, checkmark bullet lists, decorative 01/02/03 numbering, gradient text.
-- Radius: `rounded-sm` (2px) on buttons/inputs; 0 on images and tables.
-- Structure with **rules**: `border-ink` for major divisions, `border-hairline` inside.
-  Prefer ruled lists and tables over cards. Cards only for real objects (a product).
-- Left aligned, asymmetric, content decides section height. Vary spacing.
-- Headings: weight 500, `tracking-[-0.015em]`. Optional Thai line under a heading
-  (`lang="th"`, graphite). Optional mono label above ("Services · บริการ") via `Label`.
-- Buttons (`components/ui/Button`): `primary` (ink block), `outline`, `link`
-  (underlined teal-ink). Arrow only on the one primary action of a section.
-  `tone="night"` on dark backgrounds.
-- Figures: `ImageFrame` with a mono caption "FIG. n — what it shows". Don't show
-  placeholders when a section can be hidden instead.
-- Motion: hover colour changes (150ms) only. The hero robot and 3D product
-  viewers are the only animated things.
-- Accessibility: AA contrast, visible focus (teal-ink ring), `lang="th"` on Thai.
+- Radius: `rounded-lg` (8px) for buttons, inputs, small tiles; `rounded-xl`
+  (12px) for cards, images, panels; `rounded-full` for chips and dots.
+- Motion: hover transitions 200 to 300ms (colour, shadow, at most 2px lift or a
+  1.02 image zoom), scroll reveals as above. Nothing bouncy, nothing looping
+  besides the robot and 3D viewers.
+- **No**: neon glows, gradient text, purple gradients, glassmorphism (blur is for
+  the navbar only), stock-photo feel, uppercase tracked eyebrows, invented facts.
+- Accessibility: AA contrast (graphite and teal-ink pass on white and paper-2),
+  visible focus (2px teal-ink outline), `lang="th"` on any Thai text.
 
 ## Copy
 
-Plain, specific, first person plural. Banned: seamless, cutting-edge, empower,
-unlock, elevate, leverage, robust, innovative, transform, harness, intelligent,
-"end-to-end", "real world", "from X to Y", "we don't just…". No em dashes in body
-copy. Don't list in threes by reflex. Never invent numbers, clients, testimonials,
-stock status or policies. Facts live in `lib/*.ts` (site, services, products, team, work).
+Plain, specific, first person plural. English only on the site. Banned:
+seamless, cutting-edge, empower, unlock, elevate, leverage, robust, innovative,
+transform, harness, intelligent, "end-to-end", "real world", "from X to Y",
+"we don't just…". No em dashes in body copy. Don't list in threes by reflex.
+Never invent numbers, clients, testimonials, stock status or policies. Facts
+live in `lib/*.ts` (site, services, products, training, work).
 
-## Shared pieces
-
-`components/ui/`: Container, Button (ButtonLink), SectionHeading (+ `Label`),
-PageHeader (breadcrumb crumbs + H1 + titleTh), ImageFrame, CtaBand (page-specific
-contact block: pass a title such as "Ask about SO-101 price and lead time"),
-Reveal (no-op wrapper, don't use in new code).
-Logos: `/logo-ink.png` (on paper), `/logo-night.png` (on dark).
+Logos: `/logo-ink.png` (on light backgrounds). `/logo-night.png` is kept for
+dark contexts but no site page uses one.

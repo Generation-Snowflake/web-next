@@ -2,7 +2,7 @@ import Container from "@/components/ui/Container";
 import { Label } from "@/components/ui/SectionHeading";
 
 /**
- * A ruled datasheet section: ink rule on top, heading in a narrow left
+ * A product-page section: hairline on top, heading in a narrow left
  * column, content on the right. `wide` puts the content under the heading
  * at full width instead (tables, 3D viewer).
  */
@@ -29,18 +29,18 @@ export default function Band({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className={`scroll-mt-24 border-t border-ink ${tone === "paper-2" ? "bg-paper-2" : ""} ${className}`}>
-      <Container className={`py-12 md:py-16 ${wide ? "" : "grid gap-8 md:grid-cols-12 md:gap-10"}`}>
-        <div className={wide ? "mb-8 flex flex-wrap items-end justify-between gap-x-10 gap-y-3" : "md:col-span-4"}>
+    <section id={id} className={`scroll-mt-24 border-t border-hairline ${tone === "paper-2" ? "bg-paper-2" : ""} ${className}`}>
+      <Container className={`py-16 md:py-24 ${wide ? "" : "grid gap-8 md:grid-cols-12 md:gap-12"}`}>
+        <div className={wide ? "mb-10 flex flex-wrap items-end justify-between gap-x-10 gap-y-3" : "md:col-span-4"}>
           <div>
-            {label && (
-              <Label th={labelTh} className="mb-2">
+            {label && label !== title && (
+              <Label th={labelTh} className="mb-3">
                 {label}
               </Label>
             )}
-            <h2 className="text-[1.6rem] font-medium leading-tight tracking-[-0.015em] sm:text-[2rem]">{title}</h2>
+            <h2 className="text-balance text-[1.75rem] font-semibold leading-[1.15] tracking-heading sm:text-[2.25rem]">{title}</h2>
           </div>
-          {aside && <div className={wide ? "max-w-prose text-[15px] text-graphite" : "mt-4 text-[15px] leading-relaxed text-graphite"}>{aside}</div>}
+          {aside && <div className={wide ? "max-w-prose text-[16px] leading-relaxed text-graphite" : "mt-4 text-[16px] leading-relaxed text-graphite"}>{aside}</div>}
         </div>
         <div className={wide ? "" : "md:col-span-8"}>{children}</div>
       </Container>

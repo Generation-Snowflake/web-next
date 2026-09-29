@@ -1,5 +1,5 @@
 type Props = {
-  /** Small mono label above the title, e.g. "Services". Sentence case. */
+  /** Small teal label above the title, e.g. "Services". Sentence case. */
   label?: string;
   /** Thai version of the label, shown after it. */
   labelTh?: string;
@@ -16,7 +16,7 @@ type Props = {
   children?: React.ReactNode;
 };
 
-/** Mono label, e.g. "Services · บริการ". No caps, no tracking, no decoration. */
+/** Small teal-ink label above a heading, e.g. "Services". Sentence case, no caps. */
 export function Label({
   children,
   th,
@@ -29,7 +29,7 @@ export function Label({
   className?: string;
 }) {
   return (
-    <p className={`font-mono text-[13px] leading-5 ${tone === "night" ? "text-night-muted" : "text-graphite"} ${className}`}>
+    <p className={`text-[14px] font-medium leading-5 ${tone === "night" ? "text-teal" : "text-teal-ink"} ${className}`}>
       {children}
       {th && <span lang="th"> · {th}</span>}
     </p>
@@ -58,15 +58,15 @@ export default function SectionHeading({
   return (
     <div className={`${center ? "mx-auto text-center" : ""} max-w-3xl ${className}`}>
       {lbl && (
-        <Label th={labelTh} tone={tone} className="mb-3">
+        <Label th={labelTh} tone={tone} className="mb-4">
           {lbl}
         </Label>
       )}
       <Tag
-        className={`font-medium tracking-[-0.015em] ${night ? "text-night-text" : "text-ink"} ${
+        className={`text-balance font-semibold ${night ? "text-night-text" : "text-ink"} ${
           Tag === "h1"
-            ? "text-[2.5rem] leading-[1.08] sm:text-5xl lg:text-[3.5rem]"
-            : "text-[1.75rem] leading-tight sm:text-4xl"
+            ? "text-[2.5rem] leading-[1.05] tracking-display sm:text-[3.25rem] lg:text-[4rem]"
+            : "text-[2rem] leading-[1.1] tracking-heading sm:text-[2.5rem] lg:text-[2.75rem]"
         }`}
       >
         {title}
@@ -77,7 +77,7 @@ export default function SectionHeading({
         </p>
       )}
       {description && (
-        <div className={`mt-4 max-w-prose text-[17px] leading-relaxed ${night ? "text-night-muted" : "text-graphite"} ${center ? "mx-auto" : ""}`}>
+        <div className={`mt-5 max-w-[42rem] text-lg leading-relaxed ${night ? "text-night-muted" : "text-graphite"} ${center ? "mx-auto" : ""}`}>
           {description}
         </div>
       )}

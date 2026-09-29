@@ -2,7 +2,7 @@ import type { RootState } from "@react-three/fiber";
 import { easing } from "maath";
 import * as THREE from "three";
 import { RobotBrain } from "./brain";
-import { ARM_KEYS, DIM, HEAD_CENTER_Y, POSE_IDLE, type ArmPose } from "./config";
+import { ARM_KEYS, DIM, HEAD_CENTER_Y, POSE_IDLE, ZERO_POSE, type ArmPose } from "./config";
 import { setRobotCursor, type RobotInput } from "./input";
 import { LED, type RobotMaterials } from "./materials";
 
@@ -36,7 +36,18 @@ const smoothstep = (a: number, b: number, x: number) => {
   return t * t * (3 - 2 * t);
 };
 
-export type FrameOptions = { reducedMotion: boolean };
+/** One arm driven from outside (the companion pressing a button). */
+export type ArmReach = { active: boolean; side: 1 | -1; pose: ArmPose };
+
+export type FrameOptions = {
+  reducedMotion: boolean;
+  reach?: ArmReach | null;
+  /** Written each frame: fingertip of the reaching arm in world space. */
+  tip?: THREE.Vector3 | null;
+};
+
+/** Fingertip in the wrist's local frame (hand is scaled 1.22). */
+const TIP_LOCAL = new THREE.Vector3(0, -0.3, 0);
 
 export class RobotController {
   private brain = new RobotBrain();
@@ -53,6 +64,7 @@ export class RobotController {
   private bottom = new THREE.Vector3();
   private poseL: ArmPose = { ...POSE_IDLE };
   private poseR: ArmPose = { ...POSE_IDLE };
+  private zeroOsc: ArmPose = { ...ZERO_POSE };
 
   private live = {
     headYaw: 0,
@@ -102,8 +114,8 @@ export class RobotController {
     return this.ndc.set(((x - r.left) / r.width) * 2 - 1, -((y - r.top) / r.height) * 2 + 1);
   }
 
-  private applyArm(arm: Arm, pose: ArmPose, target: ArmPose, osc: ArmPose, dt: number) {
-    for (const key of ARM_KEYS) easing.damp(pose, key, target[key], 0.17, dt);
+  private applyArm(arm: Arm, pose: ArmPose, target: ArmPose, osc: ArmPose, dt: number, smooth = 0.17) {
+    for (const key of ARM_KEYS) easing.damp(pose, key, target[key], smooth, dt);
     arm.shoulder.rotation.set(pose.sx + osc.sx, pose.sy + osc.sy, pose.sz + osc.sz);
     arm.elbow.rotation.set(pose.ex + osc.ex, 0, pose.ez + osc.ez);
     arm.wrist.rotation.set(pose.wx + osc.wx, pose.wy + osc.wy, pose.wz + osc.wz);
@@ -121,6 +133,13 @@ export class RobotController {
 
     root.updateWorldMatrix(true, false);
     inv.copy(root.matrixWorld).invert();
+    const reach = opts.reach && opts.reach.active ? opts.reach : null;
+    if (reach && opts.tip) {
+      // Matrices are from the last render: one frame behind, which is fine.
+      const wrist = reach.side === 1 ? n.armL.wrist : n.armR.wrist;
+      wrist.updateWorldMatrix(true, false);
+      opts.tip.copy(TIP_LOCAL).applyMatrix4(wrist.matrixWorld);
+    }
     const headY = HEAD_CENTER_Y + live.floatY;
 
     // ---- pointer → look direction, hover, proximity ----------------------
@@ -189,7 +208,8 @@ export class RobotController {
 
     const yaw = clamp(o.lookYaw, -1.35, 1.35);
     const pitch = clamp(o.lookPitch, -0.8, 0.7);
-    const torsoYawT = clamp(yaw * 0.3, -0.36, 0.36);
+    // While pressing something, keep the shoulders square so the arm lands.
+    const torsoYawT = reach ? 0 : clamp(yaw * 0.3, -0.36, 0.36);
     const headYawT = clamp(yaw - torsoYawT, -0.85, 0.85);
     const headPitchT = clamp(pitch * 0.85, -0.42, 0.36);
     const slow = opts.reducedMotion ? 1.6 : 1;
@@ -214,8 +234,11 @@ export class RobotController {
       -live.headYaw * 0.12 + live.engaged * 0.05,
     );
 
-    this.applyArm(n.armL, this.poseL, o.armL, o.oscL, dt);
-    this.applyArm(n.armR, this.poseR, o.armR, o.oscR, dt);
+    const zero = this.zeroOsc;
+    const reachL = reach?.side === 1;
+    const reachR = reach?.side === -1;
+    this.applyArm(n.armL, this.poseL, reachL ? reach.pose : o.armL, reachL ? zero : o.oscL, dt, reachL ? 0.045 : 0.17);
+    this.applyArm(n.armR, this.poseR, reachR ? reach.pose : o.armR, reachR ? zero : o.oscR, dt, reachR ? 0.045 : 0.17);
 
     // ---- face + lights ------------------------------------------------------
     const vu = mat.visorUniforms;
@@ -232,7 +255,7 @@ export class RobotController {
     const gap = Math.max(0.27 + o.floatY, 0);
     const spread = 1.15 + gap * 1.2;
     n.shadow.scale.set(spread, spread * 0.2, 1);
-    mat.shadow.uniforms.uOpacity.value = clamp(0.95 - gap * 0.6, 0.4, 0.95);
+    mat.shadow.uniforms.uOpacity.value = clamp(0.95 - gap * 0.6, 0.4, 0.95) * 0.55;
     n.burst.visible = o.burst >= 0;
     if (o.burst >= 0) {
       n.burst.scale.setScalar(1 + o.burst * 1.6);

@@ -2,17 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/ui/PageHeader";
 import Container from "@/components/ui/Container";
-import SectionHeading from "@/components/ui/SectionHeading";
 import CtaBand from "@/components/ui/CtaBand";
-import TeamList from "@/components/about/TeamList";
-import AwardsTable from "@/components/about/AwardsTable";
 import { site } from "@/lib/site";
-import { teaching } from "@/lib/team";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "GSF (Generation Snowflake) is a small team of robotics engineers in Pak Kret, Nonthaburi. Who we are, what we have won and taught, and where to find us.",
+    "GSF (Generation Snowflake) is a small team of robotics engineers in Pak Kret, Nonthaburi. Who we are, what we do, and where to find us.",
   alternates: { canonical: "/about" },
 };
 
@@ -22,66 +18,33 @@ export default function AboutPage() {
       <PageHeader
         crumbs={[{ label: "About" }]}
         title="About GSF"
-        titleTh="เกี่ยวกับเรา"
         description="A small engineering team in Pak Kret, Nonthaburi. We write software for other companies and sell robots for classrooms and labs."
       />
 
       {/* The name */}
-      <section className="py-14 md:py-20">
+      <section className="py-20 md:py-28">
         <Container className="grid gap-6 md:grid-cols-12">
-          <h2 className="text-[1.75rem] font-medium leading-tight tracking-[-0.015em] md:col-span-4">
+          <h2 className="text-balance text-[2rem] font-semibold leading-[1.1] tracking-heading md:col-span-4">
             Why &ldquo;Generation Snowflake&rdquo;
           </h2>
-          <p className="max-w-prose text-[17px] leading-relaxed md:col-span-7 md:col-start-6">
+          <p className="max-w-prose text-xl leading-relaxed text-graphite md:col-span-7 md:col-start-6">
             GSF stands for Generation Snowflake. We are a young team. One snowflake is small and no
             two are the same, but a lot of them together can cover a whole field. That is how we
-            work: three of us studied robotics engineering at KMUTNB, one looks after finance and
-            operations, and we get more done together than any of us would alone.
+            work: different skills, one team, and more done together than any of us would alone.
           </p>
         </Container>
       </section>
 
-      {/* Team */}
-      <section aria-labelledby="team" className="border-t border-ink py-14 md:py-20">
-        <Container>
-          <SectionHeading label="Team" labelTh="ทีม" title={<span id="team">The people you will talk to</span>} />
-          <TeamList />
-        </Container>
-      </section>
-
-      {/* Track record */}
-      <section aria-labelledby="record" className="border-t border-ink bg-paper-2 py-14 md:py-20">
-        <Container className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <SectionHeading
-              label="Competitions"
-              title={<span id="record">Robotics competition results</span>}
-              description="Results won by members of our team."
-            />
-            <AwardsTable />
-          </div>
-          <div className="lg:col-span-4 lg:col-start-9">
-            <h2 className="text-xl font-medium tracking-[-0.015em]">Teaching</h2>
-            <ul className="mt-5 divide-y divide-hairline border-y border-ink text-[15px]">
-              {teaching.map((t) => (
-                <li key={t} className="py-3">
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Container>
-      </section>
 
       {/* What we do */}
-      <section aria-labelledby="what" className="border-t border-ink py-14 md:py-20">
+      <section aria-labelledby="what" className="border-t border-hairline bg-paper-2 py-20 md:py-28">
         <Container className="grid gap-10 md:grid-cols-12">
-          <h2 id="what" className="text-[1.75rem] font-medium leading-tight tracking-[-0.015em] md:col-span-4">
+          <h2 id="what" className="text-balance text-[2rem] font-semibold leading-[1.1] tracking-heading md:col-span-4">
             What we do
           </h2>
-          <div className="grid gap-8 text-[17px] leading-relaxed sm:grid-cols-2 md:col-span-8">
-            <div className="border-t border-hairline pt-4">
-              <h3 className="font-medium">Services</h3>
+          <div className="grid gap-4 text-[17px] leading-relaxed sm:grid-cols-2 md:col-span-8">
+            <div className="card p-6 sm:p-7">
+              <h3 className="text-xl font-semibold tracking-heading">Services</h3>
               <p className="mt-2 text-graphite">
                 We build software for other companies: computer vision, ROS 2 robot control, AI
                 tools, IoT dashboards, web and mobile apps. You own the code at the end.{" "}
@@ -90,8 +53,8 @@ export default function AboutPage() {
                 </Link>
               </p>
             </div>
-            <div className="border-t border-hairline pt-4">
-              <h3 className="font-medium">Products</h3>
+            <div className="card p-6 sm:p-7">
+              <h3 className="text-xl font-semibold tracking-heading">Products</h3>
               <p className="mt-2 text-graphite">
                 We also sell robots: Makerzoid kits for schools and kids, and the LeRobot SO-101 arm and
                 XLeRobot for universities and labs. We can assemble them and teach with them.{" "}
@@ -105,14 +68,14 @@ export default function AboutPage() {
       </section>
 
       {/* Where we are */}
-      <section aria-labelledby="where" className="border-t border-ink py-14 md:py-20">
+      <section aria-labelledby="where" className="border-t border-hairline py-20 md:py-28">
         <Container className="grid gap-8 md:grid-cols-12">
-          <h2 id="where" className="text-[1.75rem] font-medium leading-tight tracking-[-0.015em] md:col-span-4">
+          <h2 id="where" className="text-balance text-[2rem] font-semibold leading-[1.1] tracking-heading md:col-span-4">
             Where we are
           </h2>
           <div className="md:col-span-8">
-            <p className="text-[17px]">{site.address.locality}, {site.address.country}</p>
-            <address lang="th" className="mt-3 not-italic leading-relaxed text-graphite">
+            <p className="text-xl font-semibold tracking-tightish">{site.address.locality}, {site.address.country}</p>
+            <address className="mt-3 not-italic leading-relaxed text-graphite">
               {site.address.lines.map((l) => (
                 <span key={l} className="block">
                   {l}
@@ -134,7 +97,6 @@ export default function AboutPage() {
 
       <CtaBand
         title="Come and meet us"
-        titleTh="แวะมาคุยกับทีมได้"
         description="Call or email before you come over, so someone is in the office. Or send the form and tell us what you need."
       />
     </>

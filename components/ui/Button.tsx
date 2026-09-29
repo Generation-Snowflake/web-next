@@ -5,29 +5,27 @@ type Size = "md" | "lg";
 type Tone = "paper" | "night";
 
 const base =
-  "group inline-flex items-center justify-center gap-2 rounded-sm font-medium transition-colors duration-150";
+  "group inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-[background-color,border-color,color,box-shadow] duration-200 ease-out";
 
-// "secondary" and "ghost" are kept as aliases so older call sites still work.
+const light: Record<Variant, string> = {
+  primary: "bg-ink text-white shadow-xs hover:bg-[#26282C]",
+  outline: "border border-hairline-strong bg-paper text-ink shadow-xs hover:border-graphite/40 hover:bg-paper-2",
+  secondary: "border border-hairline-strong bg-paper text-ink shadow-xs hover:border-graphite/40 hover:bg-paper-2",
+  link: "text-teal-ink font-medium transition-colors duration-200 hover:text-ink",
+  ghost: "text-teal-ink font-medium transition-colors duration-200 hover:text-ink",
+};
+
+// "secondary" and "ghost" are aliases so older call sites still work. The
+// site has no dark surfaces any more, so tone="night" renders the light
+// variants (kept so existing call sites compile).
 const variants: Record<Tone, Record<Variant, string>> = {
-  paper: {
-    primary: "bg-ink text-paper hover:bg-black",
-    outline: "border border-ink text-ink hover:bg-ink hover:text-paper",
-    secondary: "border border-ink text-ink hover:bg-ink hover:text-paper",
-    link: "link",
-    ghost: "link",
-  },
-  night: {
-    primary: "bg-night-text text-night hover:bg-white",
-    outline: "border border-night-muted text-night-text hover:border-night-text",
-    secondary: "border border-night-muted text-night-text hover:border-night-text",
-    link: "link",
-    ghost: "link",
-  },
+  paper: light,
+  night: light,
 };
 
 const sizes: Record<Size, string> = {
-  md: "px-4 py-2.5 text-[15px]",
-  lg: "px-5 py-3 text-base",
+  md: "h-10 px-4 text-[15px]",
+  lg: "h-12 px-5 text-base",
 };
 
 type Props = {
@@ -35,9 +33,9 @@ type Props = {
   children: React.ReactNode;
   variant?: Variant;
   size?: Size;
-  /** Use "night" on the dark hero/footer. */
+  /** @deprecated no dark surfaces remain; "night" renders like "paper". */
   tone?: Tone;
-  /** Trailing arrow. Use on the one primary action of a section only. */
+  /** Trailing arrow on solid/outline buttons. Text links always get one. */
   arrow?: boolean;
   className?: string;
 } & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "className" | "children">;
@@ -59,13 +57,14 @@ export default function ButtonLink({
 }: Props) {
   const isLink = variant === "link" || variant === "ghost";
   const cls = isLink
-    ? `${variants[tone][variant]} inline-flex items-center gap-1.5 ${className}`
+    ? `group ${variants[tone][variant]} inline-flex items-center gap-1.5 ${className}`
     : `${base} ${variants[tone][variant]} ${sizes[size]} ${className}`;
+  const showArrow = arrow || isLink;
   const content = (
     <>
       {children}
-      {arrow && (
-        <span aria-hidden className="transition-transform duration-150 group-hover:translate-x-0.5">
+      {showArrow && (
+        <span aria-hidden className="transition-transform duration-200 ease-out group-hover:translate-x-0.5">
           →
         </span>
       )}

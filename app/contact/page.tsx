@@ -18,7 +18,6 @@ export default function ContactPage() {
       <PageHeader
         crumbs={[{ label: "Contact" }]}
         title="Contact"
-        titleTh="ติดต่อเรา"
         description="Tell us what you want to build or buy, and roughly when. The form opens your own email app with the message filled in. Nothing is stored on this website."
       />
 

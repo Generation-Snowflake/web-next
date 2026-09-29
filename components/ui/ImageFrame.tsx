@@ -2,8 +2,8 @@ import Image from "next/image";
 import type { LucideIcon } from "lucide-react";
 
 /**
- * A figure: image on a warm-grey backdrop, square corners, optional mono
- * caption ("FIG. 2 — …"). Without `src` it shows a plain hatched box that
+ * A figure: image on a light-grey backdrop with rounded corners and an
+ * optional short caption. Without `src` it shows a plain hatched box that
  * says the photo is still to come. Prefer hiding a section over showing it.
  */
 export default function ImageFrame({
@@ -20,7 +20,7 @@ export default function ImageFrame({
   alt: string;
   /** Text inside the empty placeholder. */
   label?: string;
-  /** Mono caption under the frame. */
+  /** Short caption under the frame. */
   caption?: React.ReactNode;
   /** @deprecated ignored (no decorative icons in the new design). */
   icon?: LucideIcon;
@@ -33,7 +33,7 @@ export default function ImageFrame({
   fit?: "cover" | "contain";
 }) {
   const frame = (
-    <div className={`relative overflow-hidden bg-paper-3 ${className}`}>
+    <div className={`relative overflow-hidden rounded-xl bg-paper-3 ${className}`}>
       {src ? (
         <Image
           src={src}
@@ -47,9 +47,9 @@ export default function ImageFrame({
         <div
           role="img"
           aria-label={alt}
-          className="absolute inset-0 flex items-end bg-[repeating-linear-gradient(135deg,transparent_0_11px,rgba(22,24,26,0.07)_11px_12px)] p-3"
+          className="absolute inset-0 flex items-end bg-[repeating-linear-gradient(135deg,transparent_0_11px,rgba(11,12,14,0.06)_11px_12px)] p-3"
         >
-          <span className="bg-paper-3 px-1.5 font-mono text-[12px] text-graphite">{label ?? "Photo to come"}</span>
+          <span className="rounded-md bg-paper px-2 py-0.5 text-[13px] text-graphite">{label ?? "Photo to come"}</span>
         </div>
       )}
     </div>
@@ -58,7 +58,7 @@ export default function ImageFrame({
   return (
     <figure>
       {frame}
-      <figcaption className="caption mt-2">{caption}</figcaption>
+      <figcaption className="caption mt-3">{caption}</figcaption>
     </figure>
   );
 }

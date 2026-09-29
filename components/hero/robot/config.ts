@@ -33,8 +33,8 @@ export const HEAD_CENTER_Y = DIM.headPivotY + DIM.headLift;
  *  colour and is reserved for the small LEDs (eyes, chest emblem, ear rings). */
 export const COLORS = {
   teal: "#00b4ae",
-  shell: "#e4e2dd",
-  shellShade: "#b8b6b0",
+  shell: "#dedfdd",
+  shellShade: "#b3b4b2",
   graphite: "#34373a",
   graphiteDeep: "#222426",
   seam: "#8d8c88",

@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 const links = [
   { href: "/", label: "Home", note: "Start again from the front page" },
   { href: "/services", label: "Services", note: "Software, AI and robotics work we do for clients" },
-  { href: "/products", label: "Products", note: "Makerzoid kits, SO-101 and XLeRobot" },
-  { href: "/portfolio", label: "Work", note: "Case notes and 3D demos" },
+  { href: "/products", label: "Products", note: "Robot kits, research robots and software" },
+  { href: "/portfolio", label: "Work", note: "The kinds of projects we build" },
   { href: "/contact", label: "Contact", note: "Phone, email and the contact form" },
 ];
 
@@ -19,25 +19,28 @@ export default function NotFound() {
   return (
     <section className="pb-20 pt-28 md:pb-28 md:pt-36">
       <Container>
-        <p className="font-mono text-[13px] text-graphite">Error 404</p>
-        <h1 className="mt-4 text-[2.5rem] font-medium leading-[1.08] tracking-[-0.015em] sm:text-5xl">
+        <p className="chip gap-2 shadow-xs">
+          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-signal" />
+          Error 404
+        </p>
+        <h1 className="mt-6 text-balance text-[2.5rem] font-semibold leading-[1.05] tracking-display sm:text-[3.25rem] lg:text-[4rem]">
           This page doesn&rsquo;t exist
         </h1>
-        <p lang="th" className="mt-2 text-lg text-graphite">
-          ไม่พบหน้าที่คุณต้องการ
-        </p>
-        <p className="mt-4 max-w-prose text-[17px] leading-relaxed text-graphite">
+        <p className="mt-5 max-w-prose text-lg leading-relaxed text-graphite">
           The link may be old or the address mistyped. One of these should get you where you were going.
         </p>
-        <ul className="mt-10 max-w-3xl border-t border-ink">
+        <ul className="card mt-12 max-w-3xl divide-y divide-hairline overflow-hidden">
           {links.map((l) => (
-            <li key={l.href} className="border-b border-hairline">
+            <li key={l.href}>
               <Link
                 href={l.href}
-                className="group flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:gap-6"
+                className="group flex flex-col gap-1 px-5 py-4 transition-colors duration-200 hover:bg-paper-2 sm:flex-row sm:items-center sm:gap-6 sm:px-6"
               >
-                <span className="w-32 shrink-0 text-lg font-medium group-hover:text-teal-ink">{l.label}</span>
-                <span className="text-[15px] text-graphite">{l.note}</span>
+                <span className="w-32 shrink-0 text-lg font-semibold tracking-tightish transition-colors duration-200 group-hover:text-teal-ink">{l.label}</span>
+                <span className="flex-1 text-[15px] text-graphite">{l.note}</span>
+                <span aria-hidden className="hidden text-graphite transition-transform duration-200 ease-out group-hover:translate-x-0.5 sm:inline">
+                  →
+                </span>
               </Link>
             </li>
           ))}

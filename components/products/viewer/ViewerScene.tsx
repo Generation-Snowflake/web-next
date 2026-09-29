@@ -18,7 +18,7 @@ export type SceneProps = {
   onReady: () => void;
 };
 
-const PAPER_3 = "#E4E0D7";
+const PAPER_3 = "#EEF0F3"; // tailwind paper-3
 
 function Model({
   src,
@@ -175,7 +175,7 @@ function Ground({ radius, height }: { radius: number; height: number }) {
       />
       <mesh rotation-x={-Math.PI / 2} receiveShadow>
         <planeGeometry args={[r * 4, r * 4]} />
-        <shadowMaterial transparent opacity={0.14} color="#3b3a36" />
+        <shadowMaterial transparent opacity={0.12} color="#2a2f38" />
       </mesh>
     </>
   );
@@ -203,11 +203,11 @@ export default function ViewerScene({ src, kind, motion, autoRotate, active, onR
       }}
     >
       <color attach="background" args={[PAPER_3]} />
-      <hemisphereLight args={["#ffffff", "#cfc8b8", 0.6]} />
+      <hemisphereLight args={["#ffffff", "#c9ced6", 0.6]} />
       <Environment resolution={256} frames={1}>
         {/* Key: large soft box above-front. Fill: dimmer from the left. Rim: thin strip behind. */}
         <Lightformer form="rect" intensity={2.4} color="#ffffff" position={[1.5, 4, 3]} scale={[6, 3, 1]} target={[0, 0, 0]} />
-        <Lightformer form="rect" intensity={0.9} color="#fff6ea" position={[-4, 1.5, 1]} scale={[4, 3, 1]} target={[0, 0, 0]} />
+        <Lightformer form="rect" intensity={0.9} color="#f7f9fc" position={[-4, 1.5, 1]} scale={[4, 3, 1]} target={[0, 0, 0]} />
         <Lightformer form="rect" intensity={1.2} color="#ffffff" position={[0, 2, -4]} scale={[8, 0.6, 1]} target={[0, 0, 0]} />
         <Lightformer form="rect" intensity={0.5} color={PAPER_3} position={[0, -3, 0]} rotation-x={Math.PI / 2} scale={[10, 10, 1]} />
       </Environment>
