@@ -45,22 +45,3 @@ export const team: TeamMember[] = [
     ],
   },
 ];
-
-export type Award = { result: string; event: string; note?: string };
-
-/** Competition results of team members (robotics), newest context first. */
-export const awards: Award[] = [
-  { result: "1st place", event: "RoboCup Rescue Canada", note: "+ Best in Class Mobility" },
-  { result: "2nd place", event: "RoboCup Rescue Australia", note: "+ Best in Class Mobility" },
-  { result: "2nd place", event: "World Robot Games" },
-  { result: "2nd place", event: "Yamo RoboCup" },
-  { result: "Rising Star Award", event: "HACKa'Thailand 2023 Roadshow" },
-  { result: "Round of 16", event: "TPA Robot Contest Thailand Championship" },
-  { result: "Round of 16", event: "World Robot Olympiad" },
-];
-
-export const teaching: string[] = [
-  "Taught robot fundamentals to 20+ vocational students",
-  "Private and small-group robotics classes",
-  "Advisor to a primary-school robotics club",
-];

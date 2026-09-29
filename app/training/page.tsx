@@ -5,7 +5,6 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ButtonLink from "@/components/ui/Button";
 import CtaBand from "@/components/ui/CtaBand";
 import { classFormats, mazeCourse } from "@/lib/training";
-import { awards, teaching } from "@/lib/team";
 
 const description =
   "Robotics and coding classes from GSF Robotics & AI: a 12-session maze robot course for kids, school clubs with Makerzoid kits, and LeRobot workshops for colleges.";
@@ -110,42 +109,6 @@ export default function TrainingPage() {
         </Container>
       </section>
 
-      <section aria-labelledby="teachers-title" className="border-t border-ink py-14 md:py-20">
-        <Container className="grid gap-10 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-4">
-            <SectionHeading
-              label="Teachers"
-              title={<span id="teachers-title">Who teaches</span>}
-              description="Robotics engineers from KMUTNB who have competed in RoboCup and the World Robot Olympiad."
-            />
-            <ButtonLink href="/about" variant="link" className="mt-6">
-              Meet the team
-            </ButtonLink>
-          </div>
-          <div className="grid gap-10 sm:grid-cols-2 lg:col-span-8">
-            <div>
-              <h3 className="caption">Teaching so far</h3>
-              <ul className="mt-2 border-t border-ink">
-                {teaching.map((t) => (
-                  <li key={t} className="border-b border-hairline py-3 text-[15px]">
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="caption">Competition results</h3>
-              <ul className="mt-2 border-t border-ink">
-                {awards.slice(0, 4).map((a) => (
-                  <li key={a.event} className="border-b border-hairline py-3 text-[15px]">
-                    <span className="font-medium">{a.result}</span>, {a.event}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </Container>
-      </section>
 
       <CtaBand
         title="Ask about a class for your school or group"
