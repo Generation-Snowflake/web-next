@@ -5,14 +5,12 @@ import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CtaBand from "@/components/ui/CtaBand";
 import TeamList from "@/components/about/TeamList";
-import AwardsTable from "@/components/about/AwardsTable";
 import { site } from "@/lib/site";
-import { teaching } from "@/lib/team";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "GSF (Generation Snowflake) is a small team of robotics engineers in Pak Kret, Nonthaburi. Who we are, what we have won and taught, and where to find us.",
+    "GSF (Generation Snowflake) is a small team of robotics engineers in Pak Kret, Nonthaburi. Who we are, what we do, and where to find us.",
   alternates: { canonical: "/about" },
 };
 
@@ -48,29 +46,6 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Track record */}
-      <section aria-labelledby="record" className="border-t border-ink bg-paper-2 py-14 md:py-20">
-        <Container className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <SectionHeading
-              label="Competitions"
-              title={<span id="record">Robotics competition results</span>}
-              description="Results won by members of our team."
-            />
-            <AwardsTable />
-          </div>
-          <div className="lg:col-span-4 lg:col-start-9">
-            <h2 className="text-xl font-medium tracking-[-0.015em]">Teaching</h2>
-            <ul className="mt-5 divide-y divide-hairline border-y border-ink text-[15px]">
-              {teaching.map((t) => (
-                <li key={t} className="py-3">
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Container>
-      </section>
 
       {/* What we do */}
       <section aria-labelledby="what" className="border-t border-ink py-14 md:py-20">
