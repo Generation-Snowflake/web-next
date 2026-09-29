@@ -1,131 +1,142 @@
-import FadeIn from "@/components/FadeIn";
-import Image from "next/image";
+import type { Metadata } from "next";
+import Link from "next/link";
+import PageHeader from "@/components/ui/PageHeader";
+import Container from "@/components/ui/Container";
+import SectionHeading from "@/components/ui/SectionHeading";
+import CtaBand from "@/components/ui/CtaBand";
+import TeamList from "@/components/about/TeamList";
+import AwardsTable from "@/components/about/AwardsTable";
+import { site } from "@/lib/site";
+import { teaching } from "@/lib/team";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "GSF (Generation Snowflake) is a small team of robotics engineers in Pak Kret, Nonthaburi. Who we are, what we have won and taught, and where to find us.",
+  alternates: { canonical: "/about" },
+};
 
 export default function AboutPage() {
   return (
-    <div className="px-6 py-28 max-w-6xl mx-auto">
-      {/* Title */}
-      <FadeIn>
-        <h1 className="text-5xl font-bold mb-8">
-          Generation Snowflake Robotics & AI
-        </h1>
-      </FadeIn>
+    <>
+      <PageHeader
+        crumbs={[{ label: "About" }]}
+        title="About GSF"
+        titleTh="เกี่ยวกับเรา"
+        description="A small engineering team in Pak Kret, Nonthaburi. We write software for other companies and sell robots for classrooms and labs."
+      />
 
-      {/* Intro Paragraph */}
-      <FadeIn delay={0.1}>
-        <p className="text-softwhite/70 max-w-3xl mb-16 leading-relaxed">
-          We are a team of young engineers building cutting-edge solutions in
-          Robotics, Artificial Intelligence, IoT, Computer Vision, Web Systems,
-          and Data Engineering. Our strength comes from creativity,
-          adaptability, and the courage to innovate.
-        </p>
-      </FadeIn>
-
-      {/* Snowflake Story Block */}
-      <FadeIn delay={0.15}>
-        <div className="p-10 bg-white/5 border border-ice/20 shadow-glow rounded-2xl backdrop-blur-md mb-20">
-          <h2 className="text-3xl font-bold text-ice mb-4">
-            Our Story: The Snowflake
+      {/* The name */}
+      <section className="py-14 md:py-20">
+        <Container className="grid gap-6 md:grid-cols-12">
+          <h2 className="text-[1.75rem] font-medium leading-tight tracking-[-0.015em] md:col-span-4">
+            Why &ldquo;Generation Snowflake&rdquo;
           </h2>
-          <p className="text-softwhite/80 leading-relaxed">
-            Older generations often describe Gen Z as “snowflakes” — beautiful
-            but fragile, melting easily under pressure.
-            <br />
-            <br />
-            But we believe differently.
-            <br />
-            <br />
-            A snowflake doesn’t melt when it’s in the right environment. When
-            many snowflakes come together in the cold — they form blizzards,
-            avalanches, and breathtaking landscapes.
-            <br />
-            <br />
-            At GSF Robotics & AI, our young team is that blizzard:
-            <span className="text-ice font-semibold">
-              powerful, creative, fast, and unstoppable when conditions are
-              right.
-            </span>
+          <p className="max-w-prose text-[17px] leading-relaxed md:col-span-7 md:col-start-6">
+            GSF stands for Generation Snowflake. We are a young team. One snowflake is small and no
+            two are the same, but a lot of them together can cover a whole field. That is how we
+            work: three of us studied robotics engineering at KMUTNB, one looks after finance and
+            operations, and we get more done together than any of us would alone.
           </p>
-        </div>
-      </FadeIn>
+        </Container>
+      </section>
 
-      {/* Vision Section */}
-      <FadeIn delay={0.2}>
-        <h2 className="text-4xl font-bold text-ice mb-6">Vision</h2>
-      </FadeIn>
+      {/* Team */}
+      <section aria-labelledby="team" className="border-t border-ink py-14 md:py-20">
+        <Container>
+          <SectionHeading label="Team" labelTh="ทีม" title={<span id="team">The people you will talk to</span>} />
+          <TeamList />
+        </Container>
+      </section>
 
-      <FadeIn delay={0.25}>
-        <p className="text-softwhite/80 max-w-3xl mb-20">
-          To become a leading force in modern robotics and AI innovation,
-          powered by young minds who use creativity and technology to reshape
-          industries and enable smarter, more efficient systems.
-        </p>
-      </FadeIn>
-
-      {/* Mission Section */}
-      <FadeIn delay={0.3}>
-        <h2 className="text-4xl font-bold text-ice mb-6">Mission</h2>
-      </FadeIn>
-
-      <FadeIn delay={0.35}>
-        <ul className="text-softwhite/80 max-w-3xl mb-20 list-disc pl-6 space-y-4">
-          <li>
-            Deliver high-quality AI, robotics, IoT, and software solutions.
-          </li>
-          <li>Empower businesses with automation and intelligent systems.</li>
-          <li>
-            Support innovation through fast, flexible, modern engineering.
-          </li>
-          <li>Create real impact using creativity and cutting-edge tech.</li>
-        </ul>
-      </FadeIn>
-
-      {/* Values Section */}
-      <FadeIn delay={0.4}>
-        <h2 className="text-4xl font-bold text-ice mb-6">Our Values</h2>
-      </FadeIn>
-
-      <FadeIn delay={0.45}>
-        <div className="grid md:grid-cols-2 gap-10">
-          <div className="p-6 border border-ice/20 rounded-xl bg-white/5 backdrop-blur-sm shadow-glow hover:border-ice transition">
-            <h3 className="text-2xl font-semibold text-ice mb-3">Innovation</h3>
-            <p className="text-softwhite/80">
-              We think forward, explore new possibilities, and embrace modern
-              technologies.
-            </p>
+      {/* Track record */}
+      <section aria-labelledby="record" className="border-t border-ink bg-paper-2 py-14 md:py-20">
+        <Container className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <SectionHeading
+              label="Competitions"
+              title={<span id="record">Robotics competition results</span>}
+              description="Results won by members of our team."
+            />
+            <AwardsTable />
           </div>
-
-          <div className="p-6 border border-ice/20 rounded-xl bg-white/5 backdrop-blur-sm shadow-glow hover:border-ice transition">
-            <h3 className="text-2xl font-semibold text-ice mb-3">
-              Speed & Agility
-            </h3>
-            <p className="text-softwhite/80">
-              Being young means we move fast — adapting and delivering solutions
-              quickly.
-            </p>
+          <div className="lg:col-span-4 lg:col-start-9">
+            <h2 className="text-xl font-medium tracking-[-0.015em]">Teaching</h2>
+            <ul className="mt-5 divide-y divide-hairline border-y border-ink text-[15px]">
+              {teaching.map((t) => (
+                <li key={t} className="py-3">
+                  {t}
+                </li>
+              ))}
+            </ul>
           </div>
+        </Container>
+      </section>
 
-          <div className="p-6 border border-ice/20 rounded-xl bg-white/5 backdrop-blur-sm shadow-glow hover:border-ice transition">
-            <h3 className="text-2xl font-semibold text-ice mb-3">
-              Quality Engineering
-            </h3>
-            <p className="text-softwhite/80">
-              Clean architecture, scalability, and maintainability are at the
-              core of our builds.
-            </p>
+      {/* What we do */}
+      <section aria-labelledby="what" className="border-t border-ink py-14 md:py-20">
+        <Container className="grid gap-10 md:grid-cols-12">
+          <h2 id="what" className="text-[1.75rem] font-medium leading-tight tracking-[-0.015em] md:col-span-4">
+            What we do
+          </h2>
+          <div className="grid gap-8 text-[17px] leading-relaxed sm:grid-cols-2 md:col-span-8">
+            <div className="border-t border-hairline pt-4">
+              <h3 className="font-medium">Services</h3>
+              <p className="mt-2 text-graphite">
+                We build software for other companies: computer vision, ROS 2 robot control, AI
+                tools, IoT dashboards, web and mobile apps. You own the code at the end.{" "}
+                <Link href="/services" className="link">
+                  See our services
+                </Link>
+              </p>
+            </div>
+            <div className="border-t border-hairline pt-4">
+              <h3 className="font-medium">Products</h3>
+              <p className="mt-2 text-graphite">
+                We also sell robots: Makerzoid kits for schools and kids, and the LeRobot SO-101 arm and
+                XLeRobot for universities and labs. We can assemble them and teach with them.{" "}
+                <Link href="/products" className="link">
+                  See the products
+                </Link>
+              </p>
+            </div>
           </div>
+        </Container>
+      </section>
 
-          <div className="p-6 border border-ice/20 rounded-xl bg-white/5 backdrop-blur-sm shadow-glow hover:border-ice transition">
-            <h3 className="text-2xl font-semibold text-ice mb-3">
-              Team of Young Minds
-            </h3>
-            <p className="text-softwhite/80">
-              We believe in the power of young talent — passionate developers
-              creating real impact.
-            </p>
+      {/* Where we are */}
+      <section aria-labelledby="where" className="border-t border-ink py-14 md:py-20">
+        <Container className="grid gap-8 md:grid-cols-12">
+          <h2 id="where" className="text-[1.75rem] font-medium leading-tight tracking-[-0.015em] md:col-span-4">
+            Where we are
+          </h2>
+          <div className="md:col-span-8">
+            <p className="text-[17px]">{site.address.locality}, {site.address.country}</p>
+            <address lang="th" className="mt-3 not-italic leading-relaxed text-graphite">
+              {site.address.lines.map((l) => (
+                <span key={l} className="block">
+                  {l}
+                </span>
+              ))}
+            </address>
+            <p className="mt-3 text-[15px] text-graphite">{site.hours}</p>
+            <a
+              href={site.address.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link mt-4 inline-block"
+            >
+              Open in Google Maps<span className="sr-only"> (opens in a new tab)</span>
+            </a>
           </div>
-        </div>
-      </FadeIn>
-    </div>
+        </Container>
+      </section>
+
+      <CtaBand
+        title="Come and meet us"
+        titleTh="แวะมาคุยกับทีมได้"
+        description="Call or email before you come over, so someone is in the office. Or send the form and tell us what you need."
+      />
+    </>
   );
 }

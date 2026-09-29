@@ -1,74 +1,43 @@
-import FadeIn from "@/components/FadeIn";
-import Link from "next/link";
+import { Suspense } from "react";
+import type { Metadata } from "next";
+import PageHeader from "@/components/ui/PageHeader";
+import Container from "@/components/ui/Container";
+import ContactForm, { ContactFormFromParams } from "@/components/contact/ContactForm";
+import ContactDetails from "@/components/contact/ContactDetails";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Ask GSF Robotics & AI about a software, AI or robotics project, or get a quote for Makerzoid kits, the SO-101 arm or XLeRobot. Office in Pak Kret, Nonthaburi.",
+  alternates: { canonical: "/contact" },
+};
 
 export default function ContactPage() {
   return (
-    <div className="px-6 py-28 max-w-6xl mx-auto">
-      {/* Title */}
-      <FadeIn>
-        <h1 className="text-5xl font-bold mb-6">Contact Us</h1>
-      </FadeIn>
+    <>
+      <PageHeader
+        crumbs={[{ label: "Contact" }]}
+        title="Contact"
+        titleTh="ติดต่อเรา"
+        description="Tell us what you want to build or buy, and roughly when. The form opens your own email app with the message filled in. Nothing is stored on this website."
+      />
 
-      {/* Description */}
-      <FadeIn delay={0.1}>
-        <p className="text-softwhite/70 max-w-3xl mb-16">
-          Get in touch with GSF Robotics & AI for project inquiries, quotes, or
-          collaborations. We are ready to build the future with you.
-        </p>
-      </FadeIn>
-
-      {/* Contact Info Card */}
-      <FadeIn delay={0.15}>
-        <div className="p-10 bg-white/5 border border-ice/20 shadow-glow rounded-2xl backdrop-blur-md">
-          {/* Address */}
-          <h3 className="text-2xl font-semibold text-ice mb-4">Address</h3>
-          <p className="text-softwhite/80 mb-6">
-            52/9 หมู่บ้านสุชาวดี หมู่ที่ 3 ซอยสุขาประชาสรรค์ 3 <br />
-            ถนนติวานนท์ ตำบลบางพูด <br />
-            อำเภอปากเกร็ด จ.นนทบุรี 11120
-          </p>
-
-          {/* Phone */}
-          <h3 className="text-2xl font-semibold text-ice mb-4">Phone</h3>
-          <p className="text-softwhite/80 mb-6">
-            092-270-2597 <br />
-            086-505-3533
-          </p>
-
-          {/* Email */}
-          <h3 className="text-2xl font-semibold text-ice mb-4">Email</h3>
-          <p className="text-softwhite/80 mb-6">contact@gsf-company.com</p>
-
-          {/* Button */}
-          <div className="mt-10 text-center">
-            <Link
-              href="mailto:contact@gsf-company.com"
-              className="px-10 py-4 bg-ice text-black font-semibold rounded-xl hover:opacity-80 transition shadow-glow"
-            >
-              Send Email
-            </Link>
+      <section aria-label="Contact form and details" className="py-14 md:py-20">
+        <Container className="grid gap-14 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-7">
+            {/* useSearchParams (prefill) needs a Suspense boundary; the
+                fallback is the same form without prefill. */}
+            <Suspense fallback={<ContactForm />}>
+              <ContactFormFromParams />
+            </Suspense>
           </div>
-        </div>
-      </FadeIn>
-
-      {/* CTA */}
-      <FadeIn delay={0.25}>
-        <div className="text-center mt-20">
-          <h2 className="text-3xl font-bold mb-4 text-ice">
-            Ready to start your project?
-          </h2>
-          <p className="text-softwhite/70 mb-8">
-            Let’s build something intelligent together.
-          </p>
-
-          <Link
-            href="mailto:contact@gsf-company.com"
-            className="px-8 py-3 bg-ice text-black font-semibold rounded-xl hover:opacity-80 transition shadow-glow"
-          >
-            Contact Now
-          </Link>
-        </div>
-      </FadeIn>
-    </div>
+          <aside className="lg:col-span-4 lg:col-start-9">
+            <div className="lg:sticky lg:top-24">
+              <ContactDetails />
+            </div>
+          </aside>
+        </Container>
+      </section>
+    </>
   );
 }

@@ -1,37 +1,47 @@
-import ServicesSection from "@/components/Services";
-import PortfolioPreview from "@/components/PortfolioPreview";
-import ParallaxHero from "@/components/ParallaxHero";
-import VisionSection from "@/components/VisionSection";
-import ContactSection from "@/components/Contact";
+import type { Metadata } from "next";
+import CtaBand from "@/components/ui/CtaBand";
+import Hero from "@/components/home/Hero";
+import PriceStrip from "@/components/home/PriceStrip";
+import ServicesList from "@/components/home/ServicesList";
+import RobotsWeSell from "@/components/home/RobotsWeSell";
+import TrackRecord from "@/components/home/TrackRecord";
+import WorkNotes from "@/components/home/WorkNotes";
+import { site } from "@/lib/site";
 
-export default function Home() {
+const title = "GSF Robotics & AI | Software house and robot supplier, Nonthaburi";
+const description =
+  "A small engineering team in Pak Kret, Nonthaburi. We build computer vision, ROS 2, IoT, web and mobile software for companies, and sell Makerzoid robot kits and LeRobot arms.";
+
+export const metadata: Metadata = {
+  title: { absolute: title },
+  description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title,
+    description,
+    url: site.url,
+    siteName: site.name,
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: { card: "summary_large_image", title, description },
+};
+
+export default function HomePage() {
   return (
-    <div className="overflow-visible">
-      <section
-        id="home"
-        className="flex min-h-screen scroll-mt-24 items-center justify-center"
-      >
-        <ParallaxHero />
-      </section>
-
-      <section
-        id="about"
-        className="flex min-h-screen scroll-mt-24 items-center overflow-hidden bg-darkbg"
-      >
-        <VisionSection />
-      </section>
-
-      <section id="services" className="min-h-screen scroll-mt-24">
-        <ServicesSection />
-      </section>
-
-      <section id="portfolio" className="min-h-screen scroll-mt-24">
-        <PortfolioPreview />
-      </section>
-
-      <section id="contact" className="min-h-screen scroll-mt-24">
-        <ContactSection />
-      </section>
-    </div>
+    <>
+      <Hero />
+      <PriceStrip />
+      <ServicesList />
+      <RobotsWeSell />
+      <TrackRecord />
+      <WorkNotes />
+      <CtaBand
+        title="Tell us what you're building"
+        titleTh="เล่าให้เราฟังว่าคุณกำลังทำอะไร"
+        description="A software project, a robot for a classroom or lab, or both. Tell us what it should do and roughly when you need it, and an engineer will reply."
+        primary={{ label: "Describe your project", href: "/contact" }}
+      />
+    </>
   );
 }

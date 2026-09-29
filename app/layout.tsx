@@ -1,39 +1,68 @@
 import "./globals.css";
+import type { Metadata, Viewport } from "next";
+import { Anuphan, IBM_Plex_Mono, IBM_Plex_Sans_Thai } from "next/font/google";
 import Chrome from "@/app/Chrome";
-import Preloader from "@/components/Preloader";
+import { site } from "@/lib/site";
 
-export const metadata = {
+const anuphan = Anuphan({
+  subsets: ["latin", "thai"],
+  variable: "--font-anuphan",
+  display: "swap",
+});
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
+// Thai fallback for the mono stack (Plex Mono has no Thai glyphs).
+const plexThai = IBM_Plex_Sans_Thai({
+  subsets: ["thai"],
+  weight: ["400", "500"],
+  variable: "--font-plex-thai",
+  display: "swap",
+});
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#F3F1EC",
+};
+
+export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
-    default: "GSF Robotics & AI | Robotics, AI, IoT & Full-Stack Software House",
+    default: "GSF Robotics & AI | Software house and robot supplier, Nonthaburi",
     template: "%s | GSF Robotics & AI",
   },
   description:
-    "GSF Robotics & AI provides expert services in Robotics, AI, IoT, and Web Application development by a team of specialized engineers. Find the best automation solutions for your business.",
+    "GSF Robotics & AI is a small engineering team in Pak Kret, Nonthaburi. We build AI, computer vision, robotics, IoT, web and mobile systems, and sell Makerzoid kits and LeRobot arms.",
+  applicationName: site.name,
   keywords: [
-    "Robotics",
-    "Robot Maker",
-    "Automation",
-    "AI",
-    "Machine Learning",
+    "software house Thailand",
+    "custom software development",
+    "AI development",
+    "machine learning",
+    "computer vision",
+    "robotics",
+    "ROS 2",
     "IoT",
-    "Internet of Things",
-    "Web Development",
-    "Software House",
-    "Data Engineering",
-    "System Integrator",
-    "ROS2",
-    "Computer Vision",
+    "web application development",
+    "mobile app development",
+    "data engineering",
+    "LeRobot",
+    "SO-101",
+    "XLeRobot",
+    "Makerzoid",
+    "STEM robotics kits",
   ],
-  authors: [{ name: "GSF Team" }],
-  creator: "GSF Robotics & AI",
-  publisher: "GSF Robotics & AI",
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.legalName,
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
-  },
-  alternates: {
-    canonical: "https://gsf-robotics.com",
   },
   robots: {
     index: true,
@@ -46,37 +75,22 @@ export const metadata = {
       "max-snippet": -1,
     },
   },
+  // og:image / twitter:image come from app/opengraph-image.tsx.
   openGraph: {
-    title: "GSF Robotics & AI | Robotics, AI, IoT & Software House",
+    title: "GSF Robotics & AI",
     description:
-      "Full-service Robotics, AI, IoT, and Web Application development by a team of innovative engineers. Driving business with modern technology.",
-    url: "https://gsf-robotics.com",
-    siteName: "GSF Robotics & AI",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "GSF Robotics & AI - Leading Automation Solutions",
-      },
-    ],
+      "We write the software, and we sell the robots it runs on. AI, vision, ROS 2, IoT and apps, plus Makerzoid kits and LeRobot arms, from Pak Kret, Nonthaburi.",
+    siteName: site.name,
     locale: "en_US",
+    alternateLocale: ["th_TH"],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GSF Robotics & AI | Robotics, AI, IoT Development",
+    title: "GSF Robotics & AI",
     description:
-      "Full-service Robotics, AI, IoT, and Web Application development by a team of innovative engineers.",
-    images: ["/og-image.png"],
+      "We write the software, and we sell the robots it runs on. From Pak Kret, Nonthaburi.",
   },
-  icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
-  },
-  viewport: "width=device-width, initial-scale=1",
-  themeColor: "#0A0F1F",
 };
 
 export default function RootLayout({
@@ -85,7 +99,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html
+      lang="en"
+      className={`scroll-smooth ${anuphan.variable} ${plexMono.variable} ${plexThai.variable}`}
+    >
       <head>
         <script
           type="application/ld+json"
@@ -93,28 +110,30 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "GSF Robotics & AI",
-              url: "https://gsf-robotics.com",
-              logo: "https://gsf-robotics.com/logo.png",
-              description:
-                "GSF Robotics & AI provides expert services in Robotics, AI, IoT, and Web Application development.",
+              name: site.name,
+              url: site.url,
+              logo: `${site.url}/logo.png`,
+              description: site.description,
+              email: site.email,
+              telephone: site.phones[0].href.replace("tel:", ""),
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: site.address.locality,
+                addressCountry: "TH",
+              },
               contactPoint: {
                 "@type": "ContactPoint",
-                contactType: "customer service",
-                areaServed: "Global",
+                contactType: "sales",
+                email: site.email,
+                areaServed: "TH",
                 availableLanguage: ["English", "Thai"],
               },
-              sameAs: [
-                "https://www.facebook.com/gsfrobotics",
-                // Add other social links here if available
-              ],
+              sameAs: site.social.map((s) => s.href),
             }),
           }}
         />
       </head>
-      <body className="relative bg-darkbg text-softwhite font-sans antialiased overflow-x-hidden selection:bg-ice selection:text-darkbg">
-        <Preloader />
-
+      <body className="relative bg-paper font-sans text-ink antialiased">
         <Chrome>{children}</Chrome>
       </body>
     </html>
