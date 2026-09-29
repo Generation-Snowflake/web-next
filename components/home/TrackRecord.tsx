@@ -1,50 +1,22 @@
 import Container from "@/components/ui/Container";
 import ButtonLink from "@/components/ui/Button";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { awards, teaching, team } from "@/lib/team";
+import { awards, teaching } from "@/lib/team";
 
 export default function TrackRecord() {
   return (
-    <section aria-labelledby="team-title" className="border-t border-ink bg-paper">
+    <section aria-labelledby="record-title" className="border-t border-ink bg-paper">
       <Container className="py-16 md:py-24">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-4">
             <SectionHeading
-              label="Team"
-              title={<span id="team-title">Who you&apos;ll be talking to</span>}
-              description="You talk directly to the engineers who write the code and build the robots."
+              label="Track record"
+              title={<span id="record-title">Competition results</span>}
+              description="Robotics competitions entered by members of the team."
             />
             <ButtonLink href="/about" variant="link" className="mt-6">
               About GSF
             </ButtonLink>
-          </div>
-
-          <ul className="border-t border-ink lg:col-span-8">
-            {team.map((m) => (
-              <li
-                key={m.name}
-                className="grid gap-2 border-b border-hairline py-5 sm:grid-cols-[15rem_minmax(0,1fr)] sm:gap-8"
-              >
-                <div>
-                  <p className="text-lg font-medium">{m.name}</p>
-                  <p className="caption">{m.role}</p>
-                </div>
-                <ul className="space-y-1 text-[15px] leading-relaxed text-graphite">
-                  {m.background.map((b) => (
-                    <li key={b}>{b}</li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="mt-16 grid gap-10 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-4">
-            <h3 className="text-xl font-medium tracking-[-0.015em]">Competition results</h3>
-            <p className="mt-2 max-w-prose text-[15px] leading-relaxed text-graphite">
-              Robotics competitions entered by members of the team.
-            </p>
           </div>
           <div className="lg:col-span-8">
             <table className="w-full border-t border-ink text-left text-[15px]">
