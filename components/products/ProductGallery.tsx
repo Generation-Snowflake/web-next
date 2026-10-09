@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useLang } from "@/components/i18n/LangProvider";
 import type { Photo } from "@/lib/products";
 
 /**
@@ -20,6 +21,7 @@ export default function ProductGallery({
   aspect?: string;
 }) {
   const [index, setIndex] = useState(0);
+  const th = useLang() === "th";
   if (photos.length === 0) return null;
   const current = photos[Math.min(index, photos.length - 1)];
 
@@ -38,13 +40,13 @@ export default function ProductGallery({
       </div>
       <figcaption className="caption mt-3 font-normal">{current.alt}</figcaption>
       {photos.length > 1 && (
-        <ul className="mt-3 grid grid-cols-5 gap-2 sm:grid-cols-6" aria-label="More photos">
+        <ul className="mt-3 grid grid-cols-5 gap-2 sm:grid-cols-6" aria-label={th ? "รูปเพิ่มเติม" : "More photos"}>
           {photos.map((p, i) => (
             <li key={p.src}>
               <button
                 type="button"
                 onClick={() => setIndex(i)}
-                aria-label={`Show photo ${i + 1}: ${p.alt}`}
+                aria-label={th ? `ดูรูปที่ ${i + 1}: ${p.alt}` : `Show photo ${i + 1}: ${p.alt}`}
                 aria-current={i === index ? "true" : undefined}
                 className={`relative block aspect-square w-full overflow-hidden rounded-lg border bg-card outline-offset-2 transition-[opacity,border-color] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-ink ${
                   i === index ? "border-cyan-500 ring-1 ring-cyan-500" : "border-hairline opacity-75 hover:opacity-100"

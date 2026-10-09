@@ -2,21 +2,40 @@ import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ButtonLink from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
-import { classFormats, mazeCourse } from "@/lib/training";
+import type { Lang } from "@/lib/i18n";
+import { getClassFormats, getMazeCourse } from "@/lib/training";
+
+const copy = {
+  en: {
+    label: "Classes",
+    title: "We teach robotics too",
+    description: "Coding and robot classes for kids, school clubs, colleges and teachers.",
+    link: "Robotics classes",
+  },
+  th: {
+    label: "คอร์สเรียน",
+    title: "เราสอนหุ่นยนต์ด้วย",
+    description: "คลาสเขียนโปรแกรมและหุ่นยนต์สำหรับเด็ก ชมรมในโรงเรียน วิทยาลัย และครู",
+    link: "คอร์สหุ่นยนต์",
+  },
+} satisfies Record<Lang, Record<string, string>>;
 
 /** Short home-page pointer to the robotics classes page. */
-export default function Classes() {
+export default function Classes({ lang }: { lang: Lang }) {
+  const c = copy[lang];
+  const mazeCourse = getMazeCourse(lang);
+  const classFormats = getClassFormats(lang);
   return (
     <section aria-labelledby="classes-title" className="border-t border-hairline bg-paper-2">
       <Container className="grid gap-10 py-20 md:py-28 lg:grid-cols-12 lg:gap-12">
         <Reveal className="lg:col-span-4">
           <SectionHeading
-            label="Classes"
-            title={<span id="classes-title">We teach robotics too</span>}
-            description="Coding and robot classes for kids, school clubs, colleges and teachers."
+            label={c.label}
+            title={<span id="classes-title">{c.title}</span>}
+            description={c.description}
           />
           <ButtonLink href="/training" variant="link" className="mt-6">
-            Robotics classes
+            {c.link}
           </ButtonLink>
         </Reveal>
         <Reveal className="lg:col-span-8" delay={80}>

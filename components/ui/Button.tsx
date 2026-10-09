@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 type Variant = "primary" | "dark" | "outline" | "link" | "secondary" | "ghost";

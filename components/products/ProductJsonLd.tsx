@@ -1,3 +1,4 @@
+import { localizeHref, type Lang } from "@/lib/i18n";
 import type { Product } from "@/lib/products";
 import { site } from "@/lib/site";
 import { productPhotos } from "./productUi";
@@ -8,8 +9,8 @@ const absolute = (path: string) => (/^https?:\/\//.test(path) ? path : `${site.u
  * schema.org Product + BreadcrumbList. Offers only for models with a listed
  * THB price; "price on request" products get none.
  */
-export default function ProductJsonLd({ product }: { product: Product }) {
-  const url = `${site.url}/products/${product.slug}`;
+export default function ProductJsonLd({ product, lang = "en" }: { product: Product; lang?: Lang }) {
+  const url = `${site.url}${localizeHref(`/products/${product.slug}`, lang)}`;
   const images = productPhotos(product).map((p) => absolute(p.src));
   const priced = product.models.filter((m) => m.priceTHB !== undefined);
 
@@ -62,7 +63,7 @@ export default function ProductJsonLd({ product }: { product: Product }) {
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Products", item: `${site.url}/products` },
+          { "@type": "ListItem", position: 1, name: lang === "th" ? "สินค้า" : "Products", item: `${site.url}${localizeHref("/products", lang)}` },
           { "@type": "ListItem", position: 2, name: product.name, item: url },
         ],
       },

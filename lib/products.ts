@@ -13,6 +13,8 @@
 // from the open-source projects (Apache-2.0); keep `credits` on those pages.
 // See public/products/lerobot/so101-ATTRIBUTION.txt.
 
+import { overlay, type Lang } from "@/lib/i18n";
+import { productGroupsTh, productSupportTh, productsTh } from "@/lib/th/products";
 export type Spec = { label: string; value: string };
 
 /** A photo with its alt text. */
@@ -703,3 +705,26 @@ export const productSupport = [
     description: "Need the robot to do something specific? We are a software house too.",
   },
 ];
+
+/** Products in a language. Thai text comes from lib/th/products.ts. */
+export function getProducts(lang: Lang): Product[] {
+  if (lang === "en") return products;
+  return products.map((p) => overlay(p, productsTh[p.slug]));
+}
+
+export function getProductIn(slug: string, lang: Lang) {
+  return getProducts(lang).find((p) => p.slug === slug);
+}
+
+export function getProductGroups(lang: Lang) {
+  return productGroups.map((g) => ({ ...g, ...(lang === "th" ? productGroupsTh[g.id] : undefined) }));
+}
+
+export function getProductSupport(lang: Lang) {
+  return lang === "th" ? overlay(productSupport, productSupportTh) : productSupport;
+}
+
+/** Every model across every product, for quote forms. */
+export function getAllModels(lang: Lang) {
+  return getProducts(lang).flatMap((p) => p.models.map((m) => ({ ...m, productSlug: p.slug, productName: p.name })));
+}

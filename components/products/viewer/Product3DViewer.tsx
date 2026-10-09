@@ -1,5 +1,6 @@
 "use client";
 
+import { useLang } from "@/components/i18n/LangProvider";
 import { Component, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -44,6 +45,25 @@ function usePrefersReducedMotion() {
 
 type Status = "idle" | "loading" | "ready" | "error" | "unsupported";
 
+const copy = {
+  en: {
+    loading: "Loading 3D model…",
+    play: "Play motion",
+    pause: "Pause motion",
+    drag: "Drag to rotate",
+    error: "The 3D model could not load, showing a still render",
+    unsupported: "Still render (3D needs WebGL)",
+  },
+  th: {
+    loading: "กำลังโหลดโมเดล 3 มิติ…",
+    play: "เล่นการเคลื่อนไหว",
+    pause: "หยุดการเคลื่อนไหว",
+    drag: "ลากเพื่อหมุน",
+    error: "โหลดโมเดล 3 มิติไม่ได้ จึงแสดงภาพนิ่งแทน",
+    unsupported: "ภาพนิ่ง (การแสดงผล 3 มิติต้องใช้ WebGL)",
+  },
+};
+
 /**
  * Interactive 3D model on a light-grey (paper-3) studio backdrop. Shows the poster
  * until the model has loaded (and keeps it if loading fails or WebGL is
@@ -63,6 +83,7 @@ export default function Product3DViewer({
   const [visible, setVisible] = useState(false);
   const [paused, setPaused] = useState(false);
   const reduced = usePrefersReducedMotion();
+  const c = copy[useLang()];
 
   useEffect(() => {
     const el = ref.current;
@@ -115,7 +136,7 @@ export default function Product3DViewer({
         )}
         </div>
         {status === "loading" && (
-          <p className="absolute left-3 top-3 rounded-full border border-hairline bg-card px-3 py-1 text-[13px] font-medium text-graphite shadow-xs">Loading 3D model…</p>
+          <p className="absolute left-3 top-3 rounded-full border border-hairline bg-card px-3 py-1 text-[13px] font-medium text-graphite shadow-xs">{c.loading}</p>
         )}
         {status === "ready" && !reduced && (
           <button
@@ -124,18 +145,18 @@ export default function Product3DViewer({
             aria-pressed={paused}
             className="absolute bottom-3 right-3 rounded-lg border border-hairline-strong bg-card px-3 py-1.5 text-[13px] font-medium text-ink shadow-xs transition-colors duration-200 hover:bg-paper-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-ink"
           >
-            {paused ? "Play motion" : "Pause motion"}
+            {paused ? c.play : c.pause}
           </button>
         )}
       </div>
       <figcaption className="caption mt-3 font-normal">
         {status === "ready"
-          ? `${model.label}. Drag to rotate`
+          ? `${model.label}. ${c.drag}`
           : status === "error"
-            ? "The 3D model could not load, showing a still render"
+            ? c.error
             : status === "unsupported"
-              ? "Still render (3D needs WebGL)"
-              : `${model.label}. Drag to rotate`}
+              ? c.unsupported
+              : `${model.label}. ${c.drag}`}
       </figcaption>
     </figure>
   );

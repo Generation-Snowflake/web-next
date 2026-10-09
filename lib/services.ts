@@ -1,6 +1,8 @@
 // Custom engineering services (work we build FOR a client). Products we sell
 // off the shelf live in lib/products.ts — keep the two separate.
 // Icons: Phosphor (Brand Guidelines, Iconography).
+import { overlay, type Lang } from "@/lib/i18n";
+import { engagementModelsTh, processStepsTh, serviceFaqsTh, servicesTh } from "@/lib/th/services";
 import type { Icon } from "@phosphor-icons/react";
 import {
   Brain,
@@ -258,3 +260,17 @@ export const techStack: string[] = [
   "NVIDIA Jetson",
   "AWS",
 ];
+
+/** Services and their supporting lists in a language (Thai from lib/th/services.ts). */
+export function getServices(lang: Lang): Service[] {
+  return lang === "th" ? services.map((s) => overlay(s, servicesTh[s.slug])) : services;
+}
+export function getEngagementModels(lang: Lang): EngagementModel[] {
+  return lang === "th" ? overlay(engagementModels, engagementModelsTh) : engagementModels;
+}
+export function getProcessSteps(lang: Lang): ProcessStep[] {
+  return lang === "th" ? overlay(processSteps, processStepsTh) : processSteps;
+}
+export function getServiceFaqs(lang: Lang): Faq[] {
+  return lang === "th" ? overlay(serviceFaqs, serviceFaqsTh) : serviceFaqs;
+}

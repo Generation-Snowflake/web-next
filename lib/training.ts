@@ -1,6 +1,8 @@
 // Robotics classes. Course content comes from GSF's own course outline;
 // prices are quoted per group, so none are listed here.
 
+import { overlay, type Lang } from "@/lib/i18n";
+import { classFormatsTh, mazeCourseTh } from "@/lib/th/training";
 export type CourseSession = { n: number; topic: string; activity: string };
 
 export const mazeCourse = {
@@ -55,3 +57,11 @@ export const classFormats: ClassFormat[] = [
     description: "Sessions for teachers who will run the kits themselves, so the robots keep being used after we leave.",
   },
 ];
+
+/** Course and class formats in a language (Thai from lib/th/training.ts). */
+export function getMazeCourse(lang: Lang): typeof mazeCourse {
+  return lang === "th" ? overlay(mazeCourse, mazeCourseTh) : mazeCourse;
+}
+export function getClassFormats(lang: Lang): ClassFormat[] {
+  return lang === "th" ? overlay(classFormats, classFormatsTh) : classFormats;
+}

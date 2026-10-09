@@ -3,9 +3,33 @@ import Container from "./Container";
 import ButtonLink from "./Button";
 import CircuitLines from "./CircuitLines";
 import Reveal from "./Reveal";
-import { site } from "@/lib/site";
+import type { Lang } from "@/lib/i18n";
+import { getSite } from "@/lib/site";
 
 const iconCls = "h-5 w-5 text-cyan-500";
+
+const ui = {
+  en: {
+    title: "Talk to the people who build it",
+    description: "Call, email, or send the form. Tell us what you want to build or buy, and roughly when.",
+    primary: "Send us a message",
+    phone: "Phone",
+    email: "Email",
+    office: "Office",
+    hours: "Hours",
+    maps: "Open in Google Maps",
+  },
+  th: {
+    title: "คุยกับทีมที่ลงมือทำงานจริง",
+    description: "โทร อีเมล หรือส่งแบบฟอร์มมาก็ได้ บอกเราว่าอยากสร้างหรืออยากซื้ออะไร และต้องการใช้ประมาณเมื่อไร",
+    primary: "ส่งข้อความถึงเรา",
+    phone: "โทรศัพท์",
+    email: "อีเมล",
+    office: "สำนักงาน",
+    hours: "เวลาทำการ",
+    maps: "เปิดใน Google Maps",
+  },
+} satisfies Record<Lang, Record<string, string>>;
 
 /**
  * Closing contact block on a Primary Dark / Gradient C panel with circuit
@@ -13,16 +37,23 @@ const iconCls = "h-5 w-5 text-cyan-500";
  * time") instead of one generic slogan.
  */
 export default function CtaBand({
-  title = "Talk to the people who build it",
-  description = "Call, email, or send the form. Tell us what you want to build or buy, and roughly when.",
-  primary = { label: "Send us a message", href: "/contact" },
+  lang = "en",
+  title,
+  description,
+  primary,
 }: {
+  lang?: Lang;
   title?: string;
   description?: string;
   primary?: { label: string; href: string };
   /** @deprecated no longer shown. */
   secondary?: { label: string; href: string };
 }) {
+  const t = ui[lang];
+  const site = getSite(lang);
+  title ??= t.title;
+  description ??= t.description;
+  primary ??= { label: t.primary, href: "/contact" };
   return (
     <section className="bg-paper py-16 md:py-20">
       <Container>
@@ -45,7 +76,7 @@ export default function CtaBand({
               <div className="rounded-lg border border-white/10 bg-ink/70 p-4 backdrop-blur-sm">
                 <dt className="flex items-center gap-2 text-[13px] font-medium text-night-muted">
                   <Phone aria-hidden className={iconCls} />
-                  Phone
+                  {t.phone}
                 </dt>
                 <dd className="mt-2 space-y-0.5">
                   {site.phones.map((p) => (
@@ -58,7 +89,7 @@ export default function CtaBand({
               <div className="rounded-lg border border-white/10 bg-ink/70 p-4 backdrop-blur-sm">
                 <dt className="flex items-center gap-2 text-[13px] font-medium text-night-muted">
                   <EnvelopeSimple aria-hidden className={iconCls} />
-                  Email
+                  {t.email}
                 </dt>
                 <dd className="mt-2">
                   <a href={`mailto:${site.email}`} className="break-all font-medium transition-colors duration-200 hover:text-cyan-300">
@@ -69,7 +100,7 @@ export default function CtaBand({
               <div className="rounded-lg border border-white/10 bg-ink/70 p-4 backdrop-blur-sm">
                 <dt className="flex items-center gap-2 text-[13px] font-medium text-night-muted">
                   <MapPin aria-hidden className={iconCls} />
-                  Office
+                  {t.office}
                 </dt>
                 <dd className="mt-2 leading-relaxed">
                   {site.address.lines.map((l) => (
@@ -78,14 +109,14 @@ export default function CtaBand({
                     </span>
                   ))}
                   <a href={site.address.mapUrl} target="_blank" rel="noopener noreferrer" className="link mt-2 inline-block text-[14px]">
-                    Open in Google Maps
+                    {t.maps}
                   </a>
                 </dd>
               </div>
               <div className="rounded-lg border border-white/10 bg-ink/70 p-4 backdrop-blur-sm">
                 <dt className="flex items-center gap-2 text-[13px] font-medium text-night-muted">
                   <Clock aria-hidden className={iconCls} />
-                  Hours
+                  {t.hours}
                 </dt>
                 <dd className="mt-2">{site.hours}</dd>
               </div>

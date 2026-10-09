@@ -1,27 +1,43 @@
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import Container from "@/components/ui/Container";
 import ButtonLink from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { services } from "@/lib/services";
+import type { Lang } from "@/lib/i18n";
+import { getServices } from "@/lib/services";
 
-// The two things we get asked for most get their full description; the rest are one line each.
-const [lead, second, ...rest] = services;
-const featured = [lead, second];
+const copy = {
+  en: {
+    label: "Services",
+    title: "What we build",
+    description: "Custom software for companies, often with a camera, a sensor or a robot on the other end.",
+    all: "All services",
+  },
+  th: {
+    label: "บริการ",
+    title: "สิ่งที่เราสร้าง",
+    description: "ซอฟต์แวร์ที่พัฒนาเฉพาะให้แต่ละองค์กร ซึ่งหลายงานต้องทำงานร่วมกับกล้อง เซนเซอร์ หรือหุ่นยนต์",
+    all: "บริการทั้งหมด",
+  },
+} satisfies Record<Lang, Record<string, string>>;
 
-export default function ServicesList() {
+export default function ServicesList({ lang }: { lang: Lang }) {
+  const c = copy[lang];
+  // The two things we get asked for most get their full description; the rest are one line each.
+  const [lead, second, ...rest] = getServices(lang);
+  const featured = [lead, second];
   return (
     <section aria-labelledby="services-title" className="border-t border-hairline bg-paper-2">
       <Container className="py-20 md:py-28">
         <Reveal className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
-            label="Services"
-            title={<span id="services-title">What we build</span>}
-            description="Custom software for companies, often with a camera, a sensor or a robot on the other end."
+            label={c.label}
+            title={<span id="services-title">{c.title}</span>}
+            description={c.description}
           />
           <ButtonLink href="/services" variant="link">
-            All services
+            {c.all}
           </ButtonLink>
         </Reveal>
 

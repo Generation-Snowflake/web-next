@@ -1,9 +1,24 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { ImageResponse } from "next/og";
-import { site } from "@/lib/site";
+import { isLang, locales, type Lang } from "@/lib/i18n";
+import { getSite, site } from "@/lib/site";
 
-export const alt = `${site.name}. We write the software, and we sell the robots it runs on.`;
+const copy = {
+  en: { line1: "We write the software,", line2: "and we sell the robots it runs on." },
+  // The OG renderer (satori) drops a tone mark stacked on an upper vowel
+  // (ที่, นั้น, ซึ่ง), so this line avoids them; the hero says the same thing.
+  th: { line1: "เราเขียนซอฟต์แวร์", line2: "และจำหน่ายหุ่นยนต์ให้ซอฟต์แวร์ทำงานได้จริง" },
+} satisfies Record<Lang, { line1: string; line2: string }>;
+
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
+
+export async function generateImageMetadata({ params }: { params: { lang: string } }) {
+  const lang: Lang = isLang(params.lang) ? params.lang : "en";
+  return [{ id: "og", alt: `${site.name}. ${copy[lang].line1} ${copy[lang].line2}`, size, contentType }];
+}
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -30,8 +45,11 @@ async function loadFont(text: string, weight: number): Promise<ArrayBuffer | nul
   }
 }
 
-export default async function OpengraphImage() {
-  const lines = ["GSF", "Robotics and AI", "We write the software,", "and we sell the robots it runs on.", site.address.locality, new URL(site.url).host];
+export default async function OpengraphImage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang: raw } = await params;
+  const lang: Lang = isLang(raw) ? raw : "en";
+  const c = copy[lang];
+  const lines = ["GSF", "Robotics and AI", c.line1, c.line2, getSite(lang).address.locality, new URL(site.url).host];
   const text = lines.join("");
   const [bold, regular, logo] = await Promise.all([
     loadFont(text, 700),
@@ -42,6 +60,8 @@ export default async function OpengraphImage() {
     ...(bold ? [{ name: "Plex", data: bold, weight: 700 as const, style: "normal" as const }] : []),
     ...(regular ? [{ name: "Plex", data: regular, weight: 400 as const, style: "normal" as const }] : []),
   ];
+  // Thai needs more line height for tone marks and no negative tracking.
+  const headline = lang === "th" ? { fontSize: 52, lineHeight: 1.4, letterSpacing: 0 } : { fontSize: 68, lineHeight: 1.1, letterSpacing: -1.5 };
   const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
 
   return new ImageResponse(
@@ -68,8 +88,12 @@ export default async function OpengraphImage() {
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 68, fontWeight: 700, lineHeight: 1.1, letterSpacing: -1.5 }}>{lines[2]}</div>
-          <div style={{ fontSize: 68, fontWeight: 700, lineHeight: 1.1, letterSpacing: -1.5, color: CYAN }}>{lines[3]}</div>
+          <div style={{ fontSize: headline.fontSize, fontWeight: 700, lineHeight: headline.lineHeight, letterSpacing: headline.letterSpacing }}>
+            {lines[2]}
+          </div>
+          <div style={{ fontSize: headline.fontSize, fontWeight: 700, lineHeight: headline.lineHeight, letterSpacing: headline.letterSpacing, color: CYAN }}>
+            {lines[3]}
+          </div>
           <div style={{ width: 120, height: 8, marginTop: 32, backgroundImage: `linear-gradient(90deg, ${CYAN}, ${ICE})` }} />
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 24, fontWeight: 400, color: MUTED }}>

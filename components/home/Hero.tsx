@@ -3,15 +3,31 @@ import ConstructionCircle from "@/components/ui/ConstructionCircle";
 import Container from "@/components/ui/Container";
 import HeroActions from "./HeroActions";
 import HeroRobotStage from "./HeroRobotStage";
+import type { Lang } from "@/lib/i18n";
 
-const CAPTION = "It follows your cursor.";
+const copy = {
+  en: {
+    caption: "It follows your cursor.",
+    label: "Software engineering · Robotics solution",
+    title: "We write the software,",
+    titleAccent: "and we sell the robots it runs on.",
+    lead: "For companies we build computer vision, ROS 2 robot software, IoT systems and the web and mobile apps around them. For classrooms we sell Makerzoid robot kits, and for AI labs our Armo robot arms and the ArmoGo dual-arm robot.",
+  },
+  th: {
+    caption: "มันมองตามเมาส์ของคุณ",
+    label: "วิศวกรรมซอฟต์แวร์ · โซลูชันหุ่นยนต์",
+    title: "เราเขียนซอฟต์แวร์",
+    titleAccent: "และขายหุ่นยนต์ที่ซอฟต์แวร์นั้นทำงานอยู่",
+    lead: "สำหรับองค์กร เราพัฒนาระบบ Computer Vision ซอฟต์แวร์หุ่นยนต์บน ROS 2 ระบบ IoT รวมถึงเว็บและแอปมือถือที่ทำงานร่วมกับระบบเหล่านั้น สำหรับห้องเรียน เราจำหน่ายชุดหุ่นยนต์ Makerzoid และสำหรับห้องแล็บ AI เรามีแขนกล Armo และหุ่นยนต์แขนคู่ ArmoGo",
+  },
+} satisfies Record<Lang, Record<string, string>>;
 
 /** The CI cover motif: a cursor pointing at a Gradient C tag. */
-function CursorTag({ className = "" }: { className?: string }) {
+function CursorTag({ caption, className = "" }: { caption: string; className?: string }) {
   return (
     <p className={`pointer-events-none flex items-start gap-1 ${className}`}>
       <Cursor aria-hidden weight="fill" className="-mt-4 h-7 w-7 text-ink" />
-      <span className="rounded-md bg-gradient-c-deep px-3.5 py-1.5 text-[13px] font-medium text-white shadow-card">{CAPTION}</span>
+      <span className="rounded-md bg-gradient-c-deep px-3.5 py-1.5 text-[13px] font-medium text-white shadow-card">{caption}</span>
     </p>
   );
 }
@@ -22,7 +38,8 @@ function CursorTag({ className = "" }: { className?: string }) {
  *  - lg and up: the robot stands in the RIGHT half, copy sits in the left half.
  *  - below lg: the robot stands in the TOP half of the first screen, copy below it.
  */
-export default function Hero() {
+export default function Hero({ lang }: { lang: Lang }) {
+  const c = copy[lang];
   return (
     <section
       id="top"
@@ -45,32 +62,30 @@ export default function Hero() {
       <Container className="relative flex flex-1 flex-col pointer-events-none">
         {/* Keeps the robot area clear on small screens. */}
         <div aria-hidden className="h-[50svh] min-h-[320px] lg:hidden" />
-        <CursorTag className="mb-8 lg:hidden" />
+        <CursorTag caption={c.caption} className="mb-8 lg:hidden" />
 
         <div className="flex flex-1 items-center pb-16 lg:pb-28 lg:pt-32">
           <div className="pointer-events-auto max-w-[36rem] lg:w-1/2 lg:max-w-none lg:pr-8 xl:pr-12">
-            <p className="label">Software engineering · Robotics solution</p>
+            <p className="label">{c.label}</p>
             <h1
               id="hero-title"
               className="mt-6 text-balance text-[2.5rem] font-bold leading-[1.12] tracking-display sm:text-5xl sm:leading-[1.12] lg:text-display xl:text-[4rem] xl:leading-[1.1]"
             >
-              We write the software,{" "}
-              <span className="text-cyan-700">and we sell the robots it runs on.</span>
+              {c.title}{" "}
+              <span className="text-cyan-700">{c.titleAccent}</span>
             </h1>
             <span aria-hidden className="accent-bar mt-7" />
             <p className="mt-7 max-w-[34rem] text-[17px] leading-[1.75] text-ink-700">
-              For companies we build computer vision, ROS 2 robot software, IoT systems and the web and
-              mobile apps around them. For classrooms we sell Makerzoid robot kits, and for AI labs our
-              Armo robot arms and the ArmoGo dual-arm robot.
+              {c.lead}
             </p>
             <div className="mt-10">
-              <HeroActions />
+              <HeroActions lang={lang} />
             </div>
           </div>
         </div>
       </Container>
 
-      <CursorTag className="absolute bottom-10 right-[max(2rem,calc((100%-78rem)/2+2rem))] hidden lg:flex" />
+      <CursorTag caption={c.caption} className="absolute bottom-10 right-[max(2rem,calc((100%-78rem)/2+2rem))] hidden lg:flex" />
     </section>
   );
 }

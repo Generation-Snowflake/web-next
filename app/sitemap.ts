@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { localizeHref } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import { products } from "@/lib/products";
 
@@ -19,6 +20,9 @@ const staticRoutes: Entry[] = [
   { path: "/about", priority: 0.6, changeFrequency: "yearly" },
 ];
 
+const abs = (path: string) => new URL(path, site.url).toString();
+
+/** Every page in English (unprefixed) and Thai (/th), each listing both as hreflang alternates. */
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
   const productRoutes: Entry[] = products.map((p) => ({
@@ -27,10 +31,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly",
   }));
 
-  return [...staticRoutes, ...productRoutes].map(({ path, priority, changeFrequency }) => ({
-    url: new URL(path, site.url).toString(),
-    lastModified,
-    changeFrequency,
-    priority,
-  }));
+  return [...staticRoutes, ...productRoutes].flatMap(({ path, priority, changeFrequency }) => {
+    const languages = { en: abs(localizeHref(path, "en")), th: abs(localizeHref(path, "th")) };
+    return (["en", "th"] as const).map((lang) => ({
+      url: languages[lang],
+      lastModified,
+      changeFrequency,
+      priority,
+      alternates: { languages },
+    }));
+  });
 }

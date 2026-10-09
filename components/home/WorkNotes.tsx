@@ -2,21 +2,39 @@ import Container from "@/components/ui/Container";
 import ButtonLink from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { caseStudies } from "@/lib/work";
+import type { Lang } from "@/lib/i18n";
+import { getCaseStudies } from "@/lib/work";
 
-export default function WorkNotes() {
+const copy = {
+  en: {
+    label: "Work",
+    title: "What we work on",
+    description: "Web and mobile apps, AI, IoT and robot software. Ask us on a call about similar projects.",
+    all: "All work",
+  },
+  th: {
+    label: "ผลงาน",
+    title: "งานที่เราทำ",
+    description: "เว็บและแอปมือถือ AI, IoT และซอฟต์แวร์หุ่นยนต์ โทรมาสอบถามเรื่องงานที่คล้ายกันได้เลย",
+    all: "ผลงานทั้งหมด",
+  },
+} satisfies Record<Lang, Record<string, string>>;
+
+export default function WorkNotes({ lang }: { lang: Lang }) {
+  const c = copy[lang];
+  const caseStudies = getCaseStudies(lang);
   return (
     <section aria-labelledby="work-title" className="bg-paper">
       <Container className="grid gap-10 py-20 md:py-28 lg:grid-cols-12 lg:gap-12">
         <Reveal className="lg:col-span-4">
           <div className="lg:sticky lg:top-28">
             <SectionHeading
-              label="Work"
-              title={<span id="work-title">What we work on</span>}
-              description="Web and mobile apps, AI, IoT and robot software. Ask us on a call about similar projects."
+              label={c.label}
+              title={<span id="work-title">{c.title}</span>}
+              description={c.description}
             />
             <ButtonLink href="/portfolio" variant="link" className="mt-6">
-              All work
+              {c.all}
             </ButtonLink>
           </div>
         </Reveal>

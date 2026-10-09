@@ -1,3 +1,5 @@
+import { overlay, type Lang, type Overlay } from "@/lib/i18n";
+
 // Company-wide facts and navigation. Every page, the navbar, the footer and
 // the JSON-LD read from here so contact details only live in one place.
 
@@ -29,23 +31,66 @@ export const site = {
   social: [{ label: "Facebook", href: "https://www.facebook.com/gsfrobotics" }],
 } as const;
 
-export type NavItem = { label: string; labelTh?: string; href: string };
+const siteTh: Overlay<typeof site> = {
+  tagline: "งานวิศวกรรมซอฟต์แวร์และหุ่นยนต์ จากปากเกร็ด นนทบุรี",
+  description:
+    "GSF Robotics & AI ทีมเล็กๆ ที่ปากเกร็ด นนทบุรี รับพัฒนาระบบ AI, Vision, หุ่นยนต์, IoT, เว็บและแอปมือถือ และจำหน่ายหุ่นยนต์สำหรับการศึกษาและงานวิจัย",
+  address: {
+    lines: [
+      "52/9 หมู่บ้านสุชาวดี หมู่ 3 ซอยสุขประชาสรรค์ 3",
+      "ถนนติวานนท์ ตำบลบางพูด",
+      "อำเภอปากเกร็ด จังหวัดนนทบุรี 11120",
+    ],
+    locality: "ปากเกร็ด นนทบุรี",
+    country: "ประเทศไทย",
+  },
+  hours: "จันทร์–ศุกร์ 9:00–18:00 น.",
+};
 
-export const mainNav: NavItem[] = [
-  { label: "Services", href: "/services" },
-  { label: "Products", href: "/products" },
-  { label: "Classes", href: "/training" },
-  { label: "Work", href: "/portfolio" },
-  { label: "About", href: "/about" },
-];
+/** Company facts in a language (address, hours and tagline differ). */
+export function getSite(lang: Lang): typeof site {
+  return lang === "th" ? overlay(site, siteTh) : site;
+}
 
+export type NavItem = { label: string; href: string };
+
+const nav = {
+  en: {
+    main: [
+      { label: "Services", href: "/services" },
+      { label: "Products", href: "/products" },
+      { label: "Classes", href: "/training" },
+      { label: "Work", href: "/portfolio" },
+      { label: "About", href: "/about" },
+    ],
+    more: [
+      { label: "How we work", href: "/workflow" },
+      { label: "Contact", href: "/contact" },
+    ],
+    cta: { label: "Contact us", href: "/contact" },
+  },
+  th: {
+    main: [
+      { label: "บริการ", href: "/services" },
+      { label: "สินค้า", href: "/products" },
+      { label: "คอร์สเรียน", href: "/training" },
+      { label: "ผลงาน", href: "/portfolio" },
+      { label: "เกี่ยวกับเรา", href: "/about" },
+    ],
+    more: [
+      { label: "วิธีการทำงาน", href: "/workflow" },
+      { label: "ติดต่อ", href: "/contact" },
+    ],
+    cta: { label: "ติดต่อเรา", href: "/contact" },
+  },
+} satisfies Record<Lang, { main: NavItem[]; more: NavItem[]; cta: NavItem }>;
+
+/** Main navigation (navbar and footer). Hrefs are in English form; the
+ *  i18n Link adds /th on Thai pages. */
+export const getMainNav = (lang: Lang): NavItem[] => nav[lang].main;
 /** Secondary links (footer). */
-export const moreNav: NavItem[] = [
-  { label: "How we work", href: "/workflow" },
-  { label: "Contact", href: "/contact" },
-];
-
-export const primaryCta: NavItem = { label: "Contact us", href: "/contact" };
+export const getMoreNav = (lang: Lang): NavItem[] => nav[lang].more;
+export const getPrimaryCta = (lang: Lang): NavItem => nav[lang].cta;
 
 /** mailto: link with a prefilled subject (and optional body). */
 export function mailto(subject: string, body?: string) {

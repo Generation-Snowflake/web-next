@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
     return [
       { source: "/products/lerobot", destination: "/products/armo", permanent: true },
       { source: "/products/xlerobot", destination: "/products/armogo", permanent: true },
+      { source: "/th/products/lerobot", destination: "/th/products/armo", permanent: true },
+      { source: "/th/products/xlerobot", destination: "/th/products/armogo", permanent: true },
     ];
   },
 };

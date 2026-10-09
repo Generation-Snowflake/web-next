@@ -1,14 +1,16 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { CaretRight } from "@phosphor-icons/react/dist/ssr";
 import Container from "./Container";
 import SectionHeading from "./SectionHeading";
+import type { Lang } from "@/lib/i18n";
 
 /**
  * Top of every sub page, styled like a CI cover: dot grid, the snowflake
  * mark as a faint watermark, breadcrumb, Display H1, lead, actions.
  */
 export default function PageHeader({
+  lang = "en",
   eyebrow,
   label,
   title,
@@ -17,6 +19,7 @@ export default function PageHeader({
   crumbs,
   children,
 }: {
+  lang?: Lang;
   /** @deprecated use crumbs/label. Shown as the last breadcrumb if no crumbs. */
   eyebrow?: string;
   label?: string;
@@ -45,7 +48,7 @@ export default function PageHeader({
       />
       <Container>
         {trail.length > 0 && (
-          <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-x-1.5 text-[14px] font-medium text-ink-600">
+          <nav aria-label={lang === "th" ? "เส้นทางนำทาง" : "Breadcrumb"} className="mb-6 flex flex-wrap items-center gap-x-1.5 text-[14px] font-medium text-ink-600">
             <Link href="/" className="transition-colors duration-200 hover:text-ink">
               GSF
             </Link>

@@ -2,15 +2,51 @@
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, List, X } from "@phosphor-icons/react";
-import { mainNav, primaryCta, site } from "@/lib/site";
+import { localizeHref, stripLang, type Lang } from "@/lib/i18n";
+import { getMainNav, getPrimaryCta, getSite } from "@/lib/site";
 
 const MENU_ID = "mobile-navigation";
 
 function isActive(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(`${href}/`);
+  const path = stripLang(pathname).path;
+  return path === href || path.startsWith(`${href}/`);
+}
+
+const ui = {
+  en: { menu: "Menu", close: "Close", phone: "Phone", email: "Email", hours: "Hours", main: "Main", switchTo: "อ่านเป็นภาษาไทย" },
+  th: { menu: "เมนู", close: "ปิด", phone: "โทรศัพท์", email: "อีเมล", hours: "เวลาทำการ", main: "เมนูหลัก", switchTo: "Read in English" },
+} satisfies Record<Lang, Record<string, string>>;
+
+/** TH | EN switch. A plain link (full load) so the page's lang attribute,
+ *  fonts and metadata all change with it. */
+function LangSwitch({ lang, pathname, className = "" }: { lang: Lang; pathname: string; className?: string }) {
+  const path = stripLang(pathname).path;
+  return (
+    <div role="group" aria-label={lang === "th" ? "ภาษา" : "Language"} className={`inline-flex h-9 items-center rounded-lg border border-hairline-strong bg-card p-0.5 text-[13px] font-semibold shadow-xs ${className}`}>
+      {(["th", "en"] as const).map((l) => {
+        const current = l === lang;
+        return (
+          <a
+            key={l}
+            href={localizeHref(path, l)}
+            hrefLang={l}
+            lang={l}
+            data-robot-skip=""
+            aria-current={current ? "true" : undefined}
+            aria-label={current ? undefined : ui[lang].switchTo}
+            className={`flex h-full items-center rounded-md px-2.5 transition-colors duration-200 ${
+              current ? "bg-ink text-white" : "text-ink-600 hover:bg-cyan-50 hover:text-ink"
+            }`}
+          >
+            {l.toUpperCase()}
+          </a>
+        );
+      })}
+    </div>
+  );
 }
 
 // Scroll position as an external store, so the navbar reads it without
@@ -38,7 +74,11 @@ export function HideOnRoutes({
   return hidden ? null : <>{children}</>;
 }
 
-export default function Navbar() {
+export default function Navbar({ lang }: { lang: Lang }) {
+  const mainNav = getMainNav(lang);
+  const primaryCta = getPrimaryCta(lang);
+  const site = getSite(lang);
+  const t = ui[lang];
   const pathname = usePathname();
   // The menu is open only for the path it was opened on, so any route change
   // closes it without an effect.
@@ -131,7 +171,7 @@ export default function Navbar() {
             </span>
           </Link>
 
-          <nav aria-label="Main" className="ml-auto hidden lg:block">
+          <nav aria-label={t.main} className="ml-auto hidden lg:block">
             <ul className="flex items-center gap-1">
               {mainNav.map((item) => {
                 const active = isActive(pathname, item.href);
@@ -155,6 +195,7 @@ export default function Navbar() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <LangSwitch lang={lang} pathname={pathname} className="hidden sm:inline-flex" />
             <Link
               href={primaryCta.href}
               aria-current={ctaActive ? "page" : undefined}
@@ -172,7 +213,7 @@ export default function Navbar() {
               className="inline-flex h-9 items-center gap-2 rounded-lg border border-hairline-strong bg-card px-3 text-[14px] font-medium text-ink shadow-xs transition-colors duration-200 hover:bg-cyan-50 lg:hidden"
             >
               {open ? <X aria-hidden className="h-4 w-4" /> : <List aria-hidden className="h-4 w-4" />}
-              {open ? "Close" : "Menu"}
+              {open ? t.close : t.menu}
             </button>
           </div>
         </div>
@@ -188,7 +229,7 @@ export default function Navbar() {
         }`}
       >
         <div className="mx-auto flex min-h-full w-full max-w-page flex-col px-5 pb-10 pt-6 sm:px-8">
-          <nav aria-label="Main">
+          <nav aria-label={t.main}>
             <ul className="divide-y divide-hairline">
               {mainNav.map((item) => {
                 const active = isActive(pathname, item.href);
@@ -205,11 +246,6 @@ export default function Navbar() {
                       >
                         {item.label}
                       </span>
-                      {item.labelTh && (
-                        <span lang="th" className="text-[15px] text-graphite">
-                          {item.labelTh}
-                        </span>
-                      )}
                     </Link>
                   </li>
                 );
@@ -227,9 +263,11 @@ export default function Navbar() {
             <ArrowRight aria-hidden weight="bold" className="h-4 w-4" />
           </Link>
 
+          <LangSwitch lang={lang} pathname={pathname} className="mt-6 self-start sm:hidden" />
+
           <dl className="mt-8 grid gap-3 text-[15px]">
             <div className="rounded-lg border border-hairline bg-card p-4">
-              <dt className="caption">Phone</dt>
+              <dt className="caption">{t.phone}</dt>
               <dd className="mt-1 space-y-1">
                 {site.phones.map((p) => (
                   <a key={p.href} href={p.href} className="block font-medium text-ink hover:text-cyan-700">
@@ -239,7 +277,7 @@ export default function Navbar() {
               </dd>
             </div>
             <div className="rounded-lg border border-hairline bg-card p-4">
-              <dt className="caption">Email</dt>
+              <dt className="caption">{t.email}</dt>
               <dd className="mt-1">
                 <a href={`mailto:${site.email}`} className="break-all text-ink hover:text-cyan-700">
                   {site.email}
@@ -247,7 +285,7 @@ export default function Navbar() {
               </dd>
             </div>
             <div className="rounded-lg border border-hairline bg-card p-4">
-              <dt className="caption">Hours</dt>
+              <dt className="caption">{t.hours}</dt>
               <dd className="mt-1 text-graphite">{site.hours}</dd>
             </div>
           </dl>

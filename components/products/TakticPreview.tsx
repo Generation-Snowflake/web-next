@@ -38,7 +38,15 @@ const priorityDot: Record<string, string> = {
   Urgent: "bg-error",
 };
 
-export default function TakticPreview({ compact = false, className = "" }: { compact?: boolean; className?: string }) {
+export default function TakticPreview({
+  compact = false,
+  lang = "en",
+  className = "",
+}: {
+  compact?: boolean;
+  lang?: "en" | "th";
+  className?: string;
+}) {
   if (compact) {
     return (
       <div aria-hidden className={`flex h-full w-full gap-1.5 bg-ink p-2.5 ${className}`}>
@@ -57,7 +65,11 @@ export default function TakticPreview({ compact = false, className = "" }: { com
   return (
     <div
       role="img"
-      aria-label="Illustration of the Taktic board: four columns, To do, In progress, In review and Done, with example task cards"
+      aria-label={
+        lang === "th"
+          ? "ภาพประกอบบอร์ดของ Taktic: 4 คอลัมน์ To do, In progress, In review และ Done พร้อมการ์ดงานตัวอย่าง"
+          : "Illustration of the Taktic board: four columns, To do, In progress, In review and Done, with example task cards"
+      }
       className={`flex h-full w-full overflow-hidden bg-paper text-left ${className}`}
     >
       {/* Sidebar */}

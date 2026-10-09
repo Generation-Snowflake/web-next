@@ -18,11 +18,26 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Thai needs room for tone marks and stacked vowels. */
-:lang(th),
-.thai {
+/* Thai needs room for tone marks and stacked vowels, and no negative
+   tracking. Thai pages set lang="th" on <html>; Thai snippets on English
+   pages carry lang="th" themselves. */
+html[lang="th"] body {
   line-height: 1.7;
+}
+html[lang="th"] :is(h1, h2, h3, h4),
+:lang(th):is(h1, h2, h3, h4, p, span) {
   letter-spacing: 0;
+}
+html[lang="th"] :is(h1, h2) {
+  line-height: 1.35;
+}
+html[lang="th"] h3 {
+  line-height: 1.45;
+}
+/* Uppercase tracked labels read oddly in Thai: keep them, without the caps
+   spacing. */
+html[lang="th"] .label {
+  letter-spacing: 0.02em;
 }
 
 ::selection {

@@ -1,6 +1,7 @@
 "use client";
 
 import ButtonLink from "@/components/ui/Button";
+import type { Lang } from "@/lib/i18n";
 
 type RobotAction = "wave" | "excited" | "calm";
 
@@ -18,14 +19,20 @@ function robotCue(action: RobotAction) {
   };
 }
 
-export default function HeroActions() {
+const copy = {
+  en: { primary: "Describe your project", secondary: "See the robots we sell" },
+  th: { primary: "เล่ารายละเอียดโปรเจกต์", secondary: "ดูหุ่นยนต์ที่เราขาย" },
+} satisfies Record<Lang, Record<string, string>>;
+
+export default function HeroActions({ lang }: { lang: Lang }) {
+  const c = copy[lang];
   return (
     <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
       <ButtonLink href="/contact" size="lg" arrow {...robotCue("wave")}>
-        Describe your project
+        {c.primary}
       </ButtonLink>
       <ButtonLink href="/products" variant="link" className="text-[16px]" {...robotCue("excited")}>
-        See the robots we sell
+        {c.secondary}
       </ButtonLink>
     </div>
   );
