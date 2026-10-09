@@ -2,6 +2,8 @@
 // broad: no client names or project details. Add `image` once real
 // screenshots are available (files in /public/work/).
 
+import { overlay, type Lang } from "@/lib/i18n";
+import { caseStudiesTh } from "@/lib/th/work";
 export type CaseStudy = {
   slug: string;
   title: string;
@@ -64,3 +66,8 @@ export const caseStudies: CaseStudy[] = [
     tags: ["Three.js", "WebGL"],
   },
 ];
+
+/** Case studies in a language (Thai from lib/th/work.ts). */
+export function getCaseStudies(lang: Lang): CaseStudy[] {
+  return lang === "th" ? caseStudies.map((c) => overlay(c, caseStudiesTh[c.slug])) : caseStudies;
+}

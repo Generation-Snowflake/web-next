@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design system: docs/design-system.md */
+/* Design system: docs/design-system.md (GSF Brand Guidelines v1.0) */
 
 html {
-  background: #ffffff;
-  color: #0b0c0e;
+  background: #f6fafc;
+  color: #071128;
   scroll-behavior: smooth;
   /* clip (not hidden) so position: sticky keeps working */
   overflow-x: clip;
@@ -18,51 +18,138 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Thai needs room for tone marks and stacked vowels. */
-:lang(th),
-.thai {
+/* Thai needs room for tone marks and stacked vowels, and no negative
+   tracking. Thai pages set lang="th" on <html>; Thai snippets on English
+   pages carry lang="th" themselves. */
+html[lang="th"] body {
   line-height: 1.7;
+}
+html[lang="th"] :is(h1, h2, h3, h4),
+:lang(th):is(h1, h2, h3, h4, p, span) {
   letter-spacing: 0;
+}
+html[lang="th"] :is(h1, h2) {
+  line-height: 1.35;
+}
+html[lang="th"] h3 {
+  line-height: 1.45;
+}
+/* Uppercase tracked labels read oddly in Thai: keep them, without the caps
+   spacing. */
+html[lang="th"] .label {
+  letter-spacing: 0.02em;
 }
 
 ::selection {
-  background: #ccefed;
-  color: #0b0c0e;
+  background: #9eebf0;
+  color: #071128;
 }
 
 :focus-visible {
-  outline: 2px solid #00736e;
+  outline: 2px solid #0b8997;
   outline-offset: 2px;
 }
 
 .night :focus-visible {
-  outline-color: #00b4ae;
+  outline-color: #18d9e3;
 }
 
 @layer components {
-  /* Text link: teal-ink, underline appears on hover. */
+  /* Text link: Primary Dark text, cyan underline, Cyan 700 on hover. */
   .link {
-    @apply font-medium text-teal-ink underline decoration-teal-ink/30 decoration-1 underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-ink/40;
+    @apply font-medium text-ink underline decoration-cyan-500 decoration-2 underline-offset-4 transition-colors duration-200 hover:text-cyan-700 hover:decoration-cyan-700;
   }
   .night .link {
-    @apply text-night-text decoration-night-muted hover:decoration-teal;
+    @apply text-night-text decoration-cyan-500 hover:text-cyan-300;
   }
   /* Small secondary label: field names, categories, units. */
   .caption {
-    @apply text-[13px] font-medium leading-5 text-graphite;
+    @apply text-[13px] font-medium leading-5 text-ink-600;
   }
-  /* Raised white card: 1px border, soft shadow. */
+  /* Section label (CI: uppercase bold label). A cyan node, then the text in
+     Primary Dark: cyan itself is too light to carry small text. */
+  .label {
+    @apply inline-flex items-center gap-2.5 text-[12px] font-semibold uppercase leading-5 tracking-label text-ink-700;
+  }
+  .label::before {
+    content: "";
+    @apply h-2 w-2 shrink-0 rounded-full border-2 border-cyan-600 bg-cyan-500;
+  }
+  .night .label {
+    @apply text-cyan-200;
+  }
+  /* Short Gradient C bar under headings (the CI's heading underline). */
+  .accent-bar {
+    @apply block h-1.5 w-24 rounded-[1px] bg-gradient-c;
+  }
+  /* Main call to action: Primary Dark with white text and a cyan arrow; on
+     hover it picks up Gradient C. (A cyan gradient with dark text looked
+     washed out next to the rest of the page.) */
+  .btn-primary {
+    @apply bg-ink font-semibold text-white shadow-xs hover:bg-gradient-c-deep;
+  }
+  .btn-primary svg {
+    @apply text-cyan-500;
+  }
+  /* On Primary Dark sections: solid Circuit Cyan with Primary Dark text. */
+  .btn-primary-night {
+    @apply bg-cyan-500 font-semibold text-ink shadow-xs hover:bg-cyan-300;
+  }
+  /* Raised white card on Primary Light: Mist border, soft shadow. */
   .card {
-    @apply rounded-xl border border-hairline bg-paper shadow-card;
+    @apply rounded-xl border border-hairline bg-card shadow-card;
   }
-  /* Card that is a link: gentle lift on hover. */
+  /* Card that is a link: gentle lift on hover, cyan edge. */
   .card-hover {
-    @apply transition-[box-shadow,transform,border-color] duration-300 ease-out hover:-translate-y-0.5 hover:border-hairline-strong hover:shadow-card-hover motion-reduce:hover:translate-y-0;
+    @apply transition-[box-shadow,transform,border-color] duration-300 ease-out hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-card-hover motion-reduce:hover:translate-y-0;
   }
   /* Small rounded tag. */
   .chip {
-    @apply inline-flex items-center rounded-full border border-hairline bg-paper px-2.5 py-0.5 text-[13px] font-medium leading-5 text-graphite;
+    @apply inline-flex items-center rounded-full border border-hairline-strong bg-card px-2.5 py-0.5 text-[13px] font-medium leading-5 text-ink-700;
   }
+  /* "Info" status chip (CI status colour: Circuit Cyan). */
+  .chip-info {
+    @apply inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-2.5 py-0.5 text-[13px] font-medium leading-5 text-ink;
+  }
+  .chip-info::before {
+    content: "";
+    @apply h-1.5 w-1.5 rounded-full bg-cyan-500;
+  }
+  /* Dot grid backdrop (CI covers). */
+  .dot-grid {
+    @apply bg-dots;
+    background-size: 24px 24px;
+  }
+  .dot-grid-night {
+    @apply bg-dots-night;
+    background-size: 24px 24px;
+  }
+  /* Price: monospace figures in Primary Dark. */
+  .price {
+    @apply font-mono font-semibold tabular-nums text-ink;
+  }
+}
+
+/* Corner markers: the small squares on the CI page frame. Add to a
+   relatively positioned box; draws four 8px squares on its corners. */
+.corner-marks {
+  --mark: #071128;
+  background-image:
+    linear-gradient(var(--mark), var(--mark)),
+    linear-gradient(var(--mark), var(--mark)),
+    linear-gradient(var(--mark), var(--mark)),
+    linear-gradient(var(--mark), var(--mark));
+  background-size: 8px 8px;
+  background-position:
+    top left,
+    top right,
+    bottom left,
+    bottom right;
+  background-repeat: no-repeat;
+}
+.night .corner-marks,
+.corner-marks-night {
+  --mark: #18d9e3;
 }
 
 /* Scroll reveal (components/ui/Reveal). Content is visible without JS; the

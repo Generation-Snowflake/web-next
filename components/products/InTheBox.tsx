@@ -1,9 +1,19 @@
+import type { Lang } from "@/lib/i18n";
 import { splitQty } from "./productUi";
 
+// "Not included: …" lines (Thai data starts them with "ไม่รวม").
+const notIncluded = /^(not included|ไม่รวม)/i;
+
+const copy = {
+  en: { item: "Item", qty: "Qty" },
+  th: { item: "รายการ", qty: "จำนวน" },
+} satisfies Record<Lang, Record<string, string>>;
+
 /** "In the box" as an item / qty table in a card. "Not included: …" lines become a note. */
-export default function InTheBox({ items, className = "" }: { items: string[]; className?: string }) {
-  const rows = items.filter((l) => !/^not included/i.test(l)).map(splitQty);
-  const notes = items.filter((l) => /^not included/i.test(l));
+export default function InTheBox({ items, lang = "en", className = "" }: { items: string[]; lang?: Lang; className?: string }) {
+  const c = copy[lang];
+  const rows = items.filter((l) => !notIncluded.test(l)).map(splitQty);
+  const notes = items.filter((l) => notIncluded.test(l));
   if (rows.length === 0) return null;
   return (
     <div className={className}>
@@ -12,10 +22,10 @@ export default function InTheBox({ items, className = "" }: { items: string[]; c
         <thead>
           <tr className="border-b border-hairline bg-paper-2">
             <th scope="col" className="px-4 py-2.5 text-[13px] font-medium text-graphite">
-              Item
+              {c.item}
             </th>
             <th scope="col" className="w-16 px-4 py-2.5 text-right text-[13px] font-medium text-graphite">
-              Qty
+              {c.qty}
             </th>
           </tr>
         </thead>

@@ -1,27 +1,35 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Link";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
-type Variant = "primary" | "outline" | "link" | "secondary" | "ghost";
+type Variant = "primary" | "dark" | "outline" | "link" | "secondary" | "ghost";
 type Size = "md" | "lg";
 type Tone = "paper" | "night";
 
 const base =
-  "group inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-[background-color,border-color,color,box-shadow] duration-200 ease-out";
+  "group inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-[background-color,border-color,color,box-shadow] duration-200 ease-out";
 
+// Primary: Primary Dark with a cyan arrow (.btn-primary in globals.css).
+// White text on cyan fails contrast, so cyan buttons always get dark text.
 const light: Record<Variant, string> = {
-  primary: "bg-ink text-white shadow-xs hover:bg-[#26282C]",
-  outline: "border border-hairline-strong bg-paper text-ink shadow-xs hover:border-graphite/40 hover:bg-paper-2",
-  secondary: "border border-hairline-strong bg-paper text-ink shadow-xs hover:border-graphite/40 hover:bg-paper-2",
-  link: "text-teal-ink font-medium transition-colors duration-200 hover:text-ink",
-  ghost: "text-teal-ink font-medium transition-colors duration-200 hover:text-ink",
+  primary: "btn-primary",
+  dark: "bg-ink text-white shadow-xs hover:bg-ink-800",
+  outline: "border border-hairline-strong bg-card text-ink shadow-xs hover:border-cyan-500 hover:bg-cyan-50",
+  secondary: "border border-hairline-strong bg-card text-ink shadow-xs hover:border-cyan-500 hover:bg-cyan-50",
+  link: "font-semibold text-ink transition-colors duration-200 hover:text-cyan-700",
+  ghost: "font-semibold text-ink transition-colors duration-200 hover:text-cyan-700",
 };
 
-// "secondary" and "ghost" are aliases so older call sites still work. The
-// site has no dark surfaces any more, so tone="night" renders the light
-// variants (kept so existing call sites compile).
-const variants: Record<Tone, Record<Variant, string>> = {
-  paper: light,
-  night: light,
+// On Primary Dark sections.
+const night: Record<Variant, string> = {
+  primary: "btn-primary-night",
+  dark: "bg-white text-ink shadow-xs hover:bg-cyan-50",
+  outline: "border border-white/25 text-white hover:border-cyan-500 hover:bg-white/5",
+  secondary: "border border-white/25 text-white hover:border-cyan-500 hover:bg-white/5",
+  link: "font-semibold text-white transition-colors duration-200 hover:text-cyan-300",
+  ghost: "font-semibold text-white transition-colors duration-200 hover:text-cyan-300",
 };
+
+const variants: Record<Tone, Record<Variant, string>> = { paper: light, night };
 
 const sizes: Record<Size, string> = {
   md: "h-10 px-4 text-[15px]",
@@ -33,7 +41,7 @@ type Props = {
   children: React.ReactNode;
   variant?: Variant;
   size?: Size;
-  /** @deprecated no dark surfaces remain; "night" renders like "paper". */
+  /** "night" on Primary Dark sections. */
   tone?: Tone;
   /** Trailing arrow on solid/outline buttons. Text links always get one. */
   arrow?: boolean;
@@ -41,9 +49,9 @@ type Props = {
 } & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "className" | "children">;
 
 /**
- * A link that looks like a button (or an underlined text link with
- * variant="link"). Internal paths use next/link; mailto:, tel: and absolute
- * URLs render a plain anchor, and external URLs open in a new tab.
+ * A link that looks like a button (or a text link with variant="link").
+ * Internal paths use next/link; mailto:, tel: and absolute URLs render a
+ * plain anchor, and external URLs open in a new tab.
  */
 export default function ButtonLink({
   href,
@@ -64,9 +72,13 @@ export default function ButtonLink({
     <>
       {children}
       {showArrow && (
-        <span aria-hidden className="transition-transform duration-200 ease-out group-hover:translate-x-0.5">
-          →
-        </span>
+        <ArrowRight
+          aria-hidden
+          weight="bold"
+          className={`h-4 w-4 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-0.5 ${
+            isLink ? (tone === "night" ? "text-cyan-500" : "text-cyan-600") : ""
+          }`}
+        />
       )}
     </>
   );

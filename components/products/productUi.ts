@@ -37,7 +37,8 @@ export function splitQty(line: string): { item: string; qty?: string } {
   return { item: line };
 }
 
-/** priceNote without a leading "Price on request." when the price line already says so. */
+/** priceNote without a leading "Price on request." (Thai: "สอบถามราคา") when
+ *  the price line already says so. */
 export function priceNoteDetail(note?: string) {
-  return note?.replace(/^Price on request\.\s*/, "");
+  return note?.replace(/^(Price on request\.|สอบถามราคา)\s*/, "");
 }

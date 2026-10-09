@@ -29,16 +29,16 @@ export const DIM = {
 
 export const HEAD_CENTER_Y = DIM.headPivotY + DIM.headLift;
 
-/** Product palette (sRGB hex; three converts to linear). Teal is the only
- *  colour and is reserved for the small LEDs (eyes, chest emblem, ear rings). */
+/** Product palette (sRGB hex; three converts to linear), cooled toward the
+ *  brand palette. Teal is the only colour and is reserved for the small LEDs (eyes, chest emblem, ear rings). */
 export const COLORS = {
-  teal: "#00b4ae",
-  shell: "#dedfdd",
-  shellShade: "#b3b4b2",
-  graphite: "#34373a",
-  graphiteDeep: "#222426",
-  seam: "#8d8c88",
-  visor: "#0b0c0d",
+  teal: "#18d9e3", // Circuit Cyan (Brand Guidelines)
+  shell: "#e1e6ea", // cool white, toward Mist
+  shellShade: "#b5bcc5",
+  graphite: "#384152", // Ink 800
+  graphiteDeep: "#1a2336",
+  seam: "#8a929e",
+  visor: "#071128", // Primary Dark
 } as const;
 
 /** Arm joint angles (radians), authored for the robot's LEFT arm (+x side).

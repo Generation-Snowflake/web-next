@@ -1,8 +1,36 @@
+import { Cursor } from "@phosphor-icons/react/dist/ssr";
+import ConstructionCircle from "@/components/ui/ConstructionCircle";
 import Container from "@/components/ui/Container";
 import HeroActions from "./HeroActions";
 import HeroRobotStage from "./HeroRobotStage";
+import type { Lang } from "@/lib/i18n";
 
-const CAPTION = "It follows your cursor.";
+const copy = {
+  en: {
+    caption: "It follows your cursor.",
+    label: "Software engineering · Robotics solution",
+    title: "We write the software,",
+    titleAccent: "and we sell the robots it runs on.",
+    lead: "For companies we build computer vision, ROS 2 robot software, IoT systems and the web and mobile apps around them. For classrooms we sell Makerzoid robot kits, and for AI labs our Armo robot arms and the ArmoGo dual-arm robot.",
+  },
+  th: {
+    caption: "มันมองตามเมาส์ของคุณ",
+    label: "วิศวกรรมซอฟต์แวร์ · โซลูชันหุ่นยนต์",
+    title: "เราเขียนซอฟต์แวร์",
+    titleAccent: "และขายหุ่นยนต์ที่ซอฟต์แวร์นั้นทำงานอยู่",
+    lead: "สำหรับองค์กร เราพัฒนาระบบ Computer Vision ซอฟต์แวร์หุ่นยนต์บน ROS 2 ระบบ IoT รวมถึงเว็บและแอปมือถือที่ทำงานร่วมกับระบบเหล่านั้น สำหรับห้องเรียน เราจำหน่ายชุดหุ่นยนต์ Makerzoid และสำหรับห้องแล็บ AI เรามีแขนกล Armo และหุ่นยนต์แขนคู่ ArmoGo",
+  },
+} satisfies Record<Lang, Record<string, string>>;
+
+/** The CI cover motif: a cursor pointing at a Gradient C tag. */
+function CursorTag({ caption, className = "" }: { caption: string; className?: string }) {
+  return (
+    <p className={`pointer-events-none flex items-start gap-1 ${className}`}>
+      <Cursor aria-hidden weight="fill" className="-mt-4 h-7 w-7 text-ink" />
+      <span className="rounded-md bg-gradient-c-deep px-3.5 py-1.5 text-[13px] font-medium text-white shadow-card">{caption}</span>
+    </p>
+  );
+}
 
 /**
  * Layout contract with the site-wide robot companion (components/robot-companion),
@@ -10,13 +38,23 @@ const CAPTION = "It follows your cursor.";
  *  - lg and up: the robot stands in the RIGHT half, copy sits in the left half.
  *  - below lg: the robot stands in the TOP half of the first screen, copy below it.
  */
-export default function Hero() {
+export default function Hero({ lang }: { lang: Lang }) {
+  const c = copy[lang];
   return (
     <section
       id="top"
       aria-labelledby="hero-title"
-      className="relative flex flex-col overflow-hidden bg-paper text-ink lg:min-h-[88svh]"
+      className="relative isolate flex flex-col overflow-hidden bg-paper text-ink lg:min-h-[88svh]"
     >
+      <div
+        aria-hidden
+        className="dot-grid absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_70%_45%,black_20%,transparent_75%)]"
+      />
+      {/* Construction circle behind the robot (CI cover graphic). */}
+      <div aria-hidden className="absolute inset-x-0 top-0 -z-10 h-[50svh] min-h-[320px] lg:inset-y-0 lg:left-1/2 lg:h-auto">
+        <ConstructionCircle className="absolute left-1/2 top-[54%] w-[min(88vw,26rem)] -translate-x-1/2 -translate-y-1/2 lg:top-1/2 lg:w-[min(40vw,34rem)]" />
+      </div>
+
       <div className="absolute inset-x-0 top-0 h-[100svh] lg:bottom-0 lg:h-auto">
         <HeroRobotStage />
       </div>
@@ -24,33 +62,30 @@ export default function Hero() {
       <Container className="relative flex flex-1 flex-col pointer-events-none">
         {/* Keeps the robot area clear on small screens. */}
         <div aria-hidden className="h-[50svh] min-h-[320px] lg:hidden" />
-        <p className="caption mb-8 lg:hidden">{CAPTION}</p>
+        <CursorTag caption={c.caption} className="mb-8 lg:hidden" />
 
         <div className="flex flex-1 items-center pb-16 lg:pb-28 lg:pt-32">
           <div className="pointer-events-auto max-w-[36rem] lg:w-1/2 lg:max-w-none lg:pr-8 xl:pr-12">
-            <p className="chip gap-2 py-1 pl-2.5 pr-3 shadow-xs">
-              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-teal" />
-              Software house + robot supplier
-            </p>
+            <p className="label">{c.label}</p>
             <h1
               id="hero-title"
-              className="mt-6 text-balance text-[2.75rem] font-semibold leading-[1.02] tracking-display sm:text-6xl lg:text-[4.25rem] xl:text-[4.75rem]"
+              className="mt-6 text-balance text-[2.5rem] font-bold leading-[1.12] tracking-display sm:text-5xl sm:leading-[1.12] lg:text-display xl:text-[4rem] xl:leading-[1.1]"
             >
-              We write the software, and we sell the robots it runs on.
+              {c.title}{" "}
+              <span className="text-cyan-700">{c.titleAccent}</span>
             </h1>
-            <p className="mt-7 max-w-[34rem] text-lg leading-relaxed text-graphite">
-              For companies we build computer vision, ROS 2 robot software, IoT systems and the web and
-              mobile apps around them. For classrooms we sell Makerzoid robot kits, and for AI labs the
-              LeRobot SO-101 arms and the XLeRobot.
+            <span aria-hidden className="accent-bar mt-7" />
+            <p className="mt-7 max-w-[34rem] text-[17px] leading-[1.75] text-ink-700">
+              {c.lead}
             </p>
             <div className="mt-10">
-              <HeroActions />
+              <HeroActions lang={lang} />
             </div>
           </div>
         </div>
       </Container>
 
-      <p className="caption pointer-events-none absolute bottom-8 right-[max(2rem,calc((100%-80rem)/2+2rem))] hidden lg:block">{CAPTION}</p>
+      <CursorTag caption={c.caption} className="absolute bottom-10 right-[max(2rem,calc((100%-78rem)/2+2rem))] hidden lg:flex" />
     </section>
   );
 }

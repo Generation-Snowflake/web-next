@@ -1,21 +1,24 @@
 // Custom engineering services (work we build FOR a client). Products we sell
 // off the shelf live in lib/products.ts — keep the two separate.
-import type { LucideIcon } from "lucide-react";
+// Icons: Phosphor (Brand Guidelines, Iconography).
+import { overlay, type Lang } from "@/lib/i18n";
+import { engagementModelsTh, processStepsTh, serviceFaqsTh, servicesTh } from "@/lib/th/services";
+import type { Icon } from "@phosphor-icons/react";
 import {
   Brain,
   Cloud,
   Cpu,
   Database,
+  DeviceMobile,
   Globe,
-  ScanEye,
-  Smartphone,
-  Wifi,
-} from "lucide-react";
+  Scan,
+  WifiHigh,
+} from "@phosphor-icons/react/dist/ssr";
 
 export type Service = {
   slug: string;
   title: string;
-  icon: LucideIcon;
+  icon: Icon;
   /** One line for cards. */
   summary: string;
   /** Longer paragraph for the services page. */
@@ -28,7 +31,7 @@ export const services: Service[] = [
   {
     slug: "computer-vision",
     title: "Computer vision",
-    icon: ScanEye,
+    icon: Scan,
     summary:
       "Models that look at camera images and report what they see, from counting parts on a line to reading a Thai ID card.",
     description:
@@ -76,7 +79,7 @@ export const services: Service[] = [
   {
     slug: "iot-systems",
     title: "IoT and sensors",
-    icon: Wifi,
+    icon: WifiHigh,
     summary:
       "Sensors that send readings to a server, and a dashboard that tells you when something is off.",
     description:
@@ -107,7 +110,7 @@ export const services: Service[] = [
   {
     slug: "mobile-applications",
     title: "Mobile apps",
-    icon: Smartphone,
+    icon: DeviceMobile,
     summary: "iOS and Android apps for your customers, your field staff, or the hardware you're building.",
     description:
       "We normally write one codebase for both platforms, in React Native or Flutter. The app can keep working offline and sync when the signal comes back, which matters for staff working upcountry or in a warehouse with bad reception. If your product includes hardware, we write the Bluetooth or Wi-Fi link to it too.",
@@ -257,3 +260,17 @@ export const techStack: string[] = [
   "NVIDIA Jetson",
   "AWS",
 ];
+
+/** Services and their supporting lists in a language (Thai from lib/th/services.ts). */
+export function getServices(lang: Lang): Service[] {
+  return lang === "th" ? services.map((s) => overlay(s, servicesTh[s.slug])) : services;
+}
+export function getEngagementModels(lang: Lang): EngagementModel[] {
+  return lang === "th" ? overlay(engagementModels, engagementModelsTh) : engagementModels;
+}
+export function getProcessSteps(lang: Lang): ProcessStep[] {
+  return lang === "th" ? overlay(processSteps, processStepsTh) : processSteps;
+}
+export function getServiceFaqs(lang: Lang): Faq[] {
+  return lang === "th" ? overlay(serviceFaqs, serviceFaqsTh) : serviceFaqs;
+}

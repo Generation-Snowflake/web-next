@@ -14,7 +14,7 @@ const ELIGIBLE = 'a[href],button,[role="button"],input[type="submit"]';
 // Clicks that start inside these are never held back.
 const FIELDS = 'input:not([type="submit"]),textarea,select,option,label,[contenteditable=""],[contenteditable="true"]';
 
-const TEAL = "#00B4AE";
+const TEAL = "#18D9E3"; // Circuit Cyan
 
 type Options = {
   motion: CompanionMotion;
