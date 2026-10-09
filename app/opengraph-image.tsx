@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { ImageResponse } from "next/og";
 import { site } from "@/lib/site";
 
@@ -5,18 +7,20 @@ export const alt = `${site.name}. We write the software, and we sell the robots 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const INK = "#0B0C0E";
-const PAPER = "#FFFFFF";
-const SURFACE = "#F6F7F9";
-const GRAPHITE = "#5B616B";
-const HAIRLINE = "#E5E7EB";
-const TEAL = "#00B4AE";
+// Brand Guidelines colours.
+const DARK = "#071128";
+const LIGHT = "#F6FAFC";
+const MUTED = "#B4BDC9";
+const CYAN = "#18D9E3";
+const ICE = "#9EEBF0";
 
-/** Anuphan (the site font) from Google Fonts; falls back to the default font if offline. */
+/** IBM Plex Sans Thai (the brand typeface) from Google Fonts; falls back to the default font if offline. */
 async function loadFont(text: string, weight: number): Promise<ArrayBuffer | null> {
   try {
     const css = await (
-      await fetch(`https://fonts.googleapis.com/css2?family=Anuphan:wght@${weight}&text=${encodeURIComponent(text)}`)
+      await fetch(
+        `https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@${weight}&text=${encodeURIComponent(text)}`,
+      )
     ).text();
     const url = css.match(/src: url\((.+?)\) format\('(?:opentype|truetype)'\)/)?.[1];
     if (!url) return null;
@@ -27,13 +31,18 @@ async function loadFont(text: string, weight: number): Promise<ArrayBuffer | nul
 }
 
 export default async function OpengraphImage() {
-  const lines = [site.name, "We write the software, and we sell the robots it runs on.", site.address.locality, new URL(site.url).host];
+  const lines = ["GSF", "Robotics and AI", "We write the software,", "and we sell the robots it runs on.", site.address.locality, new URL(site.url).host];
   const text = lines.join("");
-  const [semibold, regular] = await Promise.all([loadFont(text, 600), loadFont(text, 400)]);
+  const [bold, regular, logo] = await Promise.all([
+    loadFont(text, 700),
+    loadFont(text, 400),
+    readFile(path.join(process.cwd(), "public/logo-night.png")),
+  ]);
   const fonts = [
-    ...(semibold ? [{ name: "Anuphan", data: semibold, weight: 600 as const, style: "normal" as const }] : []),
-    ...(regular ? [{ name: "Anuphan", data: regular, weight: 400 as const, style: "normal" as const }] : []),
+    ...(bold ? [{ name: "Plex", data: bold, weight: 700 as const, style: "normal" as const }] : []),
+    ...(regular ? [{ name: "Plex", data: regular, weight: 400 as const, style: "normal" as const }] : []),
   ];
+  const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
 
   return new ImageResponse(
     (
@@ -42,37 +51,30 @@ export default async function OpengraphImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          padding: 40,
-          backgroundColor: SURFACE,
-          fontFamily: fonts.length ? "Anuphan" : "sans-serif",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          padding: "64px 72px",
+          backgroundColor: DARK,
+          backgroundImage: `linear-gradient(115deg, ${DARK} 0%, ${DARK} 45%, #0FA7B8 150%)`,
+          color: LIGHT,
+          fontFamily: fonts.length ? "Plex" : "sans-serif",
         }}
       >
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            padding: "56px 64px",
-            backgroundColor: PAPER,
-            color: INK,
-            border: `1px solid ${HAIRLINE}`,
-            borderRadius: 24,
-          }}
-        >
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ display: "flex", alignItems: "center", fontSize: 30, fontWeight: 600, color: GRAPHITE }}>
-              <div style={{ width: 14, height: 14, borderRadius: 7, backgroundColor: TEAL, marginRight: 16 }} />
-              {lines[0]}
-            </div>
-            <div style={{ fontSize: 68, fontWeight: 600, marginTop: 36, maxWidth: 980, lineHeight: 1.08, letterSpacing: -2.4 }}>
-              {lines[1]}
-            </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <img src={logoSrc} width={84} height={84} alt="" />
+          <div style={{ display: "flex", fontSize: 34, marginLeft: 20, letterSpacing: 1 }}>
+            <span style={{ fontWeight: 700 }}>{lines[0]}</span>
+            <span style={{ fontWeight: 400, marginLeft: 12 }}>{lines[1]}</span>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 26, fontWeight: 400, color: GRAPHITE }}>
-            <span>{lines[2]}</span>
-            <span>{lines[3]}</span>
-          </div>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ fontSize: 68, fontWeight: 700, lineHeight: 1.1, letterSpacing: -1.5 }}>{lines[2]}</div>
+          <div style={{ fontSize: 68, fontWeight: 700, lineHeight: 1.1, letterSpacing: -1.5, color: CYAN }}>{lines[3]}</div>
+          <div style={{ width: 120, height: 8, marginTop: 32, backgroundImage: `linear-gradient(90deg, ${CYAN}, ${ICE})` }} />
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 24, fontWeight: 400, color: MUTED }}>
+          <span>{lines[4]}</span>
+          <span>{lines[5]}</span>
         </div>
       </div>
     ),

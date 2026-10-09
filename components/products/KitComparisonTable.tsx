@@ -25,12 +25,12 @@ export default function KitComparisonTable({
     for (const e of m.extras ?? []) if (!extraLabels.includes(extraKey(e.label))) extraLabels.push(extraKey(e.label));
 
   const spec = (i: number, label: string) => models[i].specs.find((s) => s.label === label)?.value ?? "—";
-  const th = "sticky left-0 z-10 bg-paper px-4 py-3 text-left align-top font-medium text-graphite";
+  const th = "sticky left-0 z-10 bg-card px-4 py-3 text-left align-top font-medium text-graphite";
   const td = "px-4 py-3 align-top";
 
   return (
     <div>
-      <div className="-mx-5 overflow-x-auto border-y border-hairline bg-paper sm:mx-0 sm:rounded-xl sm:border sm:shadow-card" tabIndex={0} role="region" aria-label={caption ?? `${product.name} kits compared`}>
+      <div className="-mx-5 overflow-x-auto border-y border-hairline bg-card sm:mx-0 sm:rounded-xl sm:border sm:shadow-card" tabIndex={0} role="region" aria-label={caption ?? `${product.name} kits compared`}>
         <table className="w-full min-w-[50rem] table-fixed border-collapse text-[15px]">
           {caption && <caption className="sr-only">{caption}</caption>}
           <colgroup>
@@ -41,7 +41,7 @@ export default function KitComparisonTable({
           </colgroup>
           <thead>
             <tr className="border-b border-hairline">
-              <td className="sticky left-0 z-10 bg-paper" />
+              <td className="sticky left-0 z-10 bg-card" />
               {models.map((m) => (
                 <th key={m.id} scope="col" className="w-1/4 p-4 text-left align-bottom font-normal">
                   {m.image && (
@@ -50,7 +50,7 @@ export default function KitComparisonTable({
                     </Link>
                   )}
                   <span className="block text-[17px] font-semibold leading-snug tracking-tightish">
-                    <Link href={`/products/${product.slug}#${m.id}`} className="transition-colors duration-200 hover:text-teal-ink">
+                    <Link href={`/products/${product.slug}#${m.id}`} className="transition-colors duration-200 hover:text-cyan-700">
                       {m.name}
                     </Link>
                   </span>
@@ -65,7 +65,7 @@ export default function KitComparisonTable({
                 Price
               </th>
               {models.map((m) => (
-                <td key={m.id} className={`${td} font-mono text-[15px] font-medium tabular-nums text-signal`}>
+                <td key={m.id} className={`${td} font-mono text-[15px] font-semibold tabular-nums text-ink`}>
                   {formatTHB(m.priceTHB) ?? "On request"}
                 </td>
               ))}
@@ -106,7 +106,7 @@ export default function KitComparisonTable({
                         <span className="text-graphite">—</span>
                       ) : e.included ? (
                         <span>
-                          <span aria-hidden className="text-teal-ink">✓</span>
+                          <span aria-hidden className="font-bold text-success">✓</span>
                           <span className="sr-only">Included</span> {extra}
                         </span>
                       ) : (

@@ -1,32 +1,29 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
-import { Anuphan, IBM_Plex_Mono, IBM_Plex_Sans_Thai } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans_Thai } from "next/font/google";
 import Chrome from "@/app/Chrome";
 import { site } from "@/lib/site";
 
-const anuphan = Anuphan({
+// Brand typeface (Brand Guidelines, Typography): IBM Plex Sans Thai for Thai
+// and English, in the four CI weights.
+const plexThai = IBM_Plex_Sans_Thai({
   subsets: ["latin", "thai"],
-  variable: "--font-anuphan",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-plex-thai",
   display: "swap",
 });
+// Prices, SKUs and spec values.
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   variable: "--font-plex-mono",
-  display: "swap",
-});
-// Thai fallback for the mono stack (Plex Mono has no Thai glyphs).
-const plexThai = IBM_Plex_Sans_Thai({
-  subsets: ["thai"],
-  weight: ["400", "500"],
-  variable: "--font-plex-thai",
   display: "swap",
 });
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#FFFFFF",
+  themeColor: "#F6FAFC",
 };
 
 export const metadata: Metadata = {
@@ -36,7 +33,7 @@ export const metadata: Metadata = {
     template: "%s | GSF Robotics & AI",
   },
   description:
-    "GSF Robotics & AI is a small engineering team in Pak Kret, Nonthaburi. We build AI, computer vision, robotics, IoT, web and mobile systems, and sell Makerzoid kits and LeRobot arms.",
+    "GSF Robotics & AI is a small engineering team in Pak Kret, Nonthaburi. We build AI, computer vision, robotics, IoT, web and mobile systems, and sell Makerzoid kits and our Armo and ArmoGo robots.",
   applicationName: site.name,
   keywords: [
     "software house Thailand",
@@ -50,6 +47,8 @@ export const metadata: Metadata = {
     "web application development",
     "mobile app development",
     "data engineering",
+    "Armo",
+    "ArmoGo",
     "LeRobot",
     "SO-101",
     "XLeRobot",
@@ -79,7 +78,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "GSF Robotics & AI",
     description:
-      "We write the software, and we sell the robots it runs on. AI, vision, ROS 2, IoT and apps, plus Makerzoid kits and LeRobot arms, from Pak Kret, Nonthaburi.",
+      "We write the software, and we sell the robots it runs on. AI, vision, ROS 2, IoT and apps, plus Makerzoid kits and Armo robot arms, from Pak Kret, Nonthaburi.",
     siteName: site.name,
     locale: "en_US",
     alternateLocale: ["th_TH"],
@@ -101,7 +100,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`scroll-smooth ${anuphan.variable} ${plexMono.variable} ${plexThai.variable}`}
+      className={`scroll-smooth ${plexThai.variable} ${plexMono.variable}`}
     >
       <head>
         <script

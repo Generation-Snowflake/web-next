@@ -25,7 +25,7 @@ export default function ProductGallery({
 
   return (
     <figure>
-      <div className={`relative overflow-hidden rounded-xl border border-hairline bg-paper ${aspect}`}>
+      <div className={`relative overflow-hidden rounded-xl border border-hairline bg-card ${aspect}`}>
         <Image
           key={current.src}
           src={current.src}
@@ -46,8 +46,8 @@ export default function ProductGallery({
                 onClick={() => setIndex(i)}
                 aria-label={`Show photo ${i + 1}: ${p.alt}`}
                 aria-current={i === index ? "true" : undefined}
-                className={`relative block aspect-square w-full overflow-hidden rounded-lg border bg-paper outline-offset-2 transition-[opacity,border-color] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-ink ${
-                  i === index ? "border-teal ring-1 ring-teal" : "border-hairline opacity-75 hover:opacity-100"
+                className={`relative block aspect-square w-full overflow-hidden rounded-lg border bg-card outline-offset-2 transition-[opacity,border-color] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-ink ${
+                  i === index ? "border-cyan-500 ring-1 ring-cyan-500" : "border-hairline opacity-75 hover:opacity-100"
                 }`}
               >
                 <Image src={p.src} alt="" fill sizes="96px" className="object-cover mix-blend-multiply" />

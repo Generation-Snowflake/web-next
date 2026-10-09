@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { Circuitry, Hexagon, Snowflake } from "@phosphor-icons/react/dist/ssr";
+import BrandConcept from "@/components/home/BrandConcept";
 import PageHeader from "@/components/ui/PageHeader";
 import Container from "@/components/ui/Container";
 import CtaBand from "@/components/ui/CtaBand";
@@ -35,14 +38,50 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      {/* The mark (Brand Guidelines, Primary Logo) */}
+      <section aria-labelledby="mark" className="border-t border-hairline-strong bg-paper-2 py-20 md:py-28">
+        <Container className="grid items-center gap-12 md:grid-cols-12">
+          <div className="md:col-span-7">
+            <h2 id="mark" className="text-balance text-[2rem] font-semibold leading-[1.25] tracking-heading sm:text-h1">
+              The mark
+            </h2>
+            <span aria-hidden className="accent-bar mt-5" />
+            <p className="mt-6 max-w-prose text-[17px] leading-[1.75] text-ink-700">
+              Our logo puts a snowflake together with circuit traces around a hexagon: engineering, technology
+              and the systems that join them.
+            </p>
+            <ul className="mt-10 grid gap-6 sm:grid-cols-3">
+              {[
+                { icon: Snowflake, title: "Snowflake", text: "A precise structure that is flexible and can grow." },
+                { icon: Circuitry, title: "Circuit", text: "The connections between data and systems." },
+                { icon: Hexagon, title: "Hexagon", text: "Stability, and the structure of engineering." },
+              ].map((k) => (
+                <li key={k.title}>
+                  <k.icon aria-hidden className="h-10 w-10 text-cyan-600" />
+                  <h3 className="mt-3 text-[13px] font-bold uppercase tracking-label text-ink">{k.title}</h3>
+                  <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{k.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="md:col-span-5">
+            <div className="corner-marks relative mx-auto aspect-square max-w-sm rounded-sm border border-hairline-strong bg-card p-10 shadow-card">
+              <Image src="/logo.png" alt="The GSF Robotics and AI logo" width={512} height={512} className="h-full w-full object-contain" />
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <BrandConcept tone="paper" />
+
 
       {/* What we do */}
-      <section aria-labelledby="what" className="border-t border-hairline bg-paper-2 py-20 md:py-28">
+      <section aria-labelledby="what" className="border-t border-hairline-strong bg-paper-2 py-20 md:py-28">
         <Container className="grid gap-10 md:grid-cols-12">
           <h2 id="what" className="text-balance text-[2rem] font-semibold leading-[1.1] tracking-heading md:col-span-4">
             What we do
           </h2>
-          <div className="grid gap-4 text-[17px] leading-relaxed sm:grid-cols-2 md:col-span-8">
+          <div className="grid gap-6 text-[17px] leading-relaxed sm:grid-cols-2 md:col-span-8">
             <div className="card p-6 sm:p-7">
               <h3 className="text-xl font-semibold tracking-heading">Services</h3>
               <p className="mt-2 text-graphite">
@@ -56,8 +95,8 @@ export default function AboutPage() {
             <div className="card p-6 sm:p-7">
               <h3 className="text-xl font-semibold tracking-heading">Products</h3>
               <p className="mt-2 text-graphite">
-                We also sell robots: Makerzoid kits for schools and kids, and the LeRobot SO-101 arm and
-                XLeRobot for universities and labs. We can assemble them and teach with them.{" "}
+                We also sell robots: Makerzoid kits for schools and kids, and our Armo robot arm and
+                ArmoGo dual-arm robot for universities and labs. We can assemble them and teach with them.{" "}
                 <Link href="/products" className="link">
                   See the products
                 </Link>

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { ArrowRight, List, X } from "@phosphor-icons/react";
 import { mainNav, primaryCta, site } from "@/lib/site";
 
 const MENU_ID = "mobile-navigation";
@@ -118,17 +118,16 @@ export default function Navbar() {
         <div className="mx-auto flex h-16 w-full max-w-page items-center justify-between gap-6 px-5 sm:px-8">
           <Link href="/" onClick={close} className="flex shrink-0 items-center gap-2.5 rounded-md">
             <Image
-              src="/logo-ink.png"
+              src="/logo.png"
               alt=""
-              width={32}
-              height={32}
+              width={36}
+              height={36}
               priority
-              className="h-8 w-8 object-contain"
+              className="h-9 w-9 object-contain"
             />
-            <span
-              className="text-[17px] font-semibold tracking-tightish text-ink"
-            >
-              GSF <span className="font-medium text-graphite">Robotics &amp; AI</span>
+            {/* CI lockup: "GSF" bold, "Robotics and AI" regular. */}
+            <span className="text-[17px] tracking-[0.02em] text-ink">
+              <span className="font-bold">GSF</span> <span className="font-normal">Robotics and AI</span>
             </span>
           </Link>
 
@@ -141,8 +140,10 @@ export default function Navbar() {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`rounded-md px-3 py-1.5 text-[15px] font-medium transition-colors duration-200 ${
-                        active ? "bg-paper-2 text-ink" : "text-graphite hover:bg-paper-2 hover:text-ink"
+                      className={`relative rounded-md px-3 py-1.5 text-[15px] font-medium transition-colors duration-200 after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:rounded-full after:bg-cyan-500 after:transition-transform after:duration-200 ${
+                        active
+                          ? "text-ink after:scale-x-100"
+                          : "text-ink-600 after:scale-x-0 hover:bg-mist-200/70 hover:text-ink"
                       }`}
                     >
                       {item.label}
@@ -157,7 +158,7 @@ export default function Navbar() {
             <Link
               href={primaryCta.href}
               aria-current={ctaActive ? "page" : undefined}
-              className="hidden h-9 items-center rounded-lg bg-ink px-4 text-[14px] font-medium text-white shadow-xs transition-colors duration-200 hover:bg-[#26282C] sm:inline-flex"
+              className="hidden h-9 items-center rounded-lg btn-primary px-4 text-[14px] transition-colors duration-200 sm:inline-flex"
             >
               {primaryCta.label}
             </Link>
@@ -168,9 +169,9 @@ export default function Navbar() {
               onClick={() => setOpenOn(open ? null : pathname)}
               aria-expanded={open}
               aria-controls={MENU_ID}
-              className="inline-flex h-9 items-center gap-2 rounded-lg border border-hairline-strong bg-paper px-3 text-[14px] font-medium text-ink shadow-xs transition-colors duration-200 hover:bg-paper-2 lg:hidden"
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-hairline-strong bg-card px-3 text-[14px] font-medium text-ink shadow-xs transition-colors duration-200 hover:bg-cyan-50 lg:hidden"
             >
-              {open ? <X aria-hidden className="h-4 w-4" /> : <Menu aria-hidden className="h-4 w-4" />}
+              {open ? <X aria-hidden className="h-4 w-4" /> : <List aria-hidden className="h-4 w-4" />}
               {open ? "Close" : "Menu"}
             </button>
           </div>
@@ -200,7 +201,7 @@ export default function Navbar() {
                       className="flex items-baseline justify-between gap-4 py-4"
                     >
                       <span
-                        className={`text-2xl font-semibold tracking-heading ${active ? "text-teal-ink" : "text-ink"}`}
+                        className={`text-2xl font-semibold tracking-heading ${active ? "text-cyan-700" : "text-ink"}`}
                       >
                         {item.label}
                       </span>
@@ -220,32 +221,32 @@ export default function Navbar() {
             href={primaryCta.href}
             onClick={close}
             aria-current={ctaActive ? "page" : undefined}
-            className="mt-8 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-ink px-5 text-base font-medium text-white hover:bg-[#26282C]"
+            className="mt-8 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg btn-primary px-5 text-base"
           >
             {primaryCta.label}
-            <span aria-hidden>→</span>
+            <ArrowRight aria-hidden weight="bold" className="h-4 w-4" />
           </Link>
 
           <dl className="mt-8 grid gap-3 text-[15px]">
-            <div className="rounded-lg border border-hairline p-4">
+            <div className="rounded-lg border border-hairline bg-card p-4">
               <dt className="caption">Phone</dt>
               <dd className="mt-1 space-y-1">
                 {site.phones.map((p) => (
-                  <a key={p.href} href={p.href} className="block font-medium text-ink hover:text-teal-ink">
+                  <a key={p.href} href={p.href} className="block font-medium text-ink hover:text-cyan-700">
                     {p.display}
                   </a>
                 ))}
               </dd>
             </div>
-            <div className="rounded-lg border border-hairline p-4">
+            <div className="rounded-lg border border-hairline bg-card p-4">
               <dt className="caption">Email</dt>
               <dd className="mt-1">
-                <a href={`mailto:${site.email}`} className="break-all text-ink hover:text-teal-ink">
+                <a href={`mailto:${site.email}`} className="break-all text-ink hover:text-cyan-700">
                   {site.email}
                 </a>
               </dd>
             </div>
-            <div className="rounded-lg border border-hairline p-4">
+            <div className="rounded-lg border border-hairline bg-card p-4">
               <dt className="caption">Hours</dt>
               <dd className="mt-1 text-graphite">{site.hours}</dd>
             </div>

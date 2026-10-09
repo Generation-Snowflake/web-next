@@ -29,7 +29,7 @@ export default function Band({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className={`scroll-mt-24 border-t border-hairline ${tone === "paper-2" ? "bg-paper-2" : ""} ${className}`}>
+    <section id={id} className={`scroll-mt-24 border-t border-hairline-strong ${tone === "paper-2" ? "bg-paper-2" : ""} ${className}`}>
       <Container className={`py-16 md:py-24 ${wide ? "" : "grid gap-8 md:grid-cols-12 md:gap-12"}`}>
         <div className={wide ? "mb-10 flex flex-wrap items-end justify-between gap-x-10 gap-y-3" : "md:col-span-4"}>
           <div>
@@ -38,7 +38,8 @@ export default function Band({
                 {label}
               </Label>
             )}
-            <h2 className="text-balance text-[1.75rem] font-semibold leading-[1.15] tracking-heading sm:text-[2.25rem]">{title}</h2>
+            <h2 className="text-balance text-[1.75rem] font-semibold leading-[1.25] tracking-heading sm:text-[2.25rem]">{title}</h2>
+            <span aria-hidden className="accent-bar mt-4 !w-16" />
           </div>
           {aside && <div className={wide ? "max-w-prose text-[16px] leading-relaxed text-graphite" : "mt-4 text-[16px] leading-relaxed text-graphite"}>{aside}</div>}
         </div>

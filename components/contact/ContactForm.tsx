@@ -2,7 +2,7 @@
 
 import { useId, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { ChevronDown } from "lucide-react";
+import { ArrowRight, CaretDown, WarningCircle } from "@phosphor-icons/react";
 import { mailto, site } from "@/lib/site";
 import { services } from "@/lib/services";
 import { products, allModels } from "@/lib/products";
@@ -210,9 +210,9 @@ async function copyText(text: string) {
 /* ------------------------------------------------------------------ */
 
 const control =
-  "block w-full rounded-lg border bg-paper px-3.5 py-2.5 text-base text-ink shadow-xs placeholder:text-graphite/70 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:ring-4 focus:ring-teal/15";
+  "block w-full rounded-lg border bg-card px-3.5 py-2.5 text-base text-ink shadow-xs placeholder:text-graphite/70 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:ring-4 focus:ring-teal/15";
 const controlState = (invalid: boolean) =>
-  invalid ? "border-signal focus:border-signal" : "border-hairline-strong hover:border-graphite/40 focus:border-teal-ink";
+  invalid ? "border-error focus:border-error" : "border-hairline-strong hover:border-ink-500 focus:border-cyan-600";
 
 function Label({ htmlFor, children, required, optional }: { htmlFor: string; children: React.ReactNode; required?: boolean; optional?: boolean }) {
   return (
@@ -227,7 +227,8 @@ function Label({ htmlFor, children, required, optional }: { htmlFor: string; chi
 function ErrorText({ id, children }: { id: string; children?: string }) {
   if (!children) return null;
   return (
-    <p id={id} className="mt-1.5 text-[14px] text-signal">
+    <p id={id} className="mt-1.5 flex items-start gap-1.5 text-[14px] font-medium text-ink">
+      <WarningCircle aria-hidden weight="fill" className="mt-0.5 h-4 w-4 shrink-0 text-error" />
       {children}
     </p>
   );
@@ -237,7 +238,7 @@ function SelectShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative">
       {children}
-      <ChevronDown aria-hidden className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-graphite" />
+      <CaretDown aria-hidden className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-graphite" />
     </div>
   );
 }
@@ -350,20 +351,20 @@ export default function ContactForm({ initial }: { initial?: Partial<Values> }) 
         </p>
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <a href={href} className={`${smallBtn} bg-ink text-white shadow-xs hover:bg-[#26282C]`}>
+          <a href={href} className={`${smallBtn} btn-primary`}>
             Open email app again
           </a>
           <button
             type="button"
             onClick={() => onCopy("message")}
-            className={`${smallBtn} border border-hairline-strong bg-paper text-ink shadow-xs hover:bg-paper-2`}
+            className={`${smallBtn} border border-hairline-strong bg-card text-ink shadow-xs hover:bg-cyan-50`}
           >
             {copied === "message" ? "Message copied" : "Copy message"}
           </button>
           <button
             type="button"
             onClick={() => onCopy("address")}
-            className={`${smallBtn} border border-hairline-strong bg-paper text-ink shadow-xs hover:bg-paper-2`}
+            className={`${smallBtn} border border-hairline-strong bg-card text-ink shadow-xs hover:bg-cyan-50`}
           >
             {copied === "address" ? "Address copied" : "Copy email address"}
           </button>
@@ -438,9 +439,9 @@ export default function ContactForm({ initial }: { initial?: Partial<Values> }) 
                 key={value}
                 className={`flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 transition-[background-color,border-color] duration-200 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-teal-ink ${
                   checked
-                    ? "border-teal bg-teal-wash/60 ring-1 ring-teal"
+                    ? "border-cyan-500 bg-cyan-50 ring-1 ring-cyan-500"
                     : interestErr
-                      ? "border-signal hover:bg-paper-2"
+                      ? "border-error hover:bg-paper-2"
                       : "border-hairline-strong hover:bg-paper-2"
                 }`}
               >
@@ -454,7 +455,7 @@ export default function ContactForm({ initial }: { initial?: Partial<Values> }) 
                     setTouched((t) => ({ ...t, interest: true }));
                   }}
                   required
-                  className="mt-1 h-4 w-4 shrink-0 accent-teal-ink focus:outline-none"
+                  className="mt-1 h-4 w-4 shrink-0 accent-cyan-600 focus:outline-none"
                 />
                 <span className="min-w-0">
                   <span className="block text-[15px] font-medium">{label}</span>
@@ -582,14 +583,12 @@ export default function ContactForm({ initial }: { initial?: Partial<Values> }) 
         <p className="max-w-sm text-[14px] leading-relaxed text-graphite">
           Sending opens your own email app with this message ready to go. Nothing is stored on this website.
         </p>
-        <button type="submit" className={`${smallBtn} group h-12 shrink-0 gap-2 bg-ink px-5 text-base text-white shadow-xs hover:bg-[#26282C]`}>
+        <button type="submit" className={`${smallBtn} group h-12 shrink-0 gap-2 btn-primary px-5 text-base`}>
           Send via email
-          <span aria-hidden className="transition-transform duration-150 group-hover:translate-x-0.5">
-            →
-          </span>
+          <ArrowRight aria-hidden weight="bold" className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5" />
         </button>
       </div>
-      <p role="alert" className={summary ? "mt-4 text-[15px] text-signal" : "sr-only"}>
+      <p role="alert" className={summary ? "mt-4 flex items-start gap-2 rounded-lg border border-error/40 bg-error/5 px-3 py-2 text-[15px] font-medium text-ink" : "sr-only"}>
         {summary}
       </p>
     </form>

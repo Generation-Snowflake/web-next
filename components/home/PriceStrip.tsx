@@ -39,13 +39,13 @@ export default function PriceStrip() {
                 >
                   <span className="block min-w-0">
                     <span className="caption block">{r.maker}</span>
-                    <span className="mt-0.5 block font-semibold leading-snug tracking-tightish transition-colors duration-200 group-hover:text-teal-ink">
+                    <span className="mt-0.5 block font-semibold leading-snug tracking-tightish transition-colors duration-200 group-hover:text-cyan-700">
                       {r.name}
                     </span>
                     <span className="mt-1 block text-[14px] leading-snug text-graphite">{r.spec}</span>
                   </span>
                   <span
-                    className={`block ${r.price ? "font-mono text-[17px] font-medium tabular-nums text-signal" : "text-[14px] text-graphite"}`}
+                    className={`block ${r.price ? "font-mono text-[17px] font-semibold tabular-nums text-ink" : "text-[14px] text-graphite"}`}
                   >
                     {r.price ?? "Price on request"}
                   </span>

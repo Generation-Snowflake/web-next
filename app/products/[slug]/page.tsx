@@ -8,6 +8,7 @@ import PageHeader from "@/components/ui/PageHeader";
 import ButtonLink from "@/components/ui/Button";
 import CtaBand from "@/components/ui/CtaBand";
 import Band from "@/components/products/Band";
+import TakticPreview from "@/components/products/TakticPreview";
 import ProductGallery from "@/components/products/ProductGallery";
 import SpecTable from "@/components/products/SpecTable";
 import InTheBox from "@/components/products/InTheBox";
@@ -47,9 +48,6 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   };
 }
 
-/** Short name for CTA copy: "LeRobot SO-101" → "SO-101". */
-const shortName = (name: string) => name.replace(/^LeRobot\s+/, "");
-
 export default async function ProductPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const product = getProduct(slug);
@@ -61,7 +59,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
   const from = startingPrice(product);
   const quoteId = productQuoteId(product);
   const related = products.filter((p) => p.slug !== product.slug);
-  const name = shortName(product.name);
+  const name = product.name;
   const dev = product.status === "in-development";
   const hardware = product.group !== "software" && product.slug !== "robopark";
 
@@ -76,11 +74,11 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
       >
         <p className="text-[15px]">
           {dev ? (
-            <span className="chip">In development · testing with early users</span>
+            <span className="chip-info">In development · testing with early users</span>
           ) : from !== undefined ? (
             <>
               <span className="text-graphite">{multi ? "From " : ""}</span>
-              <span className="font-mono text-[1.375rem] font-medium tabular-nums text-signal">{formatTHB(from)}</span>
+              <span className="font-mono text-[1.375rem] font-semibold tabular-nums text-ink">{formatTHB(from)}</span>
             </>
           ) : (
             <span className="font-medium text-graphite">Price on request</span>
@@ -105,7 +103,15 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
               {product.credits && <p className="caption mt-4">{product.credits}</p>}
             </div>
           )}
-          <div className={photos.length > 0 ? "md:col-span-5" : "md:col-span-7"}>
+          {photos.length === 0 && product.illustration === "taktic" && (
+            <figure className="md:col-span-7">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-hairline bg-card shadow-card sm:aspect-[16/10]">
+                <TakticPreview className="absolute inset-0" />
+              </div>
+              <figcaption className="caption mt-3">Illustration of the board. Task names are examples.</figcaption>
+            </figure>
+          )}
+          <div className={photos.length > 0 || product.illustration ? "md:col-span-5" : "md:col-span-7"}>
             <div className="space-y-4 text-lg leading-relaxed text-graphite">
               {product.overview.map((p) => (
                 <p key={p}>{p}</p>
@@ -128,7 +134,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
                   {dev ? (
                     "In development, testing with early users"
                   ) : from !== undefined ? (
-                    <span className="font-mono font-medium tabular-nums text-signal">
+                    <span className="font-mono font-semibold tabular-nums text-ink">
                       {multi ? `${formatTHB(from)} to ${formatTHB(Math.max(...product.models.map((m) => m.priceTHB ?? 0)))}` : formatTHB(from)}
                     </span>
                   ) : (
@@ -263,7 +269,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
 
       {/* Related */}
       <Band wide label="Also from GSF" title="Other products">
-        <ul className="grid gap-4 sm:grid-cols-2">
+        <ul className="grid gap-6 sm:grid-cols-2">
           {related.map((p) => {
             const start = startingPrice(p);
             return (
@@ -276,10 +282,11 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
                     {p.image && (
                       <Image src={p.image} alt="" fill sizes="9rem" className="object-cover mix-blend-multiply" />
                     )}
+                    {!p.image && p.illustration === "taktic" && <TakticPreview compact className="absolute inset-0" />}
                   </span>
                   <span className="py-1 pr-2">
                     <span className="caption block">{p.category}</span>
-                    <span className="mt-0.5 block text-[1.2rem] font-semibold tracking-tightish transition-colors duration-200 group-hover:text-teal-ink">
+                    <span className="mt-0.5 block text-[1.2rem] font-semibold tracking-tightish transition-colors duration-200 group-hover:text-cyan-700">
                       {p.name}
                     </span>
                     <span className="mt-1 block text-[14px] leading-relaxed text-graphite">{p.tagline}</span>
@@ -287,7 +294,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
                       {p.status === "in-development" ? (
                         <span className="text-graphite">In development</span>
                       ) : start !== undefined ? (
-                        <span className="text-signal">From {formatTHB(start)}</span>
+                        <span className="font-semibold text-ink">From {formatTHB(start)}</span>
                       ) : (
                         <span className="text-graphite">Price on request</span>
                       )}

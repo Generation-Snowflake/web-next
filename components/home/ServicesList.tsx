@@ -1,3 +1,4 @@
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import ButtonLink from "@/components/ui/Button";
@@ -24,11 +25,11 @@ export default function ServicesList() {
           </ButtonLink>
         </Reveal>
 
-        <ul className="mt-12 grid gap-4 md:grid-cols-2">
+        <ul className="mt-12 grid gap-6 md:grid-cols-2">
           {featured.map((s, i) => (
             <Reveal as="li" key={s.slug} delay={i * 80}>
               <Link href={`/services#${s.slug}`} className="card card-hover group flex h-full flex-col p-6 sm:p-8">
-                <h3 className="text-2xl font-semibold tracking-heading transition-colors duration-200 group-hover:text-teal-ink">
+                <h3 className="text-2xl font-semibold tracking-heading transition-colors duration-200 group-hover:text-cyan-700">
                   {s.title}
                 </h3>
                 <p className="mt-3 text-[17px] leading-relaxed text-ink">{s.summary}</p>
@@ -45,16 +46,14 @@ export default function ServicesList() {
           ))}
         </ul>
 
-        <Reveal className="mt-4">
+        <Reveal className="mt-6">
           <ul className="grid gap-px overflow-hidden rounded-xl border border-hairline bg-hairline shadow-card sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((s) => (
-              <li key={s.slug} className="bg-paper">
-                <Link href={`/services#${s.slug}`} className="group block h-full p-5 transition-colors duration-200 hover:bg-paper-2 sm:p-6">
+              <li key={s.slug} className="bg-card">
+                <Link href={`/services#${s.slug}`} className="group block h-full p-5 transition-colors duration-200 hover:bg-cyan-50/60 sm:p-6">
                   <h3 className="flex items-center justify-between gap-3 font-semibold tracking-tightish">
-                    <span className="transition-colors duration-200 group-hover:text-teal-ink">{s.title}</span>
-                    <span aria-hidden className="text-graphite transition-transform duration-200 ease-out group-hover:translate-x-0.5">
-                      →
-                    </span>
+                    <span className="transition-colors duration-200 group-hover:text-cyan-700">{s.title}</span>
+                    <ArrowRight aria-hidden weight="bold" className="h-4 w-4 shrink-0 text-cyan-600 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
                   </h3>
                   <p className="mt-1.5 text-[15px] leading-relaxed text-graphite">{s.summary}</p>
                   <p className="mt-3 text-[13px] leading-5 text-graphite">{s.stack.join(" · ")}</p>

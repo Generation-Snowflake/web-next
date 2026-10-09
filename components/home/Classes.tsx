@@ -21,11 +21,11 @@ export default function Classes() {
         </Reveal>
         <Reveal className="lg:col-span-8" delay={80}>
           <div className="card p-6 sm:p-8">
-            <span className="chip border-teal/30 bg-teal-wash text-teal-ink">{mazeCourse.format}</span>
+            <span className="chip-info">{mazeCourse.format}</span>
             <h3 className="mt-3 text-2xl font-semibold tracking-heading">{mazeCourse.name}</h3>
             <p className="mt-2 max-w-prose text-[17px] leading-relaxed text-graphite">{mazeCourse.summary}</p>
           </div>
-          <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+          <ul className="mt-4 grid gap-6 sm:grid-cols-2">
             {classFormats.map((f) => (
               <li key={f.title} className="card p-5 sm:p-6">
                 <h4 className="font-semibold tracking-tightish">{f.title}</h4>

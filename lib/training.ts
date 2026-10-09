@@ -46,9 +46,9 @@ export const classFormats: ClassFormat[] = [
   },
   {
     title: "Colleges and universities",
-    description: "Robot fundamentals for vocational and university students, and workshops on robot learning with LeRobot SO-101 arms.",
-    href: "/products/lerobot",
-    linkLabel: "SO-101 arms",
+    description: "Robot fundamentals for vocational and university students, and hands-on courses on robot learning with Armo and ArmoGo.",
+    href: "/products/armo",
+    linkLabel: "Armo arms",
   },
   {
     title: "Teacher workshops",

@@ -27,7 +27,7 @@ export default function KitBlock({
             <h3 className="text-[1.625rem] font-semibold leading-tight tracking-heading sm:text-[2rem]">
               {product.name} {model.name}
             </h3>
-            <p className="font-mono text-[1.375rem] font-medium tabular-nums text-signal">{price ?? "Price on request"}</p>
+            <p className="font-mono text-[1.375rem] font-semibold tabular-nums text-ink">{price ?? "Price on request"}</p>
           </div>
           <p className="caption mt-1">
             {model.sku && <><span className="font-mono font-normal">SKU {model.sku}</span> · </>}
@@ -55,7 +55,7 @@ export default function KitBlock({
                         <th scope="row" className="px-4 py-2.5 font-normal">
                           {e.label}
                         </th>
-                        <td className={`px-4 py-2.5 text-right text-[14px] font-medium ${e.included ? "text-teal-ink" : "text-graphite"}`}>
+                        <td className={`px-4 py-2.5 text-right text-[14px] font-medium ${e.included ? "text-ink" : "text-graphite"}`}>
                           {e.included ? "Yes" : "No"}
                         </td>
                       </tr>

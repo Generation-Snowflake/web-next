@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-// Design tokens: see docs/design-system.md. Clean modern light: white pages,
-// cool light-grey surfaces, near-black text, soft borders and shadows.
+// Design tokens: see docs/design-system.md. Values come from the GSF Robotics
+// and AI Brand Guidelines v1.0 (Oct 2026): 65% Primary Light, 25% Primary
+// Dark, 10% cyan accents.
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,css}",
@@ -9,66 +10,107 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Surfaces
+        // Surfaces (Primary Light + Mist)
         paper: {
-          DEFAULT: "#FFFFFF", // page background
-          2: "#F6F7F9", // subtle section surface
-          3: "#EEF0F3", // photo / 3D backdrop
+          DEFAULT: "#F6FAFC", // Primary Light: page background
+          2: "#F1F5F8", // Mist 100: alternate sections, table headers
+          3: "#E8EEF2", // Mist 200: photo / 3D backdrop
         },
-        // Text
-        ink: "#0B0C0E",
-        graphite: "#5B616B",
+        card: "#FFFFFF", // raised cards on Primary Light
+        mist: { 100: "#F1F5F8", 200: "#E8EEF2", 300: "#D9E0E6" },
+        // Text (Primary Dark + Ink scale)
+        ink: {
+          DEFAULT: "#071128", // Primary Dark: headings, structure, dark sections
+          800: "#384152", // sub headings
+          700: "#4C5567", // body text
+          600: "#5B6474", // secondary text
+          500: "#6B7280", // captions / metadata
+        },
+        graphite: "#5B6474", // = ink-600, kept so existing classes follow the CI
         // Borders
         hairline: {
-          DEFAULT: "#E5E7EB",
-          strong: "#D0D5DD", // form controls, hovered cards
+          DEFAULT: "#E8EEF2", // Mist 200: card border
+          strong: "#D9E0E6", // Mist 300: dividers, form controls
         },
-        // Brand
-        "teal-ink": "#00736E", // links / text accents (AA on white and paper-2)
-        teal: "#00B4AE", // logo teal: dots, icons, fills. Not for body text.
-        "teal-wash": "#E6F7F6", // tinted chip backgrounds
-        signal: "#C2410C", // prices, errors
-        // Legacy tokens: only for the standalone 3D demos (/power-plant,
-        // /factory, /demo3d). Don't use in site pages.
-        ice: { light: "#6AEFFF", DEFAULT: "#00D4FF", deep: "#0088A3" },
-        darkbg: "#050A14",
-        softwhite: "#F4F9FF",
-        glass: "rgba(255, 255, 255, 0.05)",
-        "glass-border": "rgba(255, 255, 255, 0.1)",
-        // Dark palette, currently unused by site pages (hero and footer are light).
+        // Accent scale (Circuit Cyan). Cyan 500-200 never carry text on light
+        // backgrounds: they fail contrast. Use them for fills, nodes, lines and
+        // buttons with Primary Dark text.
+        cyan: {
+          50: "#EDFDFE",
+          100: "#D8F7F9",
+          200: "#9EEBF0", // Ice Aqua
+          300: "#70E5EB",
+          500: "#18D9E3", // Circuit Cyan: CTA, highlight, interactive
+          600: "#0FA7B8", // Deep Aqua: hover, data highlight
+          700: "#0B8997", // hover / active; large text accents on light (4.2:1)
+        },
+        // Old names, mapped onto the CI palette so existing classes follow it.
+        "teal-ink": "#0B8997",
+        teal: "#18D9E3",
+        "teal-wash": "#D8F7F9",
+        signal: "#071128", // prices: Primary Dark (the CI has no orange)
+        // Status colours (Brand Guidelines, Data Visualization)
+        success: "#16A34A",
+        warning: "#F59E0B",
+        error: "#EF4444",
+        info: "#18D9E3",
+        // Dark sections use Primary Dark; these keep the old names working.
         night: {
-          DEFAULT: "#0F1011",
-          2: "#16181A",
-          line: "#2A2D30",
-          text: "#E9E6DF",
-          muted: "#8E9194",
+          DEFAULT: "#071128",
+          2: "#0C1A35",
+          line: "#1E2B45",
+          text: "#F6FAFC",
+          muted: "#B4BDC9",
         },
       },
       fontFamily: {
-        sans: ["var(--font-anuphan)", "var(--font-plex-thai)", "system-ui", "sans-serif"],
-        display: ["var(--font-anuphan)", "sans-serif"],
+        sans: ["var(--font-plex-thai)", "system-ui", "sans-serif"],
+        display: ["var(--font-plex-thai)", "sans-serif"],
         mono: ["var(--font-plex-mono)", "var(--font-plex-thai)", "ui-monospace", "monospace"],
       },
+      fontSize: {
+        // Type scale (Brand Guidelines, Typography). Display/H1/H2 step down
+        // on small screens in the components.
+        display: ["3.5rem", { lineHeight: "4.25rem", fontWeight: "700" }], // 56/68
+        h1: ["2.5rem", { lineHeight: "3.25rem", fontWeight: "600" }], // 40/52
+        h2: ["1.75rem", { lineHeight: "2.5rem", fontWeight: "600" }], // 28/40
+        h3: ["1.25rem", { lineHeight: "1.875rem", fontWeight: "500" }], // 20/30
+        "body-l": ["1rem", { lineHeight: "1.75rem" }], // 16/28
+        "body-m": ["0.875rem", { lineHeight: "1.5rem" }], // 14/24
+        caption: ["0.75rem", { lineHeight: "1.125rem", fontWeight: "500" }], // 12/18 (CI: 11/18, raised for screens)
+      },
+      backgroundImage: {
+        // Gradient A: Brand Accent (CTA, key graphic, data highlight)
+        "gradient-a": "linear-gradient(90deg, #18D9E3 0%, #0FA7B8 100%)",
+        // Gradient B: Soft Technology (background, card, section transition)
+        "gradient-b": "linear-gradient(90deg, #9EEBF0 0%, #F6FAFC 100%)",
+        // Gradient C: Deep Technical (hero, cover, dashboard, dark panels)
+        "gradient-c": "linear-gradient(90deg, #071128 0%, #0FA7B8 100%)",
+        // Gradient C held dark for longer, for panels and tags that carry
+        // white text (white on the Deep Aqua end fails contrast).
+        "gradient-c-deep": "linear-gradient(115deg, #071128 0%, #071128 40%, #0FA7B8 150%)",
+        // Dot grid used on covers and section headers
+        dots: "radial-gradient(circle, rgba(7, 17, 40, 0.16) 1px, transparent 1.2px)",
+        "dots-night": "radial-gradient(circle, rgba(158, 235, 240, 0.16) 1px, transparent 1.2px)",
+      },
       boxShadow: {
-        // Legacy (3D demos only).
-        glow: "0 0 30px rgba(0, 212, 255, 0.4)",
-        "glow-sm": "0 0 15px rgba(0, 212, 255, 0.3)",
-        // Site: soft, low-contrast elevation.
-        xs: "0 1px 2px rgba(16, 24, 40, 0.05)",
-        card: "0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.05)",
-        "card-hover": "0 2px 4px rgba(16, 24, 40, 0.04), 0 8px 20px -4px rgba(16, 24, 40, 0.10)",
-        nav: "0 1px 0 rgba(16, 24, 40, 0.04), 0 4px 16px -8px rgba(16, 24, 40, 0.08)",
+        xs: "0 1px 2px rgba(7, 17, 40, 0.05)",
+        card: "0 1px 2px rgba(7, 17, 40, 0.04), 0 1px 3px rgba(7, 17, 40, 0.05)",
+        "card-hover": "0 2px 4px rgba(7, 17, 40, 0.04), 0 12px 24px -6px rgba(7, 17, 40, 0.12)",
+        nav: "0 1px 0 rgba(7, 17, 40, 0.04), 0 4px 16px -8px rgba(7, 17, 40, 0.10)",
       },
       letterSpacing: {
-        tightish: "-0.015em",
-        heading: "-0.025em",
-        display: "-0.035em",
+        tightish: "-0.01em",
+        heading: "-0.02em",
+        display: "-0.03em",
+        label: "0.08em",
       },
       transitionTimingFunction: {
         out: "cubic-bezier(0.22, 1, 0.36, 1)",
       },
       maxWidth: {
-        page: "80rem",
+        // Grid: 1200px content (1440 desktop minus 2 x 120px margins) + gutters.
+        page: "78rem",
         prose: "40rem",
       },
     },

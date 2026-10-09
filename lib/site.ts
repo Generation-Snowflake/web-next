@@ -45,7 +45,7 @@ export const moreNav: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-export const primaryCta: NavItem = { label: "Talk to us", href: "/contact" };
+export const primaryCta: NavItem = { label: "Contact us", href: "/contact" };
 
 /** mailto: link with a prefilled subject (and optional body). */
 export function mailto(subject: string, body?: string) {

@@ -8,12 +8,13 @@ import ButtonLink from "@/components/ui/Button";
 import CtaBand from "@/components/ui/CtaBand";
 import { Label } from "@/components/ui/SectionHeading";
 import Band from "@/components/products/Band";
+import TakticPreview from "@/components/products/TakticPreview";
 import SpecTable from "@/components/products/SpecTable";
 import KitComparisonTable from "@/components/products/KitComparisonTable";
 import { priceNoteDetail, productQuoteId, quoteHref } from "@/components/products/productUi";
 
 const description =
-  "Products from GSF: Makerzoid STEM kits and the RoboPark learning platform for kids, the XLeRobot and LeRobot SO-101 research robots, and the Taktic project management tool.";
+  "Products from GSF: Makerzoid STEM kits and the RoboPark learning platform for kids, the Armo and ArmoGo research robots, and the Taktic project management tool.";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -32,12 +33,13 @@ function LineIntro({ product, priority = false, specs = 0 }: { product: Product;
   const dev = product.status === "in-development";
   return (
     <div className="grid gap-8 md:grid-cols-12 md:gap-10">
-      {product.image && (
+      {(product.image || product.illustration) && (
       <figure className="md:col-span-6">
         <Link
           href={`/products/${product.slug}`}
           className="group relative block aspect-[4/3] overflow-hidden rounded-xl border border-hairline bg-paper-3 shadow-card transition-shadow duration-300 hover:shadow-card-hover"
         >
+          {product.illustration === "taktic" && <TakticPreview className="absolute inset-0" />}
           {product.image && (
             <Image
               src={product.image}
@@ -52,21 +54,21 @@ function LineIntro({ product, priority = false, specs = 0 }: { product: Product;
         <figcaption className="sr-only">{product.imageAlt ?? product.name}</figcaption>
       </figure>
       )}
-      <div className={product.image ? "md:col-span-6" : "md:col-span-8"}>
+      <div className={product.image || product.illustration ? "md:col-span-6" : "md:col-span-8"}>
         <Label>
           {product.category} · {product.maker}
         </Label>
         <h3 className="mt-2 text-[1.75rem] font-semibold leading-tight tracking-heading sm:text-[2.25rem]">
-          <Link href={`/products/${product.slug}`} className="transition-colors duration-200 hover:text-teal-ink">
+          <Link href={`/products/${product.slug}`} className="transition-colors duration-200 hover:text-cyan-700">
             {product.name}
           </Link>
         </h3>
         <p className="mt-3 max-w-prose text-lg leading-relaxed text-graphite">{product.summary}</p>
         <p className="mt-5 text-[15px]">
           {dev ? (
-            <span className="chip">In development · testing with early users</span>
+            <span className="chip-info">In development · testing with early users</span>
           ) : from !== undefined ? (
-            <span className="font-mono text-[18px] font-medium tabular-nums text-signal">
+            <span className="font-mono text-[18px] font-semibold tabular-nums text-ink">
               {formatTHB(from)} to {formatTHB(Math.max(...product.models.map((m) => m.priceTHB ?? 0)))}
             </span>
           ) : (
@@ -113,7 +115,7 @@ export default function ProductsPage() {
               return (
                 <li key={p.slug}>
                   <a href={`#${p.slug}`} className="card card-hover group block h-full px-4 py-3.5">
-                    <span className="block font-semibold tracking-tightish transition-colors duration-200 group-hover:text-teal-ink">{p.name}</span>
+                    <span className="block font-semibold tracking-tightish transition-colors duration-200 group-hover:text-cyan-700">{p.name}</span>
                     <span className="caption block">
                       {p.status === "in-development"
                         ? "in development"

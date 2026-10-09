@@ -45,7 +45,7 @@ export default function ServicesPage() {
                   <li key={s.slug}>
                     <a
                       href={`#${s.slug}`}
-                      className="flex items-baseline justify-between gap-4 rounded-lg px-3 py-2 text-[15px] font-medium transition-colors duration-200 hover:bg-paper-2 hover:text-teal-ink"
+                      className="flex items-baseline justify-between gap-4 rounded-lg px-3 py-2 text-[15px] font-medium transition-colors duration-200 hover:bg-paper-2 hover:text-cyan-700"
                     >
                       <span>{s.title}</span>
                       <span className="hidden text-[13px] font-normal text-graphite sm:inline lg:hidden xl:inline">
@@ -76,7 +76,7 @@ export default function ServicesPage() {
                   <ul className="max-w-prose space-y-2 text-[15px] leading-relaxed">
                     {s.deliverables.map((d) => (
                       <li key={d} className="flex gap-3">
-                        <span aria-hidden className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-teal" />
+                        <span aria-hidden className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-500" />
                         {d}
                       </li>
                     ))}
@@ -108,19 +108,19 @@ export default function ServicesPage() {
             title={<span id="billing-title">How we bill</span>}
             description="Which one fits depends on how sure you are about the scope."
           />
-          <dl className="mt-12 grid gap-4 md:grid-cols-3">
+          <dl className="mt-12 grid gap-6 md:grid-cols-3">
             {engagementModels.map((m) => (
               <div key={m.title} className="card flex flex-col p-6 sm:p-7">
                 <dt>
                   <span className="block text-xl font-semibold tracking-heading">{m.title}</span>
-                  <span className="mt-1 block text-[15px] text-teal-ink">{m.bestFor}</span>
+                  <span className="mt-1 block text-[15px] font-medium text-ink-800">{m.bestFor}</span>
                 </dt>
                 <dd className="mt-4 flex flex-1 flex-col">
                   <p className="mb-5 text-[16px] leading-relaxed text-graphite">{m.description}</p>
                   <ul className="mt-auto space-y-1.5 border-t border-hairline pt-4 text-[14px]">
                     {m.points.map((pt) => (
                       <li key={pt} className="flex gap-2.5">
-                        <span aria-hidden className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-teal" />
+                        <span aria-hidden className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-500" />
                         {pt}
                       </li>
                     ))}
@@ -147,7 +147,7 @@ export default function ServicesPage() {
           <ol className="space-y-5 text-[16px] leading-relaxed md:col-span-8 md:pt-2">
             {processSteps.map((p, i) => (
               <li key={p.title} className="flex gap-4">
-                <span aria-hidden className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-hairline bg-paper-2 text-[13px] font-semibold text-teal-ink">
+                <span aria-hidden className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-hairline bg-cyan-50 text-[13px] font-semibold text-ink">
                   {i + 1}
                 </span>
                 <span>
@@ -171,7 +171,7 @@ export default function ServicesPage() {
             <div className="card divide-y divide-hairline">
             {serviceFaqs.map((f) => (
               <details key={f.q} className="group">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-[17px] font-medium transition-colors duration-200 hover:text-teal-ink sm:px-6 [&::-webkit-details-marker]:hidden">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-[17px] font-medium transition-colors duration-200 hover:text-cyan-700 sm:px-6 [&::-webkit-details-marker]:hidden">
                   {f.q}
                   <span aria-hidden className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-paper-2 text-graphite transition-transform duration-200 group-open:rotate-45">
                     +

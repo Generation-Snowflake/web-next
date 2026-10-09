@@ -21,7 +21,7 @@ export default function WorkNotes() {
           </div>
         </Reveal>
 
-        <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-8">
+        <ul className="grid gap-6 sm:grid-cols-2 lg:col-span-8">
           {caseStudies.map((c, i) => (
             <Reveal
               as="li"

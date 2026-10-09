@@ -40,7 +40,7 @@ export default function WorkflowPage() {
             {processSteps.map((p, i) => (
               <li key={p.title} className="card grid gap-3 p-6 sm:p-7 md:grid-cols-12 md:gap-8">
                 <h3 className="flex items-start gap-4 text-xl font-semibold tracking-heading md:col-span-4">
-                  <span aria-hidden className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal-wash text-[14px] font-semibold text-teal-ink">
+                  <span aria-hidden className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-500 text-[14px] font-semibold text-ink">
                     {i + 1}
                   </span>
                   <span className="pt-0.5">

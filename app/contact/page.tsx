@@ -8,7 +8,7 @@ import ContactDetails from "@/components/contact/ContactDetails";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Ask GSF Robotics & AI about a software, AI or robotics project, or get a quote for Makerzoid kits, the SO-101 arm or XLeRobot. Office in Pak Kret, Nonthaburi.",
+    "Ask GSF Robotics & AI about a software, AI or robotics project, or get a quote for Makerzoid kits, Armo or ArmoGo. Office in Pak Kret, Nonthaburi.",
   alternates: { canonical: "/contact" },
 };
 

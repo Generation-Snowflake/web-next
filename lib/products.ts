@@ -5,6 +5,9 @@
 // package contents) and the manufacturers' docs (SKUs, XLeRobot and
 // SO-101 specs, checked 2026-09-28). Check prices here before publishing.
 //
+// Armo and ArmoGo are GSF's names for its SO-101 and XLeRobot builds; their
+// media stay under /public/products/lerobot and /public/products/xlerobot.
+//
 // Images live in /public/products/<slug>/. Makerzoid photos are the
 // manufacturer's product shots. SO-101 and XLeRobot photos and 3D models come
 // from the open-source projects (Apache-2.0); keep `credits` on those pages.
@@ -89,6 +92,8 @@ export type Product = {
   imageAlt?: string;
   /** Detail page gallery, main photo first. */
   gallery: Photo[];
+  /** Drawn product illustration used where a software product has no photo. */
+  illustration?: "taktic";
   model3d?: Model3D;
   /** Photo / model credit line, for open-source project media. */
   credits?: string;
@@ -386,18 +391,109 @@ export const products: Product[] = [
     accent: "teal",
   },
   {
-    slug: "xlerobot",
+    slug: "armo",
     group: "research",
-    name: "XLeRobot",
-    maker: "XLeRobot open-source project (kit by WowRobo)",
-    category: "Dual-arm mobile robot",
-    tagline: "Two SO-101 arms on a wheeled base, for household-task research.",
+    name: "Armo",
+    maker: "GSF Robotics & AI, built on the open-source SO-101 and LeRobot",
+    category: "Robot arm kit",
+    tagline: "Move one arm by hand and the other copies you. Then it learns the task.",
     summary:
-      "An open-source dual-arm mobile robot built on Hugging Face LeRobot. Drive it with a gamepad, VR or leader arms, record demonstrations and train policies such as ACT and SmolVLA.",
+      "Our leader + follower arm pair, built on the open-source SO-101 and Hugging Face's LeRobot. Teleoperate, record demonstrations and train a policy that does the task on its own.",
     overview: [
-      "XLeRobot puts two SO-101 arms, a camera head and a wheeled base on an IKEA RÅSKOG cart. It runs on the LeRobot stack, so anything you learn on a tabletop SO-101 carries over.",
+      "Armo is our build of the SO-101, the reference arm of LeRobot, Hugging Face's open-source robot learning library. It comes as a pair: you move the leader arm by hand and the follower copies it in real time.",
+      "Record 50 or so demonstrations of a task, like picking up a block and putting it in a box. Train a policy such as ACT on a single GPU, and the follower does the task by itself. Datasets and models can be shared on the Hugging Face Hub.",
+      "It is the cheapest serious way we know to teach robot learning. We assemble and calibrate the pair, and teach a hands-on Armo course for students, teachers and engineers.",
+    ],
+    audience: ["Universities & vocational colleges", "AI engineers", "Makers"],
+    features: [
+      {
+        title: "Leader–follower teleoperation",
+        description: "Guide the leader arm by hand. The follower mirrors every joint.",
+      },
+      {
+        title: "Train real policies",
+        description: "ACT, Diffusion Policy, SmolVLA, Pi0 and more, all built into LeRobot.",
+      },
+      {
+        title: "Same calibration everywhere",
+        description: "A policy trained on one Armo runs on another, so a class can share models.",
+      },
+      {
+        title: "Open hardware",
+        description: "Printable parts, STEP CAD and a MuJoCo model are all public. Broken parts are cheap to replace.",
+      },
+    ],
+    specs: [
+      { label: "Based on", value: "SO-101 open hardware (TheRobotStudio × Hugging Face)" },
+      { label: "Configuration", value: "1 leader arm + 1 follower arm" },
+      { label: "Joints per arm", value: "6 (5-DoF arm + gripper)" },
+      { label: "Servos", value: "12 × Feetech STS3215, 12-bit magnetic encoders" },
+      { label: "Follower gearing", value: "1/345 on all joints" },
+      { label: "Leader gearing", value: "Mixed 1/191, 1/345, 1/147 (light to move by hand)" },
+      { label: "Controller", value: "1 bus-servo board per arm, USB-C to PC" },
+      { label: "Power", value: "5 V supply per arm (12 V high-torque follower optional)" },
+      { label: "Host", value: "PC running LeRobot (Python): Linux, macOS or Windows" },
+      { label: "Cameras", value: "Any USB webcam; RealSense supported" },
+      { label: "Licence", value: "Apache-2.0" },
+    ],
+    inTheBox: [
+      "Leader arm + follower arm",
+      "12 × STS3215 servos (installed)",
+      "2 × bus-servo controller boards",
+      "2 × power supplies, 2 × USB-C cables",
+      "4 × table clamps",
+    ],
+    useCases: [
+      "AI and robotics courses",
+      "Imitation-learning research",
+      "Hackathons and workshops",
+      "Testing a manipulation task before buying a bigger robot",
+    ],
+    models: [
+      {
+        id: "armo",
+        name: "Armo leader + follower",
+        tagline: "Complete teleoperation pair, assembled and calibrated",
+        audience: "Education & research",
+        highlights: ["Leader + follower arms", "6 joints each", "LeRobot ready"],
+        specs: [],
+      },
+    ],
+    image: "/products/lerobot/so101-1.webp",
+    imageAlt: "Armo follower arm (SO-101) with gripper, on a desk",
+    gallery: [
+      { src: "/products/lerobot/so101-1.webp", alt: "Armo follower arm (SO-101) with gripper, on a desk" },
+      { src: "/products/lerobot/so101-2.webp", alt: "Armo leader arm (SO-101) with its handle and trigger" },
+      { src: "/products/lerobot/so101-3.webp", alt: "Armo gripper with a USB camera mount" },
+    ],
+    model3d: {
+      src: "/models/so101-pair.glb",
+      kind: "so101",
+      poster: "/products/lerobot/so101-pair-3d-poster.webp",
+      label: "3D model of the Armo leader and follower arms (SO-101)",
+    },
+    credits: "Photos and 3D model: TheRobotStudio / Hugging Face SO-ARM100, Apache-2.0. Model simplified and recoloured by GSF.",
+    links: [
+      { label: "LeRobot SO-101 docs", href: "https://huggingface.co/docs/lerobot/so101" },
+      { label: "LeRobot on GitHub", href: "https://github.com/huggingface/lerobot" },
+      { label: "SO-ARM100/101 hardware", href: "https://github.com/TheRobotStudio/SO-ARM100" },
+    ],
+    accent: "violet",
+    priceNote: "Price on request. It depends on the servo option (5 V or 12 V follower) and cameras.",
+  },
+  {
+    slug: "armogo",
+    group: "research",
+    name: "ArmoGo",
+    maker: "GSF Robotics & AI, built on the open-source XLeRobot",
+    category: "Dual-arm mobile robot",
+    tagline: "Two arms, a camera head and a wheeled base, for household-task research.",
+    summary:
+      "Our dual-arm mobile robot, built on the open-source XLeRobot and Hugging Face LeRobot. Drive it with a gamepad, VR or leader arms, record demonstrations and train policies such as ACT and SmolVLA.",
+    overview: [
+      "ArmoGo puts two SO-101 arms (the same arms as Armo), a camera head with three cameras and a wheeled base on an IKEA RÅSKOG cart. It runs on the LeRobot stack, so anything you learn on a tabletop Armo carries over.",
       "It is a research and teaching platform, not a finished consumer robot. Expect to write Python. In return you get a mobile manipulator for a fraction of the usual price, with open hardware, URDFs and a simulator.",
-      "We can supply the kit, assemble and calibrate it, and get your first dataset recorded. The IKEA cart, battery and Raspberry Pi are sourced separately.",
+      "We can supply the kit, assemble and calibrate it, and get your first dataset recorded. We also teach a hands-on ArmoGo course. The IKEA cart, battery and Raspberry Pi are sourced separately.",
     ],
     audience: ["University labs", "Robotics & AI startups", "Experienced makers"],
     features: [
@@ -420,6 +516,7 @@ export const products: Product[] = [
       },
     ],
     specs: [
+      { label: "Based on", value: "XLeRobot open-source project (Apache-2.0)" },
       { label: "Arms", value: "2 × SO-101, 6 joints each incl. gripper" },
       { label: "Actuators", value: "Feetech STS3215 12 V servos" },
       { label: "Head", value: "2-servo camera head" },
@@ -447,8 +544,8 @@ export const products: Product[] = [
     ],
     models: [
       {
-        id: "xlerobot",
-        name: "XLeRobot dual-arm kit",
+        id: "armogo",
+        name: "ArmoGo dual-arm kit",
         tagline: "Arms + base expansion, the current dual-wheel version",
         audience: "Research labs & universities",
         highlights: ["2 × SO-101 arms", "Dual-wheel base", "LeRobot compatible"],
@@ -456,18 +553,18 @@ export const products: Product[] = [
       },
     ],
     image: "/products/xlerobot/xlerobot-1.webp",
-    imageAlt: "XLeRobot on an IKEA cart with both arms raised and the camera head up",
+    imageAlt: "ArmoGo (XLeRobot) on an IKEA cart with both arms raised and the camera head up",
     gallery: [
-      { src: "/products/xlerobot/xlerobot-1.webp", alt: "XLeRobot on an IKEA cart with both arms raised and the camera head up" },
-      { src: "/products/xlerobot/xlerobot-2.webp", alt: "Close-up of the two XLeRobot arms and camera head" },
-      { src: "/products/xlerobot/xlerobot-4.webp", alt: "XLeRobot holding a can in one gripper and a cup in the other" },
-      { src: "/products/xlerobot/xlerobot-3.webp", alt: "XLeRobot on a blue cart in a lab" },
+      { src: "/products/xlerobot/xlerobot-1.webp", alt: "ArmoGo (XLeRobot) on an IKEA cart with both arms raised and the camera head up" },
+      { src: "/products/xlerobot/xlerobot-2.webp", alt: "Close-up of the two ArmoGo arms and camera head" },
+      { src: "/products/xlerobot/xlerobot-4.webp", alt: "ArmoGo holding a can in one gripper and a cup in the other" },
+      { src: "/products/xlerobot/xlerobot-3.webp", alt: "ArmoGo (XLeRobot) on a blue cart in a lab" },
     ],
     model3d: {
       src: "/models/xlerobot.glb",
       kind: "xlerobot",
       poster: "/products/xlerobot/xlerobot-3d-poster.webp",
-      label: "3D model of XLeRobot: cart, two SO-101 arms and camera head",
+      label: "3D model of ArmoGo: cart, two SO-101 arms and camera head",
     },
     credits: "Photos and 3D model: XLeRobot project (github.com/Vector-Wangel/XLeRobot), Apache-2.0.",
     links: [
@@ -478,96 +575,6 @@ export const products: Product[] = [
     priceNote: "Price on request. It depends on the kit version, import costs and whether you want it assembled.",
   },
   {
-    slug: "lerobot",
-    group: "research",
-    name: "LeRobot SO-101",
-    maker: "TheRobotStudio × Hugging Face (open hardware)",
-    category: "Robot arm kit",
-    tagline: "Move one arm by hand and the other copies you. Then it learns the task.",
-    summary:
-      "The SO-101 leader + follower arm pair for Hugging Face's LeRobot library. Teleoperate, record demonstrations and train a policy that does the task on its own.",
-    overview: [
-      "The SO-101 is the reference arm of LeRobot, Hugging Face's open-source robot learning library. It comes as a pair: you move the leader arm by hand and the follower copies it in real time.",
-      "Record 50 or so demonstrations of a task, like picking up a block and putting it in a box. Train a policy such as ACT on a single GPU, and the follower does the task by itself. Datasets and models can be shared on the Hugging Face Hub.",
-      "It is the cheapest serious way we know to teach robot learning. We can assemble and calibrate the pair for you, and run a hands-on workshop for your team or class.",
-    ],
-    audience: ["Universities & vocational colleges", "AI engineers", "Makers"],
-    features: [
-      {
-        title: "Leader–follower teleoperation",
-        description: "Guide the leader arm by hand. The follower mirrors every joint.",
-      },
-      {
-        title: "Train real policies",
-        description: "ACT, Diffusion Policy, SmolVLA, Pi0 and more, all built into LeRobot.",
-      },
-      {
-        title: "Same calibration everywhere",
-        description: "A policy trained on one SO-101 runs on another, so a class can share models.",
-      },
-      {
-        title: "Open hardware",
-        description: "Printable parts, STEP CAD and a MuJoCo model are all public. Broken parts are cheap to replace.",
-      },
-    ],
-    specs: [
-      { label: "Configuration", value: "1 leader arm + 1 follower arm" },
-      { label: "Joints per arm", value: "6 (5-DoF arm + gripper)" },
-      { label: "Servos", value: "12 × Feetech STS3215, 12-bit magnetic encoders" },
-      { label: "Follower gearing", value: "1/345 on all joints" },
-      { label: "Leader gearing", value: "Mixed 1/191, 1/345, 1/147 (light to move by hand)" },
-      { label: "Controller", value: "1 bus-servo board per arm, USB-C to PC" },
-      { label: "Power", value: "5 V supply per arm (12 V high-torque follower optional)" },
-      { label: "Host", value: "PC running LeRobot (Python): Linux, macOS or Windows" },
-      { label: "Cameras", value: "Any USB webcam; RealSense supported" },
-      { label: "Licence", value: "Apache-2.0" },
-    ],
-    inTheBox: [
-      "Leader arm + follower arm",
-      "12 × STS3215 servos (installed)",
-      "2 × bus-servo controller boards",
-      "2 × power supplies, 2 × USB-C cables",
-      "4 × table clamps",
-    ],
-    useCases: [
-      "AI and robotics courses",
-      "Imitation-learning research",
-      "Hackathons and workshops",
-      "Testing a manipulation task before buying a bigger robot",
-    ],
-    models: [
-      {
-        id: "lerobot-so101",
-        name: "SO-101 leader + follower",
-        tagline: "Complete teleoperation pair, assembled and calibrated",
-        audience: "Education & research",
-        highlights: ["Leader + follower arms", "6 joints each", "LeRobot ready"],
-        specs: [],
-      },
-    ],
-    image: "/products/lerobot/so101-1.webp",
-    imageAlt: "SO-101 follower arm with gripper, on a desk",
-    gallery: [
-      { src: "/products/lerobot/so101-1.webp", alt: "SO-101 follower arm with gripper, on a desk" },
-      { src: "/products/lerobot/so101-2.webp", alt: "SO-101 leader arm with its handle and trigger" },
-      { src: "/products/lerobot/so101-3.webp", alt: "SO-101 gripper with a USB camera mount" },
-    ],
-    model3d: {
-      src: "/models/so101-pair.glb",
-      kind: "so101",
-      poster: "/products/lerobot/so101-pair-3d-poster.webp",
-      label: "3D model of the SO-101 leader and follower arms",
-    },
-    credits: "Photos and 3D model: TheRobotStudio / Hugging Face SO-ARM100, Apache-2.0. Model simplified and recoloured by GSF.",
-    links: [
-      { label: "LeRobot SO-101 docs", href: "https://huggingface.co/docs/lerobot/so101" },
-      { label: "LeRobot on GitHub", href: "https://github.com/huggingface/lerobot" },
-      { label: "SO-ARM100/101 hardware", href: "https://github.com/TheRobotStudio/SO-ARM100" },
-    ],
-    accent: "violet",
-    priceNote: "Price on request. It depends on the servo option (5 V or 12 V follower) and cameras.",
-  },
-  {
     slug: "taktic",
     group: "software",
     status: "in-development",
@@ -575,29 +582,80 @@ export const products: Product[] = [
     name: "Taktic",
     maker: "GSF Robotics & AI",
     category: "Project management tool",
-    tagline: "A project management tool for teams.",
-    summary: "Our own project management tool for planning work, tracking tasks and keeping a team on the same page.",
+    tagline: "A task tracker for software and robotics teams. Simpler than Jira.",
+    summary:
+      "Our own project tracker: a drag-and-drop Kanban board, sprints and a backlog, a timeline, docs and per-project progress. It also works as an MCP server, so an AI assistant can work the board with you.",
     overview: [
-      "Taktic is a project management tool we are building for teams. It's where work gets planned, tasks get assigned and progress is easy to see.",
-      "It's in development and being tested with early users. If your team would like to try it, get in touch.",
+      "Taktic is the task tracker we built for our own teams, and the one we run our software and robotics projects in. It is meant to be easier than Jira: projects, a board and sprints, with little else in the way.",
+      "Each project has its own members, each one a PM or a Dev, a Kanban board, a backlog for planning sprints, a timeline with milestones, and docs with version history. My Work collects everything assigned to you across projects, and a share link gives a client a read-only page with the project's progress.",
+      "Taktic is also an MCP server. Connect Claude Code, Claude Desktop, Cursor or VS Code with a personal token, and the assistant can read the board, search, and create or update tasks, with exactly the permissions of the person who owns the token.",
+      "It is being tested with early users. If your team would like to try it, get in touch.",
     ],
-    audience: ["Teams and small companies"],
-    features: [],
+    audience: ["Software and robotics teams", "Companies with a few dev teams", "Project managers"],
+    features: [
+      {
+        title: "Kanban board",
+        description:
+          "To do, In progress, In review and Done. Drag cards between columns; each card shows its key, priority and assignee, and overdue work stands out.",
+      },
+      {
+        title: "Sprints and backlog",
+        description: "Plan the next sprint by dragging tasks out of the backlog, then start it and close it from the board.",
+      },
+      {
+        title: "Tasks with the details",
+        description: "Comments, checklists, subtasks, attachments and links between tasks, with an activity history on each one.",
+      },
+      {
+        title: "Timeline and docs",
+        description: "Milestones on a project timeline, and project docs in a rich-text editor with version history and an archive.",
+      },
+      {
+        title: "Progress you can share",
+        description:
+          "Per-project progress and analytics for PMs. A share link gives a client a read-only status page without an account.",
+      },
+      {
+        title: "My Work and search",
+        description: "Everything assigned to you or created by you, across every project, plus search across projects and keyboard shortcuts.",
+      },
+      {
+        title: "Roles and permissions",
+        description:
+          "Admin and member accounts, and PM or Dev on each project. Every read and write is checked on the server.",
+      },
+      {
+        title: "An MCP server for AI assistants",
+        description:
+          "Ten tools for projects, the board, search, tasks, comments and attachments. The setup page fills in the URL and token for your client.",
+      },
+    ],
     specs: [
-      { label: "Runs on", value: "Web browser" },
+      { label: "Runs on", value: "Web browser, desktop and phone" },
+      { label: "Accounts", value: "Email and password; an admin creates users" },
+      { label: "Roles", value: "Admin / Member, plus PM / Dev per project" },
+      { label: "Views", value: "Board, Backlog, Sprints, Timeline, Docs, Analytics, Activity" },
+      { label: "AI assistants", value: "MCP server: Claude Code, Claude Desktop, Cursor, VS Code" },
+      { label: "Appearance", value: "Light and dark mode" },
     ],
     inTheBox: [],
-    useCases: [],
+    useCases: [
+      "Running sprints for a software team",
+      "Tracking a robot build, part by part",
+      "Showing a client project progress through a share link",
+      "Letting an AI coding assistant pick up and update tasks",
+    ],
     models: [
       {
         id: "taktic",
         name: "Taktic",
         tagline: "Project management tool",
         audience: "Teams",
-        highlights: ["Web app"],
+        highlights: ["Kanban board, sprints and backlog", "Web app", "MCP server"],
         specs: [],
       },
     ],
+    illustration: "taktic",
     gallery: [],
     links: [{ label: "taktic.gsfrobotics.com", href: "https://taktic.gsfrobotics.com" }],
     accent: "ice",

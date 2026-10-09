@@ -115,14 +115,14 @@ export default function Product3DViewer({
         )}
         </div>
         {status === "loading" && (
-          <p className="absolute left-3 top-3 rounded-full border border-hairline bg-paper px-3 py-1 text-[13px] font-medium text-graphite shadow-xs">Loading 3D model…</p>
+          <p className="absolute left-3 top-3 rounded-full border border-hairline bg-card px-3 py-1 text-[13px] font-medium text-graphite shadow-xs">Loading 3D model…</p>
         )}
         {status === "ready" && !reduced && (
           <button
             type="button"
             onClick={() => setPaused((p) => !p)}
             aria-pressed={paused}
-            className="absolute bottom-3 right-3 rounded-lg border border-hairline-strong bg-paper px-3 py-1.5 text-[13px] font-medium text-ink shadow-xs transition-colors duration-200 hover:bg-paper-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-ink"
+            className="absolute bottom-3 right-3 rounded-lg border border-hairline-strong bg-card px-3 py-1.5 text-[13px] font-medium text-ink shadow-xs transition-colors duration-200 hover:bg-paper-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-ink"
           >
             {paused ? "Play motion" : "Pause motion"}
           </button>

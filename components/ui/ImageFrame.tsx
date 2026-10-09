@@ -1,5 +1,4 @@
 import Image from "next/image";
-import type { LucideIcon } from "lucide-react";
 
 /**
  * A figure: image on a light-grey backdrop with rounded corners and an
@@ -23,7 +22,7 @@ export default function ImageFrame({
   /** Short caption under the frame. */
   caption?: React.ReactNode;
   /** @deprecated ignored (no decorative icons in the new design). */
-  icon?: LucideIcon;
+  icon?: unknown;
   /** @deprecated ignored. */
   tint?: string;
   /** Should include an aspect ratio or height. */
@@ -47,9 +46,9 @@ export default function ImageFrame({
         <div
           role="img"
           aria-label={alt}
-          className="absolute inset-0 flex items-end bg-[repeating-linear-gradient(135deg,transparent_0_11px,rgba(11,12,14,0.06)_11px_12px)] p-3"
+          className="absolute inset-0 flex items-end bg-[repeating-linear-gradient(135deg,transparent_0_11px,rgba(7,17,40,0.06)_11px_12px)] p-3"
         >
-          <span className="rounded-md bg-paper px-2 py-0.5 text-[13px] text-graphite">{label ?? "Photo to come"}</span>
+          <span className="rounded-md bg-card px-2 py-0.5 text-[13px] text-graphite">{label ?? "Photo to come"}</span>
         </div>
       )}
     </div>

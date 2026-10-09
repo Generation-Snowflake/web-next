@@ -10,7 +10,7 @@ export default function ContactDetails() {
           <dt className="caption pt-0.5">Phone</dt>
           <dd className="space-y-1">
             {site.phones.map((p) => (
-              <a key={p.href} href={p.href} className="block font-medium transition-colors duration-200 hover:text-teal-ink">
+              <a key={p.href} href={p.href} className="block font-medium transition-colors duration-200 hover:text-cyan-700">
                 {p.display}
               </a>
             ))}
@@ -19,7 +19,7 @@ export default function ContactDetails() {
         <div className="grid grid-cols-[5.5rem_1fr] gap-4 py-4">
           <dt className="caption pt-0.5">Email</dt>
           <dd>
-            <a href={`mailto:${site.email}`} className="break-all font-medium transition-colors duration-200 hover:text-teal-ink">
+            <a href={`mailto:${site.email}`} className="break-all font-medium transition-colors duration-200 hover:text-cyan-700">
               {site.email}
             </a>
           </dd>

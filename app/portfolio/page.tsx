@@ -25,7 +25,7 @@ export default function PortfolioPage() {
       <section aria-labelledby="projects" className="py-20 md:py-28">
         <Container>
           <SectionHeading label="Projects" title={<span id="projects">What we work on</span>} />
-          <div className="mt-12 grid gap-4 sm:grid-cols-2">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2">
             {caseStudies.map((s, i) => (
               <CaseNote
                 key={s.slug}

@@ -3,6 +3,7 @@ import CtaBand from "@/components/ui/CtaBand";
 import Hero from "@/components/home/Hero";
 import PriceStrip from "@/components/home/PriceStrip";
 import ServicesList from "@/components/home/ServicesList";
+import BrandConcept from "@/components/home/BrandConcept";
 import RobotsWeSell from "@/components/home/RobotsWeSell";
 import Classes from "@/components/home/Classes";
 import WorkNotes from "@/components/home/WorkNotes";
@@ -10,7 +11,7 @@ import { site } from "@/lib/site";
 
 const title = "GSF Robotics & AI | Software house and robot supplier, Nonthaburi";
 const description =
-  "A small engineering team in Pak Kret, Nonthaburi. We build computer vision, ROS 2, IoT, web and mobile software for companies, and sell Makerzoid robot kits and LeRobot arms.";
+  "A small engineering team in Pak Kret, Nonthaburi. We build computer vision, ROS 2, IoT, web and mobile software for companies, and sell Makerzoid robot kits and our Armo and ArmoGo robots.";
 
 export const metadata: Metadata = {
   title: { absolute: title },
@@ -32,6 +33,7 @@ export default function HomePage() {
     <>
       <Hero />
       <PriceStrip />
+      <BrandConcept tone="paper" />
       <ServicesList />
       <RobotsWeSell />
       <Classes />
