@@ -21,7 +21,7 @@ function robotCue(action: RobotAction) {
 
 const copy = {
   en: { primary: "Describe your project", secondary: "See the robots we sell" },
-  th: { primary: "เล่ารายละเอียดโปรเจกต์", secondary: "ดูหุ่นยนต์ที่เราขาย" },
+  th: { primary: "เล่าโปรเจกต์ให้เราฟัง", secondary: "ดูหุ่นยนต์ที่เราขาย" },
 } satisfies Record<Lang, Record<string, string>>;
 
 export default function HeroActions({ lang }: { lang: Lang }) {

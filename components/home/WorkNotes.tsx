@@ -9,13 +9,13 @@ const copy = {
   en: {
     label: "Work",
     title: "What we work on",
-    description: "Web and mobile apps, AI, IoT and robot software. Ask us on a call about similar projects.",
+    description: "Web and mobile apps, AI, IoT and robot software. We're happy to talk through similar projects on a call.",
     all: "All work",
   },
   th: {
     label: "ผลงาน",
-    title: "งานที่เราทำ",
-    description: "เว็บและแอปมือถือ AI, IoT และซอฟต์แวร์หุ่นยนต์ โทรมาสอบถามเรื่องงานที่คล้ายกันได้เลย",
+    title: "ตัวอย่างงานที่เราทำ",
+    description: "เว็บและแอปมือถือ AI, IoT และซอฟต์แวร์หุ่นยนต์ ถ้ามีงานลักษณะคล้ายกัน โทรมาคุยกับเราได้เลย",
     all: "ผลงานทั้งหมด",
   },
 } satisfies Record<Lang, Record<string, string>>;

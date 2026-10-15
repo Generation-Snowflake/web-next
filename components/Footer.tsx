@@ -23,7 +23,7 @@ const ui = {
     email: "Email",
     hours: "Hours",
     nav: "Footer",
-    credits: "Armo and ArmoGo build on SO-101, LeRobot and XLeRobot, Apache-2.0 by their authors.",
+    credits: "Armo and ArmoGo are built on SO-101, LeRobot and XLeRobot, released under Apache-2.0 by their authors.",
   },
   th: {
     services: "บริการ",
@@ -37,7 +37,7 @@ const ui = {
     phone: "โทรศัพท์",
     email: "อีเมล",
     hours: "เวลาทำการ",
-    nav: "ส่วนท้าย",
+    nav: "ลิงก์ท้ายเว็บ",
     credits: "Armo และ ArmoGo พัฒนาต่อจาก SO-101, LeRobot และ XLeRobot ซึ่งเผยแพร่ภายใต้ Apache-2.0 โดยผู้พัฒนาแต่ละโครงการ",
   },
 } satisfies Record<Lang, Record<string, string>>;

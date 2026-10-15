@@ -48,7 +48,7 @@ export default function PageHeader({
       />
       <Container>
         {trail.length > 0 && (
-          <nav aria-label={lang === "th" ? "เส้นทางนำทาง" : "Breadcrumb"} className="mb-6 flex flex-wrap items-center gap-x-1.5 text-[14px] font-medium text-ink-600">
+          <nav aria-label={lang === "th" ? "เส้นทางนำทาง" : "Breadcrumb"} className="rise mb-6 flex flex-wrap items-center gap-x-1.5 text-[14px] font-medium text-ink-600">
             <Link href="/" className="transition-colors duration-200 hover:text-ink">
               GSF
             </Link>
@@ -68,7 +68,7 @@ export default function PageHeader({
             ))}
           </nav>
         )}
-        <SectionHeading as="h1" title={title} titleTh={titleTh} description={description}>
+        <SectionHeading intro as="h1" title={title} titleTh={titleTh} description={description}>
           {children && <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">{children}</div>}
         </SectionHeading>
       </Container>

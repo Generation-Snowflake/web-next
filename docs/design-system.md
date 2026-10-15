@@ -123,6 +123,30 @@ geometric), 24px grid. Server components import from
   link has a cyan underline; CTA is the primary button.
 - Footer: Primary Dark with the reverse logo and a Gradient C top rule.
 
+## Motion
+
+Medium and calm: things rise into place, lines draw themselves, nothing
+bounces. All of it lives in the Motion section of `app/globals.css` and is
+switched off by `prefers-reduced-motion`. Content is visible without
+JavaScript: hidden start states only apply after a script adds a "ready"
+class, or come from CSS animations that always finish.
+
+| What | How |
+|---|---|
+| Hero and page headers load in step by step | `.rise` with `style={{ "--rise": n }}`; `SectionHeading intro` does it for page headers |
+| Sections fade and rise as they scroll in | `Reveal` (blur + 20px rise, `delay` for stagger) |
+| Accent bar grows | automatic inside `Reveal` and with `.rise` |
+| Circuit traces and the construction circle draw themselves | `CircuitLines` (on scroll), `ConstructionCircle` (on load): strokes get `pathLength={1}` + `.trace`, dots `.node`, order with `--d` |
+| Bars fill, a card floats | `InView` wrapper + `.fill-x` / `.float` |
+| Icons pop in | `.pop-in` inside `Reveal` |
+| Card hover | lift 4px, cyan border, Gradient A line draws across the top (`.card-hover`) |
+| Primary button hover | Gradient C fades in, 1px lift (`.btn-primary`) |
+| Page change | fade-in from `app/[lang]/template.tsx`; navbar drops in on first load |
+| Reading progress | 2px Gradient A bar at the top (`.scroll-progress`, CSS scroll timeline; hidden where unsupported) |
+
+Don't put `.rise` or `.page-in` on an element that has its own opacity
+(the animation ends at opacity 1).
+
 ## Photography
 
 Real hardware, real work, clean industrial light, people with machines, cyan

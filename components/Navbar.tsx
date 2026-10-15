@@ -149,7 +149,7 @@ export default function Navbar({ lang }: { lang: Lang }) {
   return (
     <div ref={rootRef}>
       <header
-        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-300 ease-out ${
+        className={`nav-in fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-300 ease-out ${
           solid
             ? "border-hairline bg-paper/80 shadow-nav backdrop-blur-md backdrop-saturate-150 supports-[not(backdrop-filter:blur(0))]:bg-paper"
             : "border-transparent bg-paper/0"

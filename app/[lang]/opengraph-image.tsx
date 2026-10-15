@@ -8,7 +8,7 @@ const copy = {
   en: { line1: "We write the software,", line2: "and we sell the robots it runs on." },
   // The OG renderer (satori) drops a tone mark stacked on an upper vowel
   // (ที่, นั้น, ซึ่ง), so this line avoids them; the hero says the same thing.
-  th: { line1: "เราเขียนซอฟต์แวร์", line2: "และจำหน่ายหุ่นยนต์ให้ซอฟต์แวร์ทำงานได้จริง" },
+  th: { line1: "ซอฟต์แวร์ของเรา", line2: "ทำงานบนหุ่นยนต์ของเรา" },
 } satisfies Record<Lang, { line1: string; line2: string }>;
 
 export function generateStaticParams() {

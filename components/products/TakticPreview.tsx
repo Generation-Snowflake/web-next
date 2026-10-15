@@ -1,3 +1,5 @@
+import InView from "@/components/ui/InView";
+
 /**
  * Drawn preview of Taktic's board, in brand colours (Taktic has no product
  * photos yet). Task names are examples, not customer data. `compact` drops
@@ -67,7 +69,7 @@ export default function TakticPreview({
       role="img"
       aria-label={
         lang === "th"
-          ? "ภาพประกอบบอร์ดของ Taktic: 4 คอลัมน์ To do, In progress, In review และ Done พร้อมการ์ดงานตัวอย่าง"
+          ? "ภาพประกอบหน้าบอร์ดของ Taktic มี 4 คอลัมน์ ได้แก่ To do, In progress, In review และ Done พร้อมการ์ดงานตัวอย่าง"
           : "Illustration of the Taktic board: four columns, To do, In progress, In review and Done, with example task cards"
       }
       className={`flex h-full w-full overflow-hidden bg-paper text-left ${className}`}
@@ -87,7 +89,7 @@ export default function TakticPreview({
       </div>
 
       {/* Board */}
-      <div aria-hidden className="flex min-w-0 flex-1 flex-col p-3 sm:p-4">
+      <InView className="flex min-w-0 flex-1 flex-col p-3 sm:p-4">
         <div className="flex items-center justify-between gap-2">
           <div className="min-w-0">
             <p className="truncate text-[12px] font-semibold text-ink">Armo lab setup</p>
@@ -107,7 +109,7 @@ export default function TakticPreview({
         {/* progress strip */}
         <div className="mt-2.5 flex items-center gap-2">
           <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-mist-200">
-            <span className="block h-full w-[43%] rounded-full bg-gradient-a" />
+            <span className="fill-x block h-full w-[43%] rounded-full bg-gradient-a" />
           </span>
           <span className="text-[9px] font-medium text-ink-600">3 of 7 done</span>
         </div>
@@ -121,7 +123,7 @@ export default function TakticPreview({
               {c.cards.map((t, ti) => (
                 <div
                   key={t.key}
-                  className={`rounded border bg-card p-1.5 shadow-xs ${ci === 1 && ti === 0 ? "-rotate-2 border-cyan-500 shadow-card-hover" : "border-hairline"}`}
+                  className={`rounded border bg-card p-1.5 shadow-xs ${ci === 1 && ti === 0 ? "float -rotate-2 border-cyan-500 shadow-card-hover" : "border-hairline"}`}
                 >
                   <p className="font-mono text-[8.5px] text-ink-500">{t.key}</p>
                   <p className="mt-0.5 text-[10px] font-medium leading-tight text-ink">{t.title}</p>
@@ -139,7 +141,7 @@ export default function TakticPreview({
             </div>
           ))}
         </div>
-      </div>
+      </InView>
     </div>
   );
 }

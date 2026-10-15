@@ -61,7 +61,7 @@ export type ProductGroup = "education" | "research" | "software";
 /** Section headings for the product groups, in page order. */
 export const productGroups: { id: ProductGroup; title: string; description: string }[] = [
   { id: "education", title: "For schools and kids", description: "Robot kits and an online platform for learning to code and build robots." },
-  { id: "research", title: "For research labs", description: "Open-source robots for AI and robot-learning research and teaching." },
+  { id: "research", title: "For research labs", description: "Open-source robots for teaching and research in AI and robot learning." },
   { id: "software", title: "Software", description: "Tools we build and run ourselves." },
 ];
 
@@ -115,10 +115,10 @@ export const products: Product[] = [
     category: "STEM robot kits",
     tagline: "Build a robot from bricks, then code it from a phone.",
     summary:
-      "Brick-built robot kits for kids, coded with drag-and-drop blocks in the Makerzoid app. Four kits, from a 26-model starter to a competition set with remote control.",
+      "Brick-built robot kits for kids, coded with drag-and-drop blocks in the Makerzoid app. Four kits, from a starter with 26 builds to a competition set with a remote control.",
     overview: [
-      "Kids build a robot, car or machine from the bricks, follow the build guide in the Makerzoid app, and then program it with drag-and-drop blocks (Scratch, or ScratchJr on Smart Robot). The app runs on iOS and Android.",
-      "We stock four kits. Superbot and Smart Robot Premium are good first kits. Robot Master Premium has the most to learn from: 600+ parts, two motors, two sensors and the full 47-lesson video course. Superbot Premium adds a servo, a grayscale sensor and a Bluetooth remote for competition-style projects.",
+      "Kids follow the build guide in the Makerzoid app to put together a robot, car or machine, then program it with drag-and-drop blocks (Scratch, or ScratchJr on Smart Robot). The app runs on iOS and Android.",
+      "We stock four kits. Superbot and Smart Robot Premium are good first kits. Robot Master Premium covers the most: 600+ parts, two motors, two sensors and the full 47-lesson video course. Superbot Premium adds a servo, a grayscale sensor and a Bluetooth remote for competition-style projects.",
       "Robot Master Premium and Superbot Premium also come with our Thai-language lesson files on robot basics.",
     ],
     audience: ["Primary & secondary schools", "Tutoring and coding centres", "Parents buying for kids"],
@@ -126,22 +126,22 @@ export const products: Product[] = [
       {
         title: "One box, many robots",
         description:
-          "Each kit builds dozens to hundreds of models. The build steps are in the app, so nobody has to keep track of a paper manual.",
+          "Each kit builds dozens to hundreds of models. The build steps are also in the app, so a lost paper manual doesn't stop the lesson.",
       },
       {
-        title: "Block coding that grows with the kid",
+        title: "Block coding that grows with your child",
         description:
-          "Smart Robot uses ScratchJr, which works before a child can read well. The other kits use Scratch blocks: loops, conditions and sensor input.",
+          "Smart Robot uses ScratchJr, which children can use before they read well. The other kits use Scratch, with loops, conditions and sensor input.",
       },
       {
         title: "Real sensors, not just motors",
         description:
-          "IR sensors on every kit. Superbot Premium adds a grayscale sensor for line following and a servo for grippers and arms.",
+          "Every kit has IR sensors. Superbot Premium adds a grayscale sensor for line following and a servo for grippers and arms.",
       },
       {
         title: "Parts you can reuse",
         description:
-          "The same bricks are used lesson after lesson, which keeps the cost per student down for schools.",
+          "The same bricks work lesson after lesson, which keeps the cost per student down for schools.",
       },
     ],
     specs: [
@@ -242,7 +242,7 @@ export const products: Product[] = [
         sku: "MKZ-RM-PM",
         priceTHB: 4800,
         tagline: "600+ parts, two motors, two sensors and the full 47-lesson video course.",
-        badge: "Most to learn",
+        badge: "Most lessons",
         audience: "Ages 6+, classrooms",
         highlights: ["600+ parts, 301 builds", "2 motors, 2 IR sensors", "47 video lessons + Thai lesson files"],
         specs: [
@@ -349,17 +349,17 @@ export const products: Product[] = [
     overview: [
       "RoboPark is our own learning platform. Kids write drag-and-drop block code and watch a simulated robot run it straight away, so they can learn robotics at home or at school without buying hardware first.",
       "Courses start from the basics and work up to maze solving with motion and colour sensors. Students can also build their own levels and run their robots on them, and competition mode lets a class or a group of friends race their robots on the same course.",
-      "RoboPark is in development and we're testing it with early users. If you'd like to try it with your class or your kids, tell us.",
+      "RoboPark is in development and we're testing it with early users. If you'd like to try it with your class or your kids, let us know.",
     ],
     audience: ["Kids and beginners", "Schools and coding clubs", "Parents"],
     features: [
       {
         title: "Courses",
-        description: "Step-by-step lessons from first programs to maze-solving robots. The same course we teach in our maze robot classes.",
+        description: "Step-by-step lessons from first programs to maze-solving robots. It's the same course we teach in our maze robot classes.",
       },
       {
         title: "Build your own levels",
-        description: "Design a stage, then write a program to get the robot through it.",
+        description: "Design a level, then write a program to get the robot through it.",
       },
       {
         title: "Competition mode",
@@ -367,7 +367,7 @@ export const products: Product[] = [
       },
       {
         title: "Online simulation",
-        description: "Runs in a web browser. A 3D robot with motion and colour sensors, so there is nothing to install and no kit to buy.",
+        description: "Runs in a web browser with a 3D robot that has motion and colour sensors. There's nothing to install and no kit to buy.",
       },
     ],
     specs: [
@@ -404,7 +404,7 @@ export const products: Product[] = [
     overview: [
       "Armo is our build of the SO-101, the reference arm of LeRobot, Hugging Face's open-source robot learning library. It comes as a pair: you move the leader arm by hand and the follower copies it in real time.",
       "Record 50 or so demonstrations of a task, like picking up a block and putting it in a box. Train a policy such as ACT on a single GPU, and the follower does the task by itself. Datasets and models can be shared on the Hugging Face Hub.",
-      "It is the cheapest serious way we know to teach robot learning. We assemble and calibrate the pair, and teach a hands-on Armo course for students, teachers and engineers.",
+      "It's the most affordable way we know to teach robot learning on real hardware. We assemble and calibrate the pair, and teach a hands-on Armo course for students, teachers and engineers.",
     ],
     audience: ["Universities & vocational colleges", "AI engineers", "Makers"],
     features: [
@@ -417,7 +417,7 @@ export const products: Product[] = [
         description: "ACT, Diffusion Policy, SmolVLA, Pi0 and more, all built into LeRobot.",
       },
       {
-        title: "Same calibration everywhere",
+        title: "Same calibration on every arm",
         description: "A policy trained on one Armo runs on another, so a class can share models.",
       },
       {
@@ -493,9 +493,9 @@ export const products: Product[] = [
     summary:
       "Our dual-arm mobile robot, built on the open-source XLeRobot and Hugging Face LeRobot. Drive it with a gamepad, VR or leader arms, record demonstrations and train policies such as ACT and SmolVLA.",
     overview: [
-      "ArmoGo puts two SO-101 arms (the same arms as Armo), a camera head with three cameras and a wheeled base on an IKEA RÅSKOG cart. It runs on the LeRobot stack, so anything you learn on a tabletop Armo carries over.",
+      "ArmoGo puts two SO-101 arms (the same arms as Armo), a camera head and a wheeled base on an IKEA RÅSKOG cart, with three cameras in all. It runs on the LeRobot stack, so anything you learn on a tabletop Armo carries over.",
       "It is a research and teaching platform, not a finished consumer robot. Expect to write Python. In return you get a mobile manipulator for a fraction of the usual price, with open hardware, URDFs and a simulator.",
-      "We can supply the kit, assemble and calibrate it, and get your first dataset recorded. We also teach a hands-on ArmoGo course. The IKEA cart, battery and Raspberry Pi are sourced separately.",
+      "We can supply the kit, assemble and calibrate it, and get your first dataset recorded. We also teach a hands-on ArmoGo course. The IKEA cart, battery and Raspberry Pi are bought separately.",
     ],
     audience: ["University labs", "Robotics & AI startups", "Experienced makers"],
     features: [
@@ -548,7 +548,7 @@ export const products: Product[] = [
       {
         id: "armogo",
         name: "ArmoGo dual-arm kit",
-        tagline: "Arms + base expansion, the current dual-wheel version",
+        tagline: "Two arms and the base kit, in the current two-wheel version",
         audience: "Research labs & universities",
         highlights: ["2 × SO-101 arms", "Dual-wheel base", "LeRobot compatible"],
         specs: [],
@@ -589,7 +589,7 @@ export const products: Product[] = [
       "Our own project tracker: a drag-and-drop Kanban board, sprints and a backlog, a timeline, docs and per-project progress. It also works as an MCP server, so an AI assistant can work the board with you.",
     overview: [
       "Taktic is the task tracker we built for our own teams, and the one we run our software and robotics projects in. It is meant to be easier than Jira: projects, a board and sprints, with little else in the way.",
-      "Each project has its own members, each one a PM or a Dev, a Kanban board, a backlog for planning sprints, a timeline with milestones, and docs with version history. My Work collects everything assigned to you across projects, and a share link gives a client a read-only page with the project's progress.",
+      "Each project has its own members (each one a PM or a Dev), a Kanban board, a backlog for planning sprints, a timeline with milestones, and docs with version history. My Work collects everything assigned to you across projects, and a share link gives a client a read-only page with the project's progress.",
       "Taktic is also an MCP server. Connect Claude Code, Claude Desktop, Cursor or VS Code with a personal token, and the assistant can read the board, search, and create or update tasks, with exactly the permissions of the person who owns the token.",
       "It is being tested with early users. If your team would like to try it, get in touch.",
     ],
@@ -605,7 +605,7 @@ export const products: Product[] = [
         description: "Plan the next sprint by dragging tasks out of the backlog, then start it and close it from the board.",
       },
       {
-        title: "Tasks with the details",
+        title: "Task details in one place",
         description: "Comments, checklists, subtasks, attachments and links between tasks, with an activity history on each one.",
       },
       {
@@ -644,7 +644,7 @@ export const products: Product[] = [
     useCases: [
       "Running sprints for a software team",
       "Tracking a robot build, part by part",
-      "Showing a client project progress through a share link",
+      "Sharing project progress with a client through a link",
       "Letting an AI coding assistant pick up and update tasks",
     ],
     models: [
@@ -702,7 +702,7 @@ export const productSupport = [
   },
   {
     title: "Custom software",
-    description: "Need the robot to do something specific? We are a software house too.",
+    description: "Need the robot to do something specific? We're a software house too.",
   },
 ];
 

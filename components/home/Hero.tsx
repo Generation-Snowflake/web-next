@@ -8,24 +8,41 @@ import type { Lang } from "@/lib/i18n";
 const copy = {
   en: {
     caption: "It follows your cursor.",
-    label: "Software engineering · Robotics solution",
+    label: "Software engineering · Robotics solutions",
     title: "We write the software,",
     titleAccent: "and we sell the robots it runs on.",
-    lead: "For companies we build computer vision, ROS 2 robot software, IoT systems and the web and mobile apps around them. For classrooms we sell Makerzoid robot kits, and for AI labs our Armo robot arms and the ArmoGo dual-arm robot.",
+    lead: "For companies, we build computer vision, ROS 2 robot software, IoT systems, and the web and mobile apps that tie them together. For classrooms, we supply Makerzoid robot kits; for AI labs, our Armo robot arms and the ArmoGo dual-arm robot.",
   },
   th: {
-    caption: "มันมองตามเมาส์ของคุณ",
+    caption: "หุ่นยนต์มองตามเมาส์ของคุณ",
     label: "วิศวกรรมซอฟต์แวร์ · โซลูชันหุ่นยนต์",
-    title: "เราเขียนซอฟต์แวร์",
-    titleAccent: "และขายหุ่นยนต์ที่ซอฟต์แวร์นั้นทำงานอยู่",
-    lead: "สำหรับองค์กร เราพัฒนาระบบ Computer Vision ซอฟต์แวร์หุ่นยนต์บน ROS 2 ระบบ IoT รวมถึงเว็บและแอปมือถือที่ทำงานร่วมกับระบบเหล่านั้น สำหรับห้องเรียน เราจำหน่ายชุดหุ่นยนต์ Makerzoid และสำหรับห้องแล็บ AI เรามีแขนกล Armo และหุ่นยนต์แขนคู่ ArmoGo",
+    title: "ซอฟต์แวร์|ที่เราเขียน",
+    titleAccent: "ทำงานบน|หุ่นยนต์ที่เราขาย",
+    lead: "เรารับพัฒนาระบบ Computer Vision ซอฟต์แวร์หุ่นยนต์บน ROS 2 ระบบ IoT รวมถึงเว็บและแอปมือถือที่เชื่อมระบบเหล่านี้เข้าด้วยกันให้องค์กร และขายชุดหุ่นยนต์ Makerzoid สำหรับห้องเรียน รวมถึงแขนกล Armo และหุ่นยนต์แขนคู่ ArmoGo สำหรับห้องแล็บ AI",
   },
 } satisfies Record<Lang, Record<string, string>>;
+
+/** Thai has no spaces between words, so a headline can break in the middle
+ *  of a phrase. "|" in the copy marks where a line may break; each phrase
+ *  between the marks stays whole. */
+function Phrases({ text }: { text: string }) {
+  const parts = text.split("|");
+  if (parts.length === 1) return <>{text}</>;
+  return (
+    <>
+      {parts.map((part) => (
+        <span key={part} className="inline-block">
+          {part}
+        </span>
+      ))}
+    </>
+  );
+}
 
 /** The CI cover motif: a cursor pointing at a Gradient C tag. */
 function CursorTag({ caption, className = "" }: { caption: string; className?: string }) {
   return (
-    <p className={`pointer-events-none flex items-start gap-1 ${className}`}>
+    <p className={`rise pointer-events-none flex items-start gap-1 ${className}`} style={{ "--rise": 12 } as React.CSSProperties}>
       <Cursor aria-hidden weight="fill" className="-mt-4 h-7 w-7 text-ink" />
       <span className="rounded-md bg-gradient-c-deep px-3.5 py-1.5 text-[13px] font-medium text-white shadow-card">{caption}</span>
     </p>
@@ -66,19 +83,23 @@ export default function Hero({ lang }: { lang: Lang }) {
 
         <div className="flex flex-1 items-center pb-16 lg:pb-28 lg:pt-32">
           <div className="pointer-events-auto max-w-[36rem] lg:w-1/2 lg:max-w-none lg:pr-8 xl:pr-12">
-            <p className="label">{c.label}</p>
+            <p className="label rise" style={{ "--rise": 0 } as React.CSSProperties}>{c.label}</p>
             <h1
               id="hero-title"
-              className="mt-6 text-balance text-[2.5rem] font-bold leading-[1.12] tracking-display sm:text-5xl sm:leading-[1.12] lg:text-display xl:text-[4rem] xl:leading-[1.1]"
+              style={{ "--rise": 1 } as React.CSSProperties}
+              className="rise mt-6 text-balance text-[2.5rem] font-bold leading-[1.12] tracking-display sm:text-5xl sm:leading-[1.12] lg:text-display xl:text-[4rem] xl:leading-[1.1]"
             >
-              {c.title}{" "}
-              <span className="text-cyan-700">{c.titleAccent}</span>
+              <Phrases text={c.title} />{" "}
+              {/* Thai reads better with the accent part on its own line. */}
+              <span className={`text-cyan-700 ${lang === "th" ? "block" : ""}`}>
+                <Phrases text={c.titleAccent} />
+              </span>
             </h1>
-            <span aria-hidden className="accent-bar mt-7" />
-            <p className="mt-7 max-w-[34rem] text-[17px] leading-[1.75] text-ink-700">
+            <span aria-hidden className="accent-bar rise mt-7" style={{ "--rise": 3 } as React.CSSProperties} />
+            <p className="rise mt-7 max-w-[34rem] text-[17px] leading-[1.75] text-ink-700" style={{ "--rise": 4 } as React.CSSProperties}>
               {c.lead}
             </p>
-            <div className="mt-10">
+            <div className="rise mt-10" style={{ "--rise": 5 } as React.CSSProperties}>
               <HeroActions lang={lang} />
             </div>
           </div>
