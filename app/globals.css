@@ -86,7 +86,15 @@ html[lang="th"] .label {
      hover it picks up Gradient C. (A cyan gradient with dark text looked
      washed out next to the rest of the page.) */
   .btn-primary {
-    @apply bg-ink font-semibold text-white shadow-xs hover:bg-gradient-c-deep;
+    @apply relative isolate overflow-hidden bg-ink font-semibold text-white shadow-xs transition-[box-shadow,transform] duration-300 ease-out hover:-translate-y-px hover:shadow-card-hover motion-reduce:hover:translate-y-0;
+  }
+  /* Gradient C fades in on hover (a background-image can't transition). */
+  .btn-primary::before {
+    content: "";
+    @apply absolute inset-0 -z-10 bg-gradient-c-deep opacity-0 transition-opacity duration-300 ease-out;
+  }
+  .btn-primary:hover::before {
+    @apply opacity-100;
   }
   .btn-primary svg {
     @apply text-cyan-500;
@@ -101,7 +109,16 @@ html[lang="th"] .label {
   }
   /* Card that is a link: gentle lift on hover, cyan edge. */
   .card-hover {
-    @apply transition-[box-shadow,transform,border-color] duration-300 ease-out hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-card-hover motion-reduce:hover:translate-y-0;
+    @apply relative transition-[box-shadow,transform,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-cyan-300 hover:shadow-card-hover motion-reduce:hover:translate-y-0;
+  }
+  /* A Gradient A line draws across the top edge on hover. */
+  .card-hover::after {
+    content: "";
+    @apply pointer-events-none absolute inset-x-4 top-0 z-10 h-0.5 origin-left scale-x-0 rounded-full bg-gradient-a transition-transform duration-500 ease-out;
+  }
+  .card-hover:hover::after,
+  .card-hover:focus-visible::after {
+    @apply scale-x-100;
   }
   /* Small rounded tag. */
   .chip {
@@ -152,18 +169,195 @@ html[lang="th"] .label {
   --mark: #18d9e3;
 }
 
+/* ---- Motion ------------------------------------------------------------
+   Medium, calm motion: things rise into place, lines draw themselves, the
+   accent bar grows. Everything is off with prefers-reduced-motion (see the
+   media query at the end). Content is always visible without JavaScript:
+   hidden start states only apply once a script has added a "ready" class,
+   or come from CSS animations that always run to their end state. */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(-1deg);
+  }
+}
+
+/* Load-in sequence for the hero and page headers: set --rise to the
+   element's place in the sequence (0, 1, 2...). */
+.rise {
+  animation: rise 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--rise, 0) * 90ms + 60ms);
+}
+.rise.accent-bar {
+  transform-origin: left;
+  animation-name: grow-x;
+  animation-duration: 900ms;
+}
+.page-in {
+  animation: fade-in 400ms ease-out both;
+}
+.nav-in {
+  animation: drop-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Accent bars inside a Reveal grow when the block scrolls in. */
+.accent-bar {
+  transform-origin: left;
+}
+.mx-auto.accent-bar {
+  transform-origin: center;
+}
+.reveal-pending .accent-bar {
+  transform: scaleX(0);
+}
+.reveal-in .accent-bar {
+  animation: grow-x 900ms cubic-bezier(0.22, 1, 0.36, 1) 250ms both;
+}
+
+/* SVG strokes that draw themselves. Give each stroke pathLength="1" and the
+   class "trace" (optionally --d for its order); nodes get "node". */
+.draw-on-load .trace {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1400ms cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-delay: calc(var(--d, 0) * 140ms + 200ms);
+}
+.draw-on-load .node,
+.inview-ready.is-inview .node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--d, 0) * 140ms + 900ms);
+}
+.inview-ready .trace {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.inview-ready .node {
+  opacity: 0;
+}
+.inview-ready.is-inview .trace {
+  animation: draw 1600ms cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-delay: calc(var(--d, 0) * 160ms);
+}
+.spin-slow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin-slow 90s linear infinite;
+}
+
+/* Bars that fill and cards that float once their block is in view
+   (components/ui/InView). */
+.inview-ready .fill-x {
+  transform: scaleX(0);
+}
+.inview-ready.is-inview .fill-x {
+  transform-origin: left;
+  animation: grow-x 1200ms cubic-bezier(0.22, 1, 0.36, 1) 400ms both;
+}
+.inview-ready.is-inview .float {
+  animation: float 4s ease-in-out 1.4s infinite;
+}
+.reveal-in .pop-in {
+  animation: pop 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--reveal-delay, 0ms) + 200ms);
+}
+
+/* Reading progress under the navbar, where scroll-driven animations exist. */
+.scroll-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: block;
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 60;
+    height: 2px;
+    background: linear-gradient(90deg, #18d9e3, #0fa7b8);
+    transform-origin: left;
+    animation: grow-x linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
 /* Scroll reveal (components/ui/Reveal). Content is visible without JS; the
    client only hides elements that are still below the fold, then fades them in. */
 .reveal-pending {
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(20px);
+  filter: blur(4px);
 }
 .reveal-in {
   opacity: 1;
   transform: none;
+  filter: none;
   transition:
-    opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 700ms cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
@@ -174,6 +368,15 @@ html[lang="th"] .label {
   .reveal-pending {
     opacity: 1;
     transform: none;
+    filter: none;
+  }
+  .scroll-progress,
+  .spin-slow,
+  .float {
+    animation: none !important;
+  }
+  .scroll-progress {
+    display: none;
   }
   *,
   *::before,

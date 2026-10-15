@@ -17,12 +17,12 @@ const copy = {
     crumb: "About",
     title: "About GSF",
     lead: "A small engineering team in Pak Kret, Nonthaburi. We write software for other companies and sell robots for classrooms and labs.",
-    nameTitle: "Why “Generation Snowflake”",
+    nameTitle: "Why “Generation Snowflake”?",
     nameBody:
-      "GSF stands for Generation Snowflake. We are a young team. One snowflake is small and no two are the same, but a lot of them together can cover a whole field. That is how we work: different skills, one team, and more done together than any of us would alone.",
-    markTitle: "The mark",
+      "GSF stands for Generation Snowflake. We are a young team. One snowflake is small and no two are the same, but a lot of them together can cover a whole field. That is how we work: different skills, one team, and more done together than any of us could do alone.",
+    markTitle: "Our logo",
     markBody:
-      "Our logo puts a snowflake together with circuit traces around a hexagon: engineering, technology and the systems that join them.",
+      "It combines a snowflake with circuit traces around a hexagon, where engineering, technology and the systems that connect them come together.",
     keys: [
       { title: "Snowflake", text: "A precise structure that is flexible and can grow." },
       { title: "Circuit", text: "The connections between data and systems." },
@@ -36,28 +36,28 @@ const copy = {
     servicesLink: "See our services",
     productsTitle: "Products",
     productsBody:
-      "We also sell robots: Makerzoid kits for schools and kids, and our Armo robot arm and ArmoGo dual-arm robot for universities and labs. We can assemble them and teach with them.",
+      "We also sell robots: Makerzoid kits for schools and kids, and our Armo robot arm and ArmoGo dual-arm robot for universities and labs. We can assemble them for you and teach classes with them.",
     productsLink: "See the products",
     whereTitle: "Where we are",
     maps: "Open in Google Maps",
     newTab: " (opens in a new tab)",
     ctaTitle: "Come and meet us",
     ctaDescription:
-      "Call or email before you come over, so someone is in the office. Or send the form and tell us what you need.",
+      "Call or email before you visit so we can make sure someone is in. Or send the form and tell us what you need.",
   },
   th: {
     metaTitle: "เกี่ยวกับเรา",
     metaDescription:
-      "GSF (Generation Snowflake) ทีมวิศวกรหุ่นยนต์ขนาดเล็กที่ปากเกร็ด นนทบุรี เราเป็นใคร ทำอะไร และติดต่อเราได้ที่ไหน",
+      "GSF (Generation Snowflake) ทีมวิศวกรหุ่นยนต์ที่ปากเกร็ด นนทบุรี มาทำความรู้จักว่าเราเป็นใคร ทำอะไร และติดต่อเราได้อย่างไร",
     crumb: "เกี่ยวกับเรา",
     title: "เกี่ยวกับ GSF",
-    lead: "ทีมวิศวกรขนาดเล็กที่ปากเกร็ด นนทบุรี เราพัฒนาซอฟต์แวร์ให้องค์กรต่างๆ และจำหน่ายหุ่นยนต์สำหรับห้องเรียนและห้องแล็บ",
-    nameTitle: "ทำไมถึงชื่อ “Generation Snowflake”",
+    lead: "ทีมวิศวกรเล็กๆ ที่ปากเกร็ด นนทบุรี เราพัฒนาซอฟต์แวร์ให้องค์กรต่างๆ และขายหุ่นยนต์สำหรับห้องเรียนและห้องแล็บ",
+    nameTitle: "ทำไมถึงชื่อ “Generation Snowflake”?",
     nameBody:
-      "GSF ย่อมาจาก Generation Snowflake เราเป็นทีมคนรุ่นใหม่ เกล็ดหิมะหนึ่งเกล็ดมีขนาดเล็กและไม่มีเกล็ดไหนเหมือนกัน แต่เมื่อรวมกันมากพอก็ปกคลุมได้ทั้งทุ่ง เราทำงานแบบนั้น คือแต่ละคนมีทักษะต่างกัน แต่เป็นทีมเดียวกัน และทำได้มากกว่าที่ใครคนใดคนหนึ่งจะทำได้ลำพัง",
-    markTitle: "สัญลักษณ์ของเรา",
+      "GSF ย่อมาจาก Generation Snowflake เราเป็นทีมคนรุ่นใหม่ เกล็ดหิมะแต่ละเกล็ดเล็กนิดเดียวและไม่มีเกล็ดไหนเหมือนกัน แต่เมื่อรวมกันมากพอก็ปกคลุมได้ทั้งทุ่ง ทีมเราก็เป็นแบบนั้น แต่ละคนถนัดต่างกัน แต่ทำงานเป็นทีมเดียวกัน และทำได้มากกว่าที่ใครคนหนึ่งจะทำได้ลำพัง",
+    markTitle: "โลโก้ของเรา",
     markBody:
-      "โลโก้ของเราผสานโครงสร้างเกล็ดหิมะเข้ากับเส้นวงจรรอบรูปหกเหลี่ยม สื่อถึงจุดร่วมของวิศวกรรม เทคโนโลยี และระบบที่เชื่อมทุกอย่างเข้าด้วยกัน",
+      "เราผสานเกล็ดหิมะเข้ากับเส้นวงจรรอบรูปหกเหลี่ยม เพื่อสื่อถึงจุดที่วิศวกรรม เทคโนโลยี และระบบต่างๆ มาบรรจบกัน",
     keys: [
       { title: "เกล็ดหิมะ", text: "โครงสร้างที่แม่นยำ ยืดหยุ่น และเติบโตได้" },
       { title: "วงจร", text: "การเชื่อมต่อข้อมูลและระบบ" },
@@ -67,18 +67,18 @@ const copy = {
     whatTitle: "สิ่งที่เราทำ",
     servicesTitle: "บริการ",
     servicesBody:
-      "เราพัฒนาซอฟต์แวร์ให้องค์กรต่างๆ ทั้ง Computer Vision ระบบควบคุมหุ่นยนต์บน ROS 2 เครื่องมือ AI แดชบอร์ด IoT เว็บและแอปมือถือ เมื่อจบงาน ซอร์สโค้ดเป็นของคุณ",
+      "เราพัฒนาซอฟต์แวร์ให้องค์กรต่างๆ ทั้ง Computer Vision ระบบควบคุมหุ่นยนต์บน ROS 2 เครื่องมือ AI แดชบอร์ด IoT เว็บและแอปมือถือ และส่งมอบซอร์สโค้ดให้คุณเป็นเจ้าของเมื่อจบงาน",
     servicesLink: "ดูบริการของเรา",
     productsTitle: "สินค้า",
     productsBody:
-      "เรายังจำหน่ายหุ่นยนต์ด้วย ได้แก่ ชุดหุ่นยนต์ Makerzoid สำหรับโรงเรียนและเด็ก แขนกล Armo และหุ่นยนต์แขนคู่ ArmoGo สำหรับมหาวิทยาลัยและห้องแล็บ เราประกอบให้และสอนการใช้งานได้",
+      "นอกจากนี้เรายังขายหุ่นยนต์ ทั้งชุดหุ่นยนต์ Makerzoid สำหรับโรงเรียนและเด็ก แขนกล Armo และหุ่นยนต์แขนคู่ ArmoGo สำหรับมหาวิทยาลัยและห้องแล็บ โดยเราประกอบให้และสอนการใช้งานได้ด้วย",
     productsLink: "ดูสินค้า",
     whereTitle: "ที่ตั้งของเรา",
     maps: "เปิดใน Google Maps",
     newTab: " (เปิดในแท็บใหม่)",
-    ctaTitle: "แวะมาพบเราได้",
+    ctaTitle: "แวะมาคุยกับเราได้",
     ctaDescription:
-      "โทรหรืออีเมลมาก่อนเข้ามา เพื่อให้แน่ใจว่ามีคนอยู่ที่สำนักงาน หรือส่งแบบฟอร์มมาบอกเราว่าต้องการอะไร",
+      "ก่อนแวะมา โทรหรือส่งอีเมลบอกเราก่อน จะได้มีคนรออยู่ที่สำนักงาน หรือจะกรอกแบบฟอร์มบอกเราว่าต้องการอะไรก็ได้",
   },
 };
 

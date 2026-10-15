@@ -22,6 +22,7 @@ export default function Chrome({ lang, children }: { lang: Lang; children: React
           {lang === "th" ? "ข้ามไปยังเนื้อหา" : "Skip to content"}
         </a>
         <Navbar lang={lang} />
+        <div aria-hidden className="scroll-progress" />
       </HideOnRoutes>
       <main id="main" tabIndex={-1} className="relative z-10 focus:outline-none">
         {children}

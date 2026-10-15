@@ -14,6 +14,8 @@ type Props = {
   tone?: "paper" | "night";
   /** The short Gradient C bar under the title (CI heading pattern). */
   bar?: boolean;
+  /** Play the load-in sequence (page headers, which are on screen at load). */
+  intro?: boolean;
   className?: string;
   children?: React.ReactNode;
 };
@@ -64,21 +66,26 @@ export default function SectionHeading({
   as: Tag = "h2",
   tone = "paper",
   bar = true,
+  intro = false,
   className = "",
   children,
 }: Props) {
+  // Load-in sequence: each part rises a step after the previous one.
+  const step = (n: number) =>
+    intro ? { className: "rise", style: { "--rise": n } as React.CSSProperties } : { className: "", style: undefined };
   const night = tone === "night";
   const center = align === "center";
   const lbl = label ?? eyebrow;
   return (
     <div className={`${center ? "mx-auto text-center" : ""} max-w-3xl ${className}`}>
       {lbl && (
-        <Label th={labelTh} tone={tone} className="mb-4">
+        <Label th={labelTh} tone={tone} className={`mb-4 ${step(0).className}`}>
           {lbl}
         </Label>
       )}
       <Tag
-        className={`text-balance ${night ? "text-white" : "text-ink"} ${
+        style={step(1).style}
+        className={`${step(1).className} text-balance ${night ? "text-white" : "text-ink"} ${
           Tag === "h1"
             ? "text-[2.5rem] font-bold leading-[1.15] tracking-display sm:text-5xl sm:leading-[1.15] lg:text-display"
             : "text-[2rem] font-semibold leading-[1.25] tracking-heading sm:text-h1"
@@ -87,19 +94,26 @@ export default function SectionHeading({
         {title}
       </Tag>
       {titleTh && (
-        <p lang="th" className={`mt-2 text-lg leading-snug sm:text-xl ${night ? "text-night-muted" : "text-ink-600"}`}>
+        <p lang="th" style={step(2).style} className={`${step(2).className} mt-2 text-lg leading-snug sm:text-xl ${night ? "text-night-muted" : "text-ink-600"}`}>
           {titleTh}
         </p>
       )}
-      {bar && <span aria-hidden className={`accent-bar mt-5 ${night ? "!bg-gradient-a" : ""} ${center ? "mx-auto" : ""}`} />}
+      {bar && <span aria-hidden style={step(3).style} className={`${step(3).className} accent-bar mt-5 ${night ? "!bg-gradient-a" : ""} ${center ? "mx-auto" : ""}`} />}
       {description && (
         <div
-          className={`mt-5 max-w-[40rem] text-[17px] leading-[1.75] ${night ? "text-night-muted" : "text-ink-700"} ${center ? "mx-auto" : ""}`}
+          style={step(4).style}
+          className={`${step(4).className} mt-5 max-w-[40rem] text-[17px] leading-[1.75] ${night ? "text-night-muted" : "text-ink-700"} ${center ? "mx-auto" : ""}`}
         >
           {description}
         </div>
       )}
-      {children}
+      {intro && children ? (
+        <div className="rise" style={{ "--rise": 5 } as React.CSSProperties}>
+          {children}
+        </div>
+      ) : (
+        children
+      )}
     </div>
   );
 }

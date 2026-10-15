@@ -10,7 +10,7 @@ export const site = {
   url: "https://gsf-robotics.com",
   tagline: "Software and robotics engineering from Pak Kret, Nonthaburi.",
   description:
-    "GSF Robotics & AI is a small team in Pak Kret, Nonthaburi. We build AI, vision, robotics, IoT, web and mobile systems, and sell STEM and research robots.",
+    "GSF Robotics & AI is a small engineering team in Pak Kret, Nonthaburi. We build AI, computer vision, robotics, IoT, web and mobile systems, and sell robots for STEM education and research.",
   email: "contact@gsf-company.com",
   phones: [
     { display: "092-270-2597", href: "tel:+66922702597" },
@@ -32,9 +32,9 @@ export const site = {
 } as const;
 
 const siteTh: Overlay<typeof site> = {
-  tagline: "งานวิศวกรรมซอฟต์แวร์และหุ่นยนต์ จากปากเกร็ด นนทบุรี",
+  tagline: "ทีมวิศวกรซอฟต์แวร์และหุ่นยนต์ จากปากเกร็ด นนทบุรี",
   description:
-    "GSF Robotics & AI ทีมเล็กๆ ที่ปากเกร็ด นนทบุรี รับพัฒนาระบบ AI, Vision, หุ่นยนต์, IoT, เว็บและแอปมือถือ และจำหน่ายหุ่นยนต์สำหรับการศึกษาและงานวิจัย",
+    "GSF Robotics & AI เป็นทีมวิศวกรขนาดเล็กที่ปากเกร็ด นนทบุรี รับพัฒนาระบบ AI, Computer Vision, หุ่นยนต์, IoT, เว็บและแอปมือถือ และจำหน่ายหุ่นยนต์สำหรับการศึกษาและงานวิจัย",
   address: {
     lines: [
       "52/9 หมู่บ้านสุชาวดี หมู่ 3 ซอยสุขประชาสรรค์ 3",

@@ -9,7 +9,7 @@ import { quoteHref } from "./productUi";
 
 const copy = {
   en: { onRequest: "Price on request", inTheBox: "In the box", alsoIncluded: "Also included", yes: "Yes", no: "No", ask: "Ask about" },
-  th: { onRequest: "สอบถามราคา", inTheBox: "ในกล่องมีอะไรบ้าง", alsoIncluded: "สิ่งที่ได้เพิ่มเติม", yes: "มี", no: "ไม่มี", ask: "สอบถามเรื่อง" },
+  th: { onRequest: "สอบถามราคา", inTheBox: "ในกล่องมีอะไรบ้าง", alsoIncluded: "สิ่งที่รวมมาด้วย", yes: "มี", no: "ไม่มี", ask: "สอบถามเรื่อง" },
 } satisfies Record<Lang, Record<string, string>>;
 
 /** One model of a multi-model product (a Makerzoid kit), anchored by model.id. */
